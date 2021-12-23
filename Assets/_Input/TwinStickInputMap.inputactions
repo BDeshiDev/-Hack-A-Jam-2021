@@ -76,6 +76,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Bomb",
+                    "type": "Button",
+                    "id": "5afcd901-215d-4a7d-b79e-ba92b16569ed",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -192,7 +200,7 @@
                 {
                     "name": "",
                     "id": "ecb00646-3907-4139-9e41-25d078e87dff",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "kb&mouse",
@@ -263,6 +271,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "571d2906-9966-4fa6-bae8-aa15a0db2561",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "kb&mouse",
+                    "action": "Bomb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43435e3f-42c0-4cd6-96e1-25f71a24a56e",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "kb&mouse",
+                    "action": "Bomb",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

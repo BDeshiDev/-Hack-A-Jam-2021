@@ -44,7 +44,10 @@ namespace BDeshi.Utility.Extensions
         {
             return Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         }
-
+        public static float get2dAngle(this Transform t)
+        {
+            return get2dAngle(t.up);
+        }
         public static void lookAlongTopDown(this Transform transform, Vector3 dir)
         {
             transform.rotation = Quaternion.LookRotation(dir, Vector3.up);

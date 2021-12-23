@@ -158,6 +158,7 @@ MonoBehaviour:
   MouseAimActive: 0
   GamePadAimActive: 0
   aimDir: {x: 0, y: 0, z: 0}
+  aimPoint: {x: 0, y: 0, z: 0}
   moveInput: {x: 0, y: 0}
   applySensitivity: 1
   gamepadVel: 80
@@ -168,6 +169,10 @@ MonoBehaviour:
   movementAction: {fileID: 4992085326163989145, guid: 790be33bfc5730743903c0b3ae976f6d,
     type: 3}
   dashAction: {fileID: 4992085326163989145, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  meleeAction: {fileID: -1717504556656073157, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  bombAction: {fileID: -3707671587220374735, guid: 790be33bfc5730743903c0b3ae976f6d,
     type: 3}
   debugAction1: {fileID: 4014740420654707869, guid: 790be33bfc5730743903c0b3ae976f6d,
     type: 3}

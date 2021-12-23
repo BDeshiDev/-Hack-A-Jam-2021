@@ -16,6 +16,9 @@ namespace Core.Player
         private void Start()
         {
             InputManager.Instance.AimOrigin = transform;
+            
+            InputManager.meleeButton.addPerformedCallback(gameObject, player.Attacker.handleMeleeHeld);
+            InputManager.meleeButton.addCancelledCallback(gameObject, player.Attacker.handleMeleeReleased);
         }
 
         void Update()
@@ -24,7 +27,7 @@ namespace Core.Player
 
             if (InputManager.IsAimActive)
             {
-                player.Attacker.updateIndicator(InputManager.AimPoint);
+                player.setLookDir(InputManager.AimDir,InputManager.AimPoint);
             }
         }
         

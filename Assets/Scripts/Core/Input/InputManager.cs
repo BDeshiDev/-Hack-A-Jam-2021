@@ -40,6 +40,8 @@ namespace Core.Input
         [SerializeField]private InputActionReference aimAlongAction;
         [SerializeField]private InputActionReference movementAction;
         [SerializeField]private InputActionReference dashAction;
+        [SerializeField]private InputActionReference meleeAction;
+        [SerializeField]private InputActionReference bombAction;
         [SerializeField]private InputActionReference debugAction1;
         [SerializeField]private InputActionReference debugAction2;
         [SerializeField]private InputActionReference debugAction3;
@@ -155,8 +157,8 @@ namespace Core.Input
             movementAction.action.performed += OnMovePerformed;
             movementAction.action.canceled += OnMoveCancelled ;
             
-            meleeButton.bind(dashAction);
-            bombButton.bind(dashAction);
+            meleeButton.bind(meleeAction);
+            bombButton.bind(bombAction);
 
             #if UNITY_EDITOR
             
@@ -181,8 +183,8 @@ namespace Core.Input
             movementAction.action.performed -= OnMovePerformed;
             movementAction.action.canceled -= OnMoveCancelled;
 
-            meleeButton.unBind(dashAction);
-            bombButton.unBind(dashAction);
+            meleeButton.unBind(meleeAction);
+            bombButton.unBind(bombAction);
 
             
 #if UNITY_EDITOR
@@ -217,7 +219,13 @@ namespace Core.Input
         private void OnDrawGizmosSelected()
         {
             if(AimOrigin != null)
-                Gizmos.DrawRay(AimOrigin.position, aimDir);
+            {
+                // Gizmos.color = Color.green;
+                // Gizmos.DrawRay(AimOrigin.position, aimDir);
+                // Gizmos.color = Color.red;
+
+                Gizmos.DrawLine(AimOrigin.position, aimPoint);
+            }
         }
 
         public static void PlayModeExitCleanUp()
