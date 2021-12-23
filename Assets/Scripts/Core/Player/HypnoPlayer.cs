@@ -1,4 +1,5 @@
 ﻿using System;
+using BDeshi.BTSM;
 using Core.Combat;
 using Core.Physics;
 using UnityEngine;
@@ -6,23 +7,45 @@ using UnityEngine;
 namespace Core.Player
 {
     [RequireComponent(typeof(MoveComponent))]
-    public class HypnoPlayer: CombatEntity
+    public class HypnoPlayer: BlobEntity
     {
-        public MoveComponent mover { get; private set; }
-        public HypnoAttacker Attacker { get; private set; }
-
-        public void setLookDir(Vector3 dir, Vector3 aimPoint)
+        [SerializeField] Transform shootIndicator;
+        [SerializeField] PlayerIdleState idleState;
+        [SerializeField] PlayerChargableAttackState chargableAttackState;
+        [SerializeField] PlayerDashState dashState;
+        public override void look(Vector3 dir, Vector3 aimPoint)
         {
-            Attacker.updateAim(dir, aimPoint);
-        }
-
-        protected void Awake()
-        {
-            base.Awake();
-            mover = GetComponent<MoveComponent>();
-            Attacker = GetComponent<HypnoAttacker>();
+            base.look(dir, aimPoint);
+            shootIndicator.position = aimPoint;
         }
         
+        public override EventDrivenStateMachine<Events> createFSM()
+        {
+            EventDrivenStateMachine<Events> fsm = new EventDrivenStateMachine<Events>(idleState);
+            
+            fsm.addTransition(dashState, idleState,()=> dashState.IsComplete);
+            fsm.addTransition(chargableAttackState, idleState,()=> chargableAttackState.IsComplete);
+            
+            fsm.addEventTransition(idleState,Events.MeleeChargeStart, chargableAttackState );
+
+            fsm.addGlobalEventTransition(Events.Dash, dashState);
+            fsm.addGlobalEventTransition(Events.MeleeChargeStart, chargableAttackState );
+
+            fsm.addEventHandler(chargableAttackState, Events.MeleeChargeRelease, chargableAttackState.handleChargeReleased);
+
+            return fsm;
+        }
         
+
+
+        public void handleMeleeHeld()
+        {
+            fsm.handleEvent(Events.MeleeChargeStart);
+        }
+
+        public void handleMeleeReleased()
+        {
+            fsm.handleEvent(Events.MeleeChargeRelease);
+        }
     }
 }

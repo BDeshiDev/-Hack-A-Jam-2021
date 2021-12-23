@@ -1,17 +1,13 @@
 ﻿using System;
-using BDeshi.BTSM;
-using BDeshi.Utility.Extensions;
-using Core.Physics;
 using UnityEngine;
 
 namespace Core.Combat
 {
-    public abstract class EnemyEntity: CombatEntity
+    public abstract class EnemyEntity: BlobEntity
     {
         [SerializeField] protected HypnoComponent hypnoComponent;
-        public MoveComponent moveComponent { get; private set; }
         [SerializeField] protected bool isHypnotized = false;
-        [SerializeField] private SpriteRenderer spriter;
+
         /// <summary>
         /// at t = T% hypnodamage taken at T%/100 health and so on
         /// </summary>
@@ -19,10 +15,7 @@ namespace Core.Combat
         public float hypnoDamageHealthScalingFactor = 5;
         public float hypnoRecoveryPerHealthDamage = .5f;
 
-        public FSMRunner fsmRunner;
-        public abstract StateMachine createFSM();
         public Transform target;
-        public Transform aimer;
 
         /// <summary>
         /// Health and hypnosis are modified
@@ -41,28 +34,16 @@ namespace Core.Combat
                    * hypnoDamageHealthScalingFactor
                    - (isHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
         }
-
-        public void lookAlong(Vector3 dir)
-        {
-            aimer.allignToDir(dir);
-        }
-
+        
         protected override void Awake()
         {
             base.Awake();
             hypnoComponent = GetComponent<HypnoComponent>();
             spriter = GetComponent<SpriteRenderer>();
-            fsmRunner = GetComponent<FSMRunner>();
-            moveComponent = GetComponent<MoveComponent>();
-            
+
             target = GameObject.FindWithTag("Player").transform;
-
         }
 
-        private void Start()
-        {
-            fsmRunner.Initialize(createFSM());
-        }
 
 
         private void OnEnable()

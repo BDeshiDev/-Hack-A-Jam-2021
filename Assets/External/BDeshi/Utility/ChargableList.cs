@@ -23,7 +23,7 @@ namespace BDeshi.Utility
                 return;
             }
 
-            if (items[chargeIndex].chargeTimer.tryCompleteTimer(amount, out var extra))
+            if (items[chargeIndex].chargeTimer.tryCompleteTimer(amount))
             {
                 if (hasMoreChargeLevels &&
                     (levelIncreasePermissionFunc == null
@@ -65,7 +65,7 @@ namespace BDeshi.Utility
         public class ChargableListSlot
         {
             [SerializeField] public TItem item;
-            [SerializeField] public FiniteTimer chargeTimer = new FiniteTimer(0,.5f);
+            [SerializeField] public FiniteTimer chargeTimer = new FiniteTimer(0.5f);
         }
 
         public IEnumerator<TItem> GetEnumerator()

@@ -7,13 +7,15 @@ namespace Core.Combat.Enemies
     public  class PrepAttackState: EnemyStatebase
     {
         [SerializeField] float range = 4;
-        public FiniteTimer timer = new FiniteTimer(2);
+        public FiniteTimer maxTimer = new FiniteTimer(2);
+        public FiniteTimer minTimer = new FiniteTimer(.33f);
         public bool WasInRangeLastFrame = false;
         [SerializeField] bool lookAtTarget = true;
-
+        public bool IsComplete => maxTimer.isComplete || (WasInRangeLastFrame && minTimer.isComplete);
         public override void EnterState()
         {
-            timer.reset();
+            maxTimer.reset();
+            minTimer.reset();
             WasInRangeLastFrame = false;
         }
 
@@ -22,11 +24,14 @@ namespace Core.Combat.Enemies
             var vecToTarget = (entity.target.position - entity.transform.position);
             if (vecToTarget.exceedSqrDist(range))
             {
-                entity.moveComponent.moveInputThisFrame = vecToTarget.normalized;
+                entity.MoveComponent.moveInputThisFrame = vecToTarget.normalized;
+                WasInRangeLastFrame = false;
+                minTimer.reset();
             }
             else
             {
                 WasInRangeLastFrame = true;
+                minTimer.safeUpdateTimer(Time.deltaTime);
             }
 
             if (lookAtTarget)
@@ -34,7 +39,7 @@ namespace Core.Combat.Enemies
                 entity.lookAlong(vecToTarget);
             }
 
-            timer.safeUpdateTimer(Time.deltaTime);
+            maxTimer.safeUpdateTimer(Time.deltaTime);
         }
 
         public override void ExitState()

@@ -9,6 +9,7 @@ namespace Core.Combat
     public class CombatEntity: MonoBehaviour, IDamagable
     {
         [SerializeField]protected HealthComponent healthComponent;
+        public bool isInvulnerable;
         protected virtual void Awake()
         {
             if (healthComponent == null)
@@ -28,6 +29,9 @@ namespace Core.Combat
         /// <param name="damage"></param>
         public virtual void takeDamage(DamageInfo damage)
         {
+            if(isInvulnerable)
+                return;
+            
             processDamage(ref damage);
             healthComponent.modifyAmount(damage.healthDamage);
         }

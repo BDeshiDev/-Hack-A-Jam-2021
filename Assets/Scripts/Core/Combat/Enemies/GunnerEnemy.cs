@@ -2,6 +2,7 @@
 using BDeshi.BTSM;
 using BDeshi.Utility;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace Core.Combat.Enemies
 {
@@ -9,41 +10,38 @@ namespace Core.Combat.Enemies
     {
         [SerializeField] MaintainRangeState maintainRangeState;
         [SerializeField] PrepAttackState prepAttackState;
+        [SerializeField] GunAttackState gunAttackState;
         public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
         public bool canRecoverCooldown = true;
-        public override StateMachine createFSM()
+        public override EventDrivenStateMachine<Events> createFSM()
         {
-            EventDrivenStateMachine<String> fsm = new EventDrivenStateMachine<string>(maintainRangeState);
+            EventDrivenStateMachine<Events> fsm = new EventDrivenStateMachine<Events>(maintainRangeState);
             
             fsm.addTransition(maintainRangeState, prepAttackState,
-                                () => prepAttackState.WasInRangeLastFrame || prepAttackState.timer.isComplete,
+                                () =>  attackCoolDown.isComplete,
                                 () => { 
                                     attackCoolDown.reset();
                                     canRecoverCooldown = false;
                                 });
             
-            
+            fsm.addTransition(prepAttackState, gunAttackState,()=> prepAttackState.IsComplete);
+            fsm.addTransition(gunAttackState, maintainRangeState,
+                ()=> gunAttackState.IsComplete,
+                () =>
+                {
+                    canRecoverCooldown = true;
+                });
             
             return fsm;
         }
-    }
 
-    public class AttackState: EnemyStatebase
-    {
-        [SerializeField] private Attack attack;
-        public override void EnterState()
+        void Update()
         {
-            attack.startAttack();
-        }
+            if (canRecoverCooldown)
+            {
+                attackCoolDown.safeUpdateTimer(Time.deltaTime);
+            }
 
-        public override void Tick()
-        {
-            
-        }
-
-        public override void ExitState()
-        {
-            attack.stopAttack();
         }
     }
 }

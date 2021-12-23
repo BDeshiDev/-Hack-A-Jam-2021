@@ -17,23 +17,8 @@ namespace Core.Player
         {
             InputManager.Instance.AimOrigin = transform;
             
-            InputManager.meleeButton.addPerformedCallback(gameObject, player.Attacker.handleMeleeHeld);
-            InputManager.meleeButton.addCancelledCallback(gameObject, player.Attacker.handleMeleeReleased);
+            InputManager.meleeButton.addPerformedCallback(gameObject, player.handleMeleeHeld);
+            InputManager.meleeButton.addCancelledCallback(gameObject, player.handleMeleeReleased);
         }
-
-        void Update()
-        {
-            player.mover.moveInputThisFrame = InputManager.NormalizedMoveInput;
-
-            if (InputManager.IsAimActive)
-            {
-                player.setLookDir(InputManager.AimDir,InputManager.AimPoint);
-            }
-        }
-        
-        
-
-
-
     }
 }

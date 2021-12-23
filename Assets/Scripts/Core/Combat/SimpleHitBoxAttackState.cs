@@ -4,46 +4,39 @@ using UnityEngine;
 
 namespace Core.Combat
 {
-    public class SimpleHitBoxAttack : Attack
+    public class SimpleHitBoxAttackState : AttackState
     {
         public SpriteRenderer spriter;
         [SerializeField] private HitBox hitbox;
         [SerializeField] private FiniteTimer attackTimer = new FiniteTimer(0, .2f);
-        public override bool IsAttackComplete => attackTimer.isComplete;
+        public override bool IsComplete => attackTimer.isComplete;
         
         private void Awake()
         {
             attackTimer.complete();
         }
 
-        public override void startAttack()
+
+        public override void EnterState()
         {
             attackTimer.reset();
             spriter.enabled = true;
             hitbox.startDetection();
         }
 
+        public override void Tick()
+        {
+            if (!attackTimer.isComplete)
+            {
+                attackTimer.updateTimer(Time.deltaTime);
 
-        public override void stopAttack()
+            }
+        }
+
+        public override void ExitState()
         {
             spriter.enabled = false;
             hitbox.stopDetection();
-        }
-
-        private void Update()
-        {
-            if (attackTimer.isComplete)
-            {
-                return;
-            }
-            else
-            {
-                attackTimer.updateTimer(Time.deltaTime);
-                if (attackTimer.isComplete)
-                {
-                    stopAttack();
-                }
-            }
         }
     }
 }

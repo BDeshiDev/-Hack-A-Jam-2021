@@ -101,7 +101,7 @@ MonoBehaviour:
   durationTimer:
     timer: 0
     maxValue: 5
-  speed: 50
+  speed: 20
   onHit:
     m_PersistentCalls:
       m_Calls: []
