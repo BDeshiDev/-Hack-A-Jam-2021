@@ -6,7 +6,7 @@ namespace Core.Combat
 {
     public class HitBox: MonoBehaviour
     {
-        HitBoxStatus status;
+        [SerializeField]HitBoxStatus status;
         public LayerMask damageMask;
         public DamageInfo damagePerHit;
         private HashSet<IDamagable> damaged = new HashSet<IDamagable>();
@@ -33,6 +33,7 @@ namespace Core.Combat
                     damageMask);
                 foreach (var result in results)
                 {
+                    Debug.Log("damage " , result.gameObject);
                     var d = result.GetComponent<IDamagable>();
                     if (d != null && damaged.Add(d))
                     {

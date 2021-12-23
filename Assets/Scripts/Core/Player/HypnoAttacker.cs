@@ -20,7 +20,6 @@ namespace Core.Player
         //updating rotation of rigidbody directly has issues
         //moreover, there are parts of the sprite that we do not want to rotate
         [SerializeField] private Transform meleeHitboxContainer;
-        private Vector2 a;
         public void updateAim(Vector3 dir, Vector3 aimPoint)
         {
             // if we just want dir we'll swap to this
@@ -28,7 +27,6 @@ namespace Core.Player
             // shootIndicator.transform.allignToDir(dir, indicatorAngleOffset);
             
             meleeHitboxContainer.allignToDir(dir, rotationAngleOffset);
-            a = aimPoint;
             shootIndicator.position = aimPoint;
         }
 
@@ -56,10 +54,6 @@ namespace Core.Player
             var attack = meleeAttacks.getItemAndReset();
             attack.startAttack();
         }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(a, 1);
-        }
+        
     }
 }
