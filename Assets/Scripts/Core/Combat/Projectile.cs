@@ -2,6 +2,7 @@
 using BDeshi.Utility.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
@@ -14,14 +15,16 @@ namespace Core.Combat
         [SerializeField] private UnityEvent onHit;
         [SerializeField] private float knockbackForce = 6;
 
-        public TargettingInfo targetingInfo;
+        public TargettingInfo TargetingInfo;
         public Vector3 ShotDir => transform.right;
         public DamageInfo damage;
-        public void initialize(Vector3 spawnPos, Vector3 dir)
+        public void initialize(Vector3 spawnPos, Vector3 dir, TargettingInfo targetingInfo)
         {
             transform.position = spawnPos;
             transform.allignToDir(dir);
-
+            //projectiles should no magically change damagelayers if enemy gets brainwashed
+            //maybe lasers  but I'm not bothering with that now
+            this.TargetingInfo = targetingInfo;
             durationTimer.reset();
         }
 
@@ -49,7 +52,7 @@ namespace Core.Combat
                 ShotDir.get2dAngle(),
                 ShotDir, 
                 checkDistance,
-                targetingInfo.getCombinedLayerMask());
+                TargetingInfo.getCombinedLayerMask());
             
         }
         private void move(float delta)
@@ -59,7 +62,7 @@ namespace Core.Combat
             
             if (hit && hit.collider != null )
             {
-                if (targetingInfo.DamageMask.Contains(hit))
+                if (TargetingInfo.DamageMask.Contains(hit))
                 {
                     var d = hit.collider.GetComponent<IDamagable>();
                     d.takeDamage(damage);

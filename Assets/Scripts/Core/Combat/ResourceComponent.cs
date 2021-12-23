@@ -63,7 +63,6 @@ namespace Core.Combat
             {
                 if (cur < max)
                 {
-                    Debug.Log(cur);
                     cur += changeAmount;
                     if (cur > max)
                     {

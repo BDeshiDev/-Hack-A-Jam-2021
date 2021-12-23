@@ -16,6 +16,7 @@ namespace Core.Player
         public  override void EnterState()
         {
             pickedAttack = null;
+            
         }
 
         public override void Tick()
@@ -24,7 +25,7 @@ namespace Core.Player
             {
                 chargedAttacks.updateCharge(Time.deltaTime);
                 
-                player.MoveComponent.moveInputThisFrame = InputManager.NormalizedInput * moveSpeedMult;
+                player.MoveComponent.moveInputThisFrame = InputManager.NormalizedMoveInput * moveSpeedMult;
                 player.look(InputManager.AimDir, InputManager.AimPoint);
             }
             else
@@ -35,7 +36,7 @@ namespace Core.Player
 
         public void handleChargeReleased()
         {
-            pickedAttack = chargedAttacks.getCurrentItem();
+            pickedAttack = chargedAttacks.getItemAndReset();
             pickedAttack.EnterState();
         }
 

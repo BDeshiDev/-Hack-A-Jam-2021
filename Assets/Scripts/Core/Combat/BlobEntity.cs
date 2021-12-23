@@ -14,8 +14,9 @@ namespace Core.Combat
         [SerializeField] protected SpriteRenderer spriter;
         public FSMRunner fsmRunner;
         public MoveComponent MoveComponent { get; protected set; }
-        public Transform aimer;
+        [SerializeField] Transform aimer;
         protected EventDrivenStateMachine<Events> fsm;
+        public Vector2 LastLookDir { get; private set; }
         public abstract EventDrivenStateMachine<Events> createFSM();
 
         protected override void Awake()
@@ -27,10 +28,13 @@ namespace Core.Combat
         public virtual void look(Vector3 dir, Vector3 point)
         {
             aimer.allignToDir(dir);
+            LastLookDir = aimer.right;
         }
         public virtual void lookAlong(Vector3 dir)
         {
             aimer.allignToDir(dir);
+            LastLookDir = aimer.right;
+
         }
         
         

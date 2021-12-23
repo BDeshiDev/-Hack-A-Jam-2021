@@ -3,14 +3,15 @@ using BDeshi.BTSM;
 using BDeshi.Utility;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 namespace Core.Combat.Enemies
 {
-    public class GunnerEnemy : EnemyEntity
+    public class BasicEnemy : EnemyEntity
     {
         [SerializeField] MaintainRangeState maintainRangeState;
         [SerializeField] PrepAttackState prepAttackState;
-        [SerializeField] GunAttackState gunAttackState;
+        [SerializeField] AttackState attackState;
         public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
         public bool canRecoverCooldown = true;
         public override EventDrivenStateMachine<Events> createFSM()
@@ -24,9 +25,9 @@ namespace Core.Combat.Enemies
                                     canRecoverCooldown = false;
                                 });
             
-            fsm.addTransition(prepAttackState, gunAttackState,()=> prepAttackState.IsComplete);
-            fsm.addTransition(gunAttackState, maintainRangeState,
-                ()=> gunAttackState.IsComplete,
+            fsm.addTransition(prepAttackState, attackState,()=> prepAttackState.IsComplete);
+            fsm.addTransition(attackState, maintainRangeState,
+                ()=> attackState.IsComplete,
                 () =>
                 {
                     canRecoverCooldown = true;

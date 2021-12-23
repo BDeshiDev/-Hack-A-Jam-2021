@@ -8,14 +8,14 @@ namespace Core.Combat
         public float healthDamage;
         public float hypnoDamage;
 
-        public static DamageInfo NormalAttack()
+        public static DamageInfo NormalAttack(float damage = 10)
         {
-            return new DamageInfo() {healthDamage = 10};
+            return new DamageInfo() {healthDamage = damage};
         }
         
-        public static DamageInfo HypnoAttack()
+        public static DamageInfo HypnoAttack(float damage= 10)
         {
-            return new DamageInfo() {hypnoDamage = 10};
+            return new DamageInfo() {hypnoDamage = damage};
         }
 
         public override string ToString()

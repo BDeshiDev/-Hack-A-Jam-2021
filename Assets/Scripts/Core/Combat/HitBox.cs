@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
     public class HitBox: MonoBehaviour
     {
         [SerializeField]HitBoxStatus status;
-        public LayerMask damageMask;
+        public TargetResolverComponent targetter;
         public DamageInfo damagePerHit;
         private HashSet<IDamagable> damaged = new HashSet<IDamagable>();
         public bool showIfInactive = false;
@@ -30,10 +31,9 @@ namespace Core.Combat
                 var results = Physics2D.OverlapBoxAll(transform.position,
                     transform.lossyScale,
                     transform.get2dAngle(),
-                    damageMask);
+                    targetter.targettingInfo.DamageMask);
                 foreach (var result in results)
                 {
-                    Debug.Log("damage " , result.gameObject);
                     var d = result.GetComponent<IDamagable>();
                     if (d != null && damaged.Add(d))
                     {

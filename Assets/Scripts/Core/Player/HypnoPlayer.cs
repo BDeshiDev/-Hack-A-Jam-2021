@@ -47,5 +47,10 @@ namespace Core.Player
         {
             fsm.handleEvent(Events.MeleeChargeRelease);
         }
+
+        public void handleDashHeld()
+        {
+            fsm.handleEvent(Events.Dash);
+        }
     }
 }

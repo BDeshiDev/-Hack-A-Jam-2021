@@ -16,7 +16,7 @@ namespace Core.Input
         public bool GamePadAimActive = false;
         [SerializeField] private  Vector3 aimDir;   
         [SerializeField] private  Vector3 aimPoint;   
-        public static Vector3 NormalizedInput { get; private set; }
+        public static Vector3 NormalizedAimDir { get; private set; }
 
         // [SerializeField] private LayerMask aimLayer;
 
@@ -48,6 +48,7 @@ namespace Core.Input
 
         public static InputButtonSlot meleeButton = new InputButtonSlot();
         public static InputButtonSlot bombButton = new InputButtonSlot();
+        public static InputButtonSlot dashButton = new InputButtonSlot();
 
         
         public static InputButtonSlot debugButton1 = new InputButtonSlot();
@@ -100,8 +101,8 @@ namespace Core.Input
         public void calculateAimPoint(Vector3 playerPos, float maxAimDist, out Vector3 aimEndPoint)
         {
             //#TODO gamepad case
-            aimDir = NormalizedInput = Vector2.zero;
-            NormalizedInput = AimOrigin.up;
+            aimDir = NormalizedAimDir = Vector2.zero;
+            NormalizedAimDir = AimOrigin.up;
         
             var aimDist = maxAimDist;
             
@@ -121,7 +122,7 @@ namespace Core.Input
                     gamepadVal = aimDir = Vector2.MoveTowards(gamepadVal, aimDir, Time.deltaTime * rate);
                 }
                 aimDist = Mathf.Min(1, aimDir.magnitude) * maxAimDist;
-                aimEndPoint = (Vector3)playerPos + NormalizedInput * aimDist;
+                aimEndPoint = (Vector3)playerPos + NormalizedAimDir * aimDist;
             }
             else if (MouseAimActive)
             {
@@ -130,12 +131,12 @@ namespace Core.Input
             }
             else
             {
-                aimEndPoint = playerPos + NormalizedInput * aimDist;
+                aimEndPoint = playerPos + NormalizedAimDir * aimDist;
             }
 
             aimDir.z = 0;
             aimEndPoint.z = 0;
-            NormalizedInput = aimDir.normalized;
+            NormalizedAimDir = aimDir.normalized;
         
         
         }
@@ -159,7 +160,7 @@ namespace Core.Input
             
             meleeButton.bind(meleeAction);
             bombButton.bind(bombAction);
-
+            dashButton.bind(dashAction);
             #if UNITY_EDITOR
             
             debugButton1.bind(debugAction1);
@@ -185,6 +186,7 @@ namespace Core.Input
 
             meleeButton.unBind(meleeAction);
             bombButton.unBind(bombAction);
+            dashButton.unBind(dashAction);
 
             
 #if UNITY_EDITOR
@@ -231,6 +233,9 @@ namespace Core.Input
         public static void PlayModeExitCleanUp()
         {
             meleeButton.cleanup();
+            dashButton.cleanup();
+            bombButton.cleanup();
+            
             debugButton1.cleanup();
             debugButton1.cleanup();
             debugButton1.cleanup();

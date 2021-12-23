@@ -1,6 +1,7 @@
 ﻿using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Core.Combat.Enemies
 {
@@ -11,12 +12,15 @@ namespace Core.Combat.Enemies
         public FiniteTimer minTimer = new FiniteTimer(.33f);
         public bool WasInRangeLastFrame = false;
         [SerializeField] bool lookAtTarget = true;
+        [SerializeField] UnityEvent OnPrepStart;
+        [SerializeField] UnityEvent OnPrepFinish;
         public bool IsComplete => maxTimer.isComplete || (WasInRangeLastFrame && minTimer.isComplete);
         public override void EnterState()
         {
             maxTimer.reset();
             minTimer.reset();
             WasInRangeLastFrame = false;
+            OnPrepStart.Invoke();
         }
 
         public override void Tick()
@@ -44,6 +48,7 @@ namespace Core.Combat.Enemies
 
         public override void ExitState()
         {
+            OnPrepFinish.Invoke();
             WasInRangeLastFrame = false;
         }
     }

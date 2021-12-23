@@ -19,6 +19,8 @@ namespace Core.Player
             
             InputManager.meleeButton.addPerformedCallback(gameObject, player.handleMeleeHeld);
             InputManager.meleeButton.addCancelledCallback(gameObject, player.handleMeleeReleased);
+            InputManager.bombButton.addPerformedCallback(gameObject, player.handleMeleeHeld);
+            InputManager.dashButton.addCancelledCallback(gameObject, player.handleDashHeld);
         }
     }
 }
