@@ -1,4 +1,7 @@
-﻿namespace BDeshi.BTSM
+﻿using System;
+using JetBrains.Annotations;
+
+namespace BDeshi.BTSM
 {
     /// <summary>
     /// General interface for Transitions
@@ -13,5 +16,7 @@
         
         State SuccessState { get; }
         bool TakenLastTime { get; set; }
+        [CanBeNull]public Action OnTaken { get; }
+
     }
 }

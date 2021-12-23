@@ -1,19 +1,27 @@
 ﻿using System;
+using BDeshi.BTSM;
+using Core.Physics;
 using UnityEngine;
 
 namespace Core.Combat
 {
-    public class EnemyEntity: CombatEntity
+    public abstract class EnemyEntity: CombatEntity
     {
-        [SerializeField]protected HypnoComponent hypnoComponent;
+        [SerializeField] protected HypnoComponent hypnoComponent;
+        public MoveComponent moveComponent { get; private set; }
         [SerializeField] protected bool isHypnotized = false;
-
+        [SerializeField] private SpriteRenderer spriter;
         /// <summary>
         /// at t = T% hypnodamage taken at T%/100 health and so on
         /// </summary>
         public AnimationCurve hypnoDamageVsHealthCurve = AnimationCurve.EaseInOut(0,1,1,0);
         public float hypnoDamageHealthScalingFactor = 5;
-        
+        public float hypnoRecoveryPerHealthDamage = .5f;
+
+        public FSMRunner fsmRunner;
+        public abstract StateMachine createFSM();
+        public Transform target;
+
         /// <summary>
         /// Health and hypnosis are modified
         /// </summary>
@@ -28,14 +36,27 @@ namespace Core.Combat
         public float calcHypnoDamage(DamageInfo damage)
         {
             return ( 1 + damage.hypnoDamage * hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio))
-                   * hypnoDamageHealthScalingFactor;
+                   * hypnoDamageHealthScalingFactor
+                   - (isHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
         }
 
-        protected void Awake()
+        protected override void Awake()
         {
             base.Awake();
             hypnoComponent = GetComponent<HypnoComponent>();
+            spriter = GetComponent<SpriteRenderer>();
+            fsmRunner = GetComponent<FSMRunner>();
+            moveComponent = GetComponent<MoveComponent>();
+            
+            target = GameObject.FindWithTag("Player").transform;
+
         }
+
+        private void Start()
+        {
+            fsmRunner.Initialize(createFSM());
+        }
+
 
         private void OnEnable()
         {
@@ -61,7 +82,7 @@ namespace Core.Combat
             {
                 Debug.Log("revcover hypnotise " +gameObject , gameObject);
             }
-
+            spriter.color = Color.yellow;
             isHypnotized = false;
         }
 
@@ -69,6 +90,11 @@ namespace Core.Combat
         {
             isHypnotized = true;
             Debug.Log("hypnotised " +gameObject , gameObject);
+            
+            spriter.color = Color.cyan;
+
         }
     }
+    
+    
 }

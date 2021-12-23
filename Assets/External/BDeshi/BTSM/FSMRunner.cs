@@ -5,7 +5,6 @@ namespace BDeshi.BTSM
     public class FSMRunner: MonoBehaviour
     {
         public StateMachine fsm { get; private set; }
-
         /// <summary>
         /// Calls fsm.enter
         /// </summary>

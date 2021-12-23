@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -53,6 +54,7 @@ namespace BDeshi.BTSM
                     if (DebugContext)
                         Debug.Log("from " + (curState.FullStateName ) + "To " + activeTransition, DebugContext);
 #endif
+                    activeTransition.OnTaken?.Invoke();
                     break;
                 }
                 else
@@ -184,6 +186,11 @@ namespace BDeshi.BTSM
             {
                 transitions.Add(from, new List<Transition>(){t});
             }
+        }
+        
+        public void addTransition(State from, State to, Func<bool> condition, Action onTaken = null )
+        {
+            addTransition(from, new SimpleTransition(to, condition, onTaken));
         }
 
         public void addGlobalTransition(Transition t)

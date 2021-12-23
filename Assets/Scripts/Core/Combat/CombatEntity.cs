@@ -3,10 +3,13 @@ using UnityEngine;
 
 namespace Core.Combat
 {
+    /// <summary>
+    /// Anything that can take damage.
+    /// </summary>
     public class CombatEntity: MonoBehaviour, IDamagable
     {
         [SerializeField]protected HealthComponent healthComponent;
-        protected void Awake()
+        protected virtual void Awake()
         {
             if (healthComponent == null)
                 healthComponent = GetComponent<HealthComponent>();

@@ -1,8 +1,12 @@
 ﻿using System;
+using UnityEngine;
 
 namespace BDeshi.BTSM
 {
-    public abstract class StateBase: State
+    /// <summary>
+    /// C# default interface issues so this is a copy of statebase with monobehaviour inheritance
+    /// </summary>
+    public abstract class MonoBehaviourStateBase: MonoBehaviour,State
     {
         public abstract void EnterState();
         public abstract void Tick();

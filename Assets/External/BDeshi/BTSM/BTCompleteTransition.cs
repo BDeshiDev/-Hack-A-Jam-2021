@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace BDeshi.BTSM
 {
@@ -7,6 +8,8 @@ namespace BDeshi.BTSM
         private BtNodeBase node;
         public State SuccessState => successState;
         public bool TakenLastTime { get; set; }
+        public Action OnTaken { get; }
+        
         public State successState;
 
         public BTCompleteTransition(BtNodeBase node, State state)
