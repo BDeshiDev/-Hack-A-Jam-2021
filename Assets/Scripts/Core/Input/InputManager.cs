@@ -15,18 +15,19 @@ namespace Core.Input
         public bool MouseAimActive = false;
         public bool GamePadAimActive = false;
         [SerializeField] private  Vector3 aimDir;   
-        public static Vector3 NormalizedTopDownAimInput { get; private set; }
-        public static Vector3 NormalizedTopDownAimEndPoint => normalizedTopDownAimEndPoint;
-        private static Vector3 normalizedTopDownAimEndPoint;
+        [SerializeField] private  Vector3 aimPoint;   
+        public static Vector3 NormalizedInput { get; private set; }
 
         // [SerializeField] private LayerMask aimLayer;
 
         public static Vector3 AimDir => Instance.aimDir;
+        public static Vector3 AimPoint => Instance.aimPoint;
         public static bool IsAimActive => Instance.aimDir != Vector3.zero;
+        
 
         [SerializeField]private Vector2 moveInput;
         public static Vector2 RawMoveInput => Instance.moveInput;
-        public static Vector3 NormalizedTopDownMoveInput { get; private set; }
+        public static Vector3 NormalizedMoveInput { get; private set; }
         public static bool IsMoveInputActive { get; private set; } = false;
 
 
@@ -43,7 +44,9 @@ namespace Core.Input
         [SerializeField]private InputActionReference debugAction2;
         [SerializeField]private InputActionReference debugAction3;
 
-        public static InputButtonSlot dashButton = new InputButtonSlot();
+        public static InputButtonSlot meleeButton = new InputButtonSlot();
+        public static InputButtonSlot bombButton = new InputButtonSlot();
+
         
         public static InputButtonSlot debugButton1 = new InputButtonSlot();
         public static InputButtonSlot debugButton2 = new InputButtonSlot();
@@ -52,10 +55,10 @@ namespace Core.Input
 
 
 
-        // void Update()
-        // {
-        //     updateAim();
-        // }
+        void Update()
+        {
+            updateAim();
+        }
 
         protected override void initialize()
         {
@@ -92,53 +95,55 @@ namespace Core.Input
         }
 
 
-        // public void calculateAimPoint(Vector3 playerPos, float maxAimDist, out Vector3 aimEndPoint)
-        // {
-        //     //#TODO gamepad case
-        //     Vector3 aimDirTopDown = NormalizedTopDownAimInput = Vector2.zero;
-        //     NormalizedTopDownAimInput = AimOrigin.forward;
-        //
-        //     var aimDist = maxAimDist;
-        //
-        //
-        //     if (GamePadAimActive)
-        //     {
-        //         aimDirTopDown = aimAlongAction.action.ReadValue<Vector2>();
-        //         if (applySensitivity)
-        //         {
-        //             float rate = gamepadVel;
-        //             var dotProduct = Vector2.Dot(aimDirTopDown, gamepadVal);
-        //             if (dotProduct < .5f)//opposite dirs
-        //             {
-        //                 rate *= dotFactor + (1 - dotProduct);
-        //             }
-        //
-        //             gamepadVal = aimDirTopDown = Vector2.MoveTowards(gamepadVal, aimDirTopDown, Time.deltaTime * rate);
-        //         }
-        //         aimDist = Mathf.Min(1, aimDirTopDown.magnitude) * maxAimDist;
-        //     }
-        //     else if (MouseAimActive)
-        //     {
-        //
-        //         var ray = cam.ScreenPointToRay(aimAtAction.action.ReadValue<Vector2>());
-        //         Physics.Raycast(ray,out var hit, 1000, aimLayer, QueryTriggerInteraction.Collide);
-        //         aimDirTopDown = (hit.point - playerPos);
-        //         aimDist = Mathf.Min(aimDirTopDown.magnitude, maxAimDist);
-        //     }
-        //
-        //     aimDirTopDown.y = 0;
-        //     NormalizedTopDownAimInput = aimDirTopDown.normalized;
-        //
-        //
-        //     aimEndPoint = (Vector3)playerPos + NormalizedTopDownAimInput * aimDist;
-        // }
-        //
-        //
-        // public void updateAim()
-        // {
-        //     if(AimOrigin != null)
-        //         calculateAimPoint(AimOrigin.position, 5, out normalizedTopDownAimEndPoint);
-        // }
+        public void calculateAimPoint(Vector3 playerPos, float maxAimDist, out Vector3 aimEndPoint)
+        {
+            //#TODO gamepad case
+            aimDir = NormalizedInput = Vector2.zero;
+            NormalizedInput = AimOrigin.up;
+        
+            var aimDist = maxAimDist;
+            
+        
+            if (GamePadAimActive)
+            {
+                aimDir = aimAlongAction.action.ReadValue<Vector2>();
+                if (applySensitivity)
+                {
+                    float rate = gamepadVel;
+                    var dotProduct = Vector2.Dot(aimDir, gamepadVal);
+                    if (dotProduct < .5f)//opposite dirs
+                    {
+                        rate *= dotFactor + (1 - dotProduct);
+                    }
+        
+                    gamepadVal = aimDir = Vector2.MoveTowards(gamepadVal, aimDir, Time.deltaTime * rate);
+                }
+                aimDist = Mathf.Min(1, aimDir.magnitude) * maxAimDist;
+                aimEndPoint = (Vector3)playerPos + NormalizedInput * aimDist;
+            }
+            else if (MouseAimActive)
+            {
+                aimEndPoint = cam.ScreenToWorldPoint(aimAtAction.action.ReadValue<Vector2>());
+                aimDir = (aimEndPoint - playerPos);
+            }
+            else
+            {
+                aimEndPoint = playerPos + NormalizedInput * aimDist;
+            }
+
+            aimDir.z = 0;
+            aimEndPoint.z = 0;
+            NormalizedInput = aimDir.normalized;
+        
+        
+        }
+        
+        
+        public void updateAim()
+        {
+            if(AimOrigin != null)
+                calculateAimPoint(AimOrigin.position, 5, out aimPoint);
+        }
 
         void OnEnable()
         {
@@ -150,7 +155,8 @@ namespace Core.Input
             movementAction.action.performed += OnMovePerformed;
             movementAction.action.canceled += OnMoveCancelled ;
             
-            dashButton.bind(dashAction);
+            meleeButton.bind(dashAction);
+            bombButton.bind(dashAction);
 
             #if UNITY_EDITOR
             
@@ -175,7 +181,8 @@ namespace Core.Input
             movementAction.action.performed -= OnMovePerformed;
             movementAction.action.canceled -= OnMoveCancelled;
 
-            dashButton.unBind(dashAction);
+            meleeButton.unBind(dashAction);
+            bombButton.unBind(dashAction);
 
             
 #if UNITY_EDITOR
@@ -197,13 +204,13 @@ namespace Core.Input
         private void OnMovePerformed(InputAction.CallbackContext obj)
         {
             moveInput = obj.ReadValue<Vector2>();
-            NormalizedTopDownMoveInput = moveInput.normalized.toTopDown();
+            NormalizedMoveInput = moveInput.normalized;
             IsMoveInputActive = true;
         }
         
         private void OnMoveCancelled(InputAction.CallbackContext obj)
         {
-            NormalizedTopDownMoveInput = moveInput = Vector2.zero;
+            NormalizedMoveInput = moveInput = Vector2.zero;
             IsMoveInputActive = false;
         }
 
@@ -215,7 +222,7 @@ namespace Core.Input
 
         public static void PlayModeExitCleanUp()
         {
-            dashButton.cleanup();
+            meleeButton.cleanup();
             debugButton1.cleanup();
             debugButton1.cleanup();
             debugButton1.cleanup();

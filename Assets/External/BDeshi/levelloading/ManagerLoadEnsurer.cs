@@ -20,15 +20,15 @@ namespace bdeshi.levelloading
 
         private void Awake()
         {
-            ensureLoad(managerSceneName);
+            ensureLoad();
         }
 
-        public static void ensureLoad(string sceneName)
+        public  void ensureLoad()
         {
             if (!loadedManager)
             {
                 loadedManager = true;
-                SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+                SceneManager.LoadScene(managerSceneName, LoadSceneMode.Additive);
             }
         }
 

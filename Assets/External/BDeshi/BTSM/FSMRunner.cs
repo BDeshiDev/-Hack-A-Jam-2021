@@ -12,7 +12,7 @@ namespace BDeshi.BTSM
         public  void Initialize(StateMachine fsm, bool callEnter = true)
         {
             this.fsm = fsm;
-            fsm.enter();
+            fsm.enter(callEnter);
         }
 
         

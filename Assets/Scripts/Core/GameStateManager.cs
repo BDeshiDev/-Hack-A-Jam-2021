@@ -50,6 +50,7 @@ public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
     public static void setInitialState(State s)
     {
         initialState = s;
+        
         if(Instance.fsm.curState != null)
             return;
         

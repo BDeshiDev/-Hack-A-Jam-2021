@@ -35,7 +35,7 @@ namespace BDeshi.BTSM
 
         public void enter(bool callEnter = true)
         {
-            transitionTo(startingState);
+            transitionTo(startingState, callEnter);
         }
 
         public void Tick()
@@ -109,6 +109,11 @@ namespace BDeshi.BTSM
 #endif
                 if(callEnter)
                     recursiveTransitionToState(newState);
+                else
+                {
+                    curState = newState;
+                }
+
                 HandleTransitioned();
             }
         }
