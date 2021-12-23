@@ -8,13 +8,13 @@ namespace Core.Combat.Enemies
     {
         [SerializeField] float range = 4;
         public FiniteTimer timer = new FiniteTimer(2);
-        public bool wasInRangeLastFrame = false;
+        public bool WasInRangeLastFrame = false;
         [SerializeField] bool lookAtTarget = true;
 
         public override void EnterState()
         {
             timer.reset();
-            wasInRangeLastFrame = false;
+            WasInRangeLastFrame = false;
         }
 
         public override void Tick()
@@ -26,7 +26,12 @@ namespace Core.Combat.Enemies
             }
             else
             {
-                wasInRangeLastFrame = true;
+                WasInRangeLastFrame = true;
+            }
+
+            if (lookAtTarget)
+            { 
+                entity.lookAlong(vecToTarget);
             }
 
             timer.safeUpdateTimer(Time.deltaTime);
@@ -34,7 +39,7 @@ namespace Core.Combat.Enemies
 
         public override void ExitState()
         {
-            wasInRangeLastFrame = false;
+            WasInRangeLastFrame = false;
         }
     }
 }

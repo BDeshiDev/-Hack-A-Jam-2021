@@ -24,7 +24,7 @@ namespace Core.Combat
         }
 
 
-        protected override void stopAttack()
+        public override void stopAttack()
         {
             spriter.enabled = false;
             hitbox.stopDetection();

@@ -1,5 +1,6 @@
 ﻿using System;
 using BDeshi.BTSM;
+using BDeshi.Utility.Extensions;
 using Core.Physics;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace Core.Combat
         public FSMRunner fsmRunner;
         public abstract StateMachine createFSM();
         public Transform target;
+        public Transform aimer;
 
         /// <summary>
         /// Health and hypnosis are modified
@@ -38,6 +40,11 @@ namespace Core.Combat
             return ( 1 + damage.hypnoDamage * hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio))
                    * hypnoDamageHealthScalingFactor
                    - (isHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
+        }
+
+        public void lookAlong(Vector3 dir)
+        {
+            aimer.allignToDir(dir);
         }
 
         protected override void Awake()

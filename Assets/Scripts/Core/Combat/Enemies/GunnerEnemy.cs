@@ -10,18 +10,40 @@ namespace Core.Combat.Enemies
         [SerializeField] MaintainRangeState maintainRangeState;
         [SerializeField] PrepAttackState prepAttackState;
         public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
-        
+        public bool canRecoverCooldown = true;
         public override StateMachine createFSM()
         {
             EventDrivenStateMachine<String> fsm = new EventDrivenStateMachine<string>(maintainRangeState);
             
             fsm.addTransition(maintainRangeState, prepAttackState,
-                        () => prepAttackState.wasInRangeLastFrame || prepAttackState.timer.isComplete,
-                        () => attackCoolDown.reset());
+                                () => prepAttackState.WasInRangeLastFrame || prepAttackState.timer.isComplete,
+                                () => { 
+                                    attackCoolDown.reset();
+                                    canRecoverCooldown = false;
+                                });
             
             
             
             return fsm;
+        }
+    }
+
+    public class AttackState: EnemyStatebase
+    {
+        [SerializeField] private Attack attack;
+        public override void EnterState()
+        {
+            attack.startAttack();
+        }
+
+        public override void Tick()
+        {
+            
+        }
+
+        public override void ExitState()
+        {
+            attack.stopAttack();
         }
     }
 }

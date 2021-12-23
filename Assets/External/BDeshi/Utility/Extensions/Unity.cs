@@ -39,6 +39,11 @@ namespace BDeshi.Utility.Extensions
         {
             transform.rotation = Quaternion.AngleAxis(transform.rotation.eulerAngles.z + angleOffset, Vector3.forward);
         }
+        
+        public static float get2dAngle(this Vector3 dir)
+        {
+            return Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        }
 
         public static float get2dAngle(this Vector2 dir)
         {

@@ -6,6 +6,6 @@ namespace Core.Combat
     {
         public abstract bool IsAttackComplete { get; }
         public abstract void startAttack();
-        protected abstract void stopAttack();
+        public abstract void stopAttack();
     }
 }

@@ -28,7 +28,7 @@ namespace Core.Combat.Enemies
 
             if (lookAtTarget)
             {
-                //#todo  do something when we add eyes
+                entity.lookAlong(vecToTarget);
             }
         }
 

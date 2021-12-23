@@ -26,7 +26,7 @@ namespace Core.Player
             // shootIndicator.transform.localPosition = indicatorDistance * Vector3.up;
             // shootIndicator.transform.allignToDir(dir, indicatorAngleOffset);
             
-            meleeHitboxContainer.allignToDir(dir, rotationAngleOffset);
+            meleeHitboxContainer.allignToDir(dir);
             shootIndicator.position = aimPoint;
         }
 
