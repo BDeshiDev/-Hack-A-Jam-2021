@@ -478,6 +478,9 @@ MonoBehaviour:
   max: 40
   cur: 0
   hypnosisRecoveryRate: 1
+  normalHypnosisRecoveryRate: 1
+  hypnotizedStateHypoRecoveryRate: 3
+  isHypnotized: 0
 --- !u!114 &6374371920892130140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,3 +529,6 @@ MonoBehaviour:
   state: 0
   player: {fileID: 0}
   mostAggroedTarget: {fileID: 0}
+  randomDirTimer:
+    timer: 0
+    maxValue: 1.85
