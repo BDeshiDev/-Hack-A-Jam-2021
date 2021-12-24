@@ -1,12 +1,17 @@
 ﻿using System;
+using Core.Combat.Enemies;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
     public abstract class EnemyEntity: BlobEntity
     {
         [SerializeField] protected HypnoComponent hypnoComponent;
-        [SerializeField] protected bool isHypnotized = false;
+        public EnemyTargetResolver Targetter => targetter;
+        public bool IsHypnotized => hypnoComponent.IsHypnotized;
+
+        [SerializeField] protected EnemyTargetResolver targetter;
 
         /// <summary>
         /// at t = T% hypnodamage taken at T%/100 health and so on
@@ -15,7 +20,6 @@ namespace Core.Combat
         public float hypnoDamageHealthScalingFactor = 5;
         public float hypnoRecoveryPerHealthDamage = .5f;
 
-        public Transform target;
 
         /// <summary>
         /// Health and hypnosis are modified
@@ -25,14 +29,17 @@ namespace Core.Combat
         {
             base.takeDamage(damage);
             float hypnoDamage = calcHypnoDamage(damage);
+            Debug.Log(damage + "actual hypno->" + hypnoDamage
+                      + "factor " + healthComponent.Ratio + "  " + 
+                      hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio ));
             hypnoComponent.modifyAmount(hypnoDamage);
         }
 
         public float calcHypnoDamage(DamageInfo damage)
         {
-            return ( 1 + damage.hypnoDamage * hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio))
-                   * hypnoDamageHealthScalingFactor
-                   - (isHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
+            return ( 1 +  hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio) * hypnoDamageHealthScalingFactor)
+                   * damage.hypnoDamage
+                   - (hypnoComponent.IsHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
         }
         
         protected override void Awake()
@@ -40,9 +47,10 @@ namespace Core.Combat
             base.Awake();
             hypnoComponent = GetComponent<HypnoComponent>();
             spriter = GetComponent<SpriteRenderer>();
-
-            target = GameObject.FindWithTag("Player").transform;
+            targetter = GetComponent<EnemyTargetResolver>();
         }
+        
+        
 
 
 
@@ -50,37 +58,38 @@ namespace Core.Combat
         {
             if(hypnoComponent != null)
             {
-                hypnoComponent.Capped += OnHypnotized;
-                hypnoComponent.Emptied += HypnosisRecovered;
+                hypnoComponent.Hypnotized += OnHypnotized;
+                hypnoComponent.HypnosisRecovered += HypnosisRecovered;
             }
+            EnemyTracker.addNewActiveEnemy(this);
         }
         
         private void OnDisable()
         {
             if(hypnoComponent != null)
             {
-                hypnoComponent.Capped -= OnHypnotized;
-                hypnoComponent.Emptied -= HypnosisRecovered;
+                hypnoComponent.Hypnotized -= OnHypnotized;
+                hypnoComponent.HypnosisRecovered -= HypnosisRecovered;
             }
+            EnemyTracker.removeInactiveEnemy(this);
+
         }
 
-        protected void HypnosisRecovered(ResourceComponent obj)
+        protected void HypnosisRecovered()
         {
-            if (isHypnotized)
-            {
-                Debug.Log("revcover hypnotise " +gameObject , gameObject);
-            }
+            targetter.handleNormalState();
+            targetter.gameObject.layer = targetter.TargettingInfo.EnemyLayer.LayerIndex;
             spriter.color = Color.yellow;
-            isHypnotized = false;
         }
 
-        protected void OnHypnotized(ResourceComponent obj)
+        protected void OnHypnotized()
         {
-            isHypnotized = true;
             Debug.Log("hypnotised " +gameObject , gameObject);
+
+            targetter.handleHypnosis();
+            targetter.gameObject.layer = targetter.TargettingInfo.PlayerLayer.LayerIndex;
             
             spriter.color = Color.cyan;
-
         }
     }
     

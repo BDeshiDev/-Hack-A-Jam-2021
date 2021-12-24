@@ -25,7 +25,7 @@ namespace Core.Combat.Enemies
 
         public override void Tick()
         {
-            var vecToTarget = (entity.target.position - entity.transform.position);
+            var vecToTarget = (entity.Targetter.getTargetPos() - entity.transform.position);
             if (vecToTarget.exceedSqrDist(range))
             {
                 entity.MoveComponent.moveInputThisFrame = vecToTarget.normalized;

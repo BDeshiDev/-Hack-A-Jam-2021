@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMask:
     serializedVersion: 2
-    m_Bits: 139264
+    m_Bits: 147456
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 524288
+  PlayerLayer:
+    m_LayerIndex: 13
+  EnemyLayer:
+    m_LayerIndex: 14

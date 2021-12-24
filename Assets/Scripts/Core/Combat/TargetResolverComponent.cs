@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
     /// <summary>
+    /// Abstraction over targets
     /// Since enemies can get hypnotized and change sides on a whim
-    /// Need a single place to get all of them
-    /// And manage aggro.
+    /// Need a single place to get target
     /// </summary>
-    public class TargetResolverComponent: MonoBehaviour
+    public abstract class TargetResolverComponent: MonoBehaviour
     {
-        public TargettingInfo targettingInfo;
-        // public Vector3 targetPos;
+        public TargettingInfo TargettingInfo => targettingInfo;
+        [SerializeField] protected TargettingInfo targettingInfo;
+        
+        public abstract Vector3 getTargetPos();
+        
     }
 }

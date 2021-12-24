@@ -1,4 +1,5 @@
 ﻿using bdeshi.levelloading;
+using Core.Combat.Enemies;
 using Core.Input;
 using UnityEditor;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace Core.Misc
             else if (playModeState == PlayModeStateChange.ExitingEditMode)
             {
                 GameStateManager.PlayModeEnterCleanup();
+                EnemyTracker.PlayModeEnterCleanup();
             }
         }
     }

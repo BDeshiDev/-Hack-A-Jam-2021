@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6324937025fb4208822d864f6e680455, type: 3}
-  m_Name: EnemyTargettingInfo
+  m_Name: BerserkTargettingInfo
   m_EditorClassIdentifier: 
   damageMask:
     serializedVersion: 2
-    m_Bits: 139264
+    m_Bits: 155648
   obstacleMask:
     serializedVersion: 2
     m_Bits: 524288

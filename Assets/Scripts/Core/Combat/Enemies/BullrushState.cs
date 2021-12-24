@@ -8,16 +8,18 @@ namespace Core.Combat.Enemies
     public class BullrushState: AttackState
     {
         public Vector2 bullrushDir;
-        public FiniteTimer timer = new FiniteTimer(.3f);
+        [FormerlySerializedAs("timer")] public FiniteTimer bullrushTimer = new FiniteTimer(.3f);
+        [FormerlySerializedAs("timer")] public FiniteTimer postBullrushTimer = new FiniteTimer(1.87f);
 
-        public override bool IsComplete => timer.isComplete;
+        public override bool IsComplete => bullrushTimer.isComplete && postBullrushTimer.isComplete;
         public float bullrushSpeedMultiplier = 2;
         public AnimationCurve bullrushSpeedCurve;
         public HitBox bullrushHitBox;
 
         public override void EnterState()
         {
-            timer.reset();
+            bullrushTimer.reset();
+            postBullrushTimer.reset();
             //could be used as  general dashs state if input and player refs are moved.
             //Not necessary at the moment
             bullrushDir = blobEntity.LastLookDir;
@@ -26,13 +28,17 @@ namespace Core.Combat.Enemies
 
         public override void Tick()
         {
-            if(!timer.isComplete)
+            if(!bullrushTimer.isComplete)
             {
-                timer.updateTimer(Time.deltaTime);
+                bullrushTimer.updateTimer(Time.deltaTime);
 
                 blobEntity.MoveComponent.moveInputThisFrame = bullrushDir 
-                                                              * bullrushSpeedCurve.Evaluate(timer.Ratio) 
+                                                              * bullrushSpeedCurve.Evaluate(bullrushTimer.Ratio) 
                                                               * bullrushSpeedMultiplier;
+            }
+            else
+            {
+                postBullrushTimer.safeUpdateTimer(Time.deltaTime);
             }
 
         }

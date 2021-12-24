@@ -7,10 +7,10 @@ namespace Core.Combat
         public Transform shotPoint;
         //#TODO pools
         public Projectile prefab;
-        public TargetResolverComponent targetter;
+        public EnemyTargetResolver targetter;
         public void shoot()
         {
-            Instantiate(prefab).initialize(shotPoint.position,shotPoint.right,targetter.targettingInfo);
+            Instantiate(prefab).initialize(shotPoint.position,shotPoint.right,targetter.TargettingInfo);
         }
     }
 }

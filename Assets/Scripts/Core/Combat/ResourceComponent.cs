@@ -51,7 +51,7 @@ namespace Core.Combat
                     if(cur > 0)
                     {
                         cur = 0;
-                        Emptied?.Invoke(this);
+                        handleEmptied();
                     }
                 }
                 else
@@ -67,12 +67,21 @@ namespace Core.Combat
                     if (cur > max)
                     {
                         cur = max;
-                        Capped?.Invoke(this);
+                        handleCapped();
                     }
                 }
             }
 
             RatioChanged?.Invoke(this);
         }
+        public virtual void handleEmptied(){
+            Emptied?.Invoke(this);
+        }
+        
+        public virtual void handleCapped(){
+            Capped?.Invoke(this);
+        }
     }
+    
+
 }

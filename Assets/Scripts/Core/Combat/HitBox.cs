@@ -31,7 +31,7 @@ namespace Core.Combat
                 var results = Physics2D.OverlapBoxAll(transform.position,
                     transform.lossyScale,
                     transform.get2dAngle(),
-                    targetter.targettingInfo.DamageMask);
+                    targetter.TargettingInfo.DamageMask);
                 foreach (var result in results)
                 {
                     var d = result.GetComponent<IDamagable>();

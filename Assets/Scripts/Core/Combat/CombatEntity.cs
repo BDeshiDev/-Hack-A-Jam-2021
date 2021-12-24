@@ -8,6 +8,7 @@ namespace Core.Combat
     /// </summary>
     public class CombatEntity: MonoBehaviour, IDamagable
     {
+        public HealthComponent HealthComponent=> healthComponent;
         [SerializeField]protected HealthComponent healthComponent;
         public bool isInvulnerable;
         protected virtual void Awake()
@@ -33,7 +34,7 @@ namespace Core.Combat
                 return;
             
             processDamage(ref damage);
-            healthComponent.modifyAmount(damage.healthDamage);
+            healthComponent.reduceAmount(damage.healthDamage);
         }
     }
 }
