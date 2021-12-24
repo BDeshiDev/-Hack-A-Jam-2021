@@ -38,9 +38,8 @@ namespace Core.Combat.Enemies
             return fsm;
         }
 
-        protected override  void Update()
+        protected void Update()
         {
-            base.Update();
             if (canRecoverCooldown)
             {
                 attackCoolDown.safeUpdateTimer(Time.deltaTime);

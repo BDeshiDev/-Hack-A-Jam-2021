@@ -34,10 +34,6 @@ public class HealthGaugeView : MonoBehaviour
         updateHealthGaugeFill(healthComponent);
     }
     
-    private void Update()
-    {
-        updateHealthGaugeFill(healthComponent);
-    }
 
 
     private void OnEnable()

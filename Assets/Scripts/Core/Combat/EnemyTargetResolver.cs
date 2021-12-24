@@ -14,10 +14,9 @@ namespace Core.Combat
         [SerializeField] private TargettingInfo normalTargettingInfo;
         [SerializeField] private TargettingInfo hypnotizedTargettingInfo;
         [SerializeField] private TargettingInfo berserkTargettingInfo;
-        
-        public TargettingState state;
-        public Transform player;
 
+
+        public Transform player;
 
         public EnemyEntity mostAggroedTarget = null;
         public Dictionary<EnemyEntity, float> aggroTracker = new Dictionary<EnemyEntity, float>();
@@ -25,25 +24,22 @@ namespace Core.Combat
 
         [SerializeField]FiniteTimer randomDirTimer = new FiniteTimer(1.85f);
         Vector3 lastRandomDir = Vector3.zero;
-        
-        
+        private HypnoComponent hypnoComponent;
+
+
         //not worth a fsm
         public void handleHypnosis()
         {
-            state = TargettingState.Hypnotized;
             targettingInfo = hypnotizedTargettingInfo;
         }
 
         public void handleBerserk()
         {
-            state = TargettingState.Berserk;
             targettingInfo = berserkTargettingInfo;
         }
 
         public void handleNormalState()
         {
-            state = TargettingState.Normal;
-            mostAggroedTarget = null;
             targettingInfo = normalTargettingInfo;
         }
 
@@ -69,7 +65,7 @@ namespace Core.Combat
         private void Awake()
         {
             player = GameObject.FindWithTag("Player").transform;
-            
+            hypnoComponent = GetComponent<HypnoComponent>();
             
             randomDirTimer.complete();
             handleNormalState();
@@ -82,11 +78,11 @@ namespace Core.Combat
         /// <returns>value can be random</returns>
         public override Vector3 getTargetPos()
         {
-            switch (state)
+            switch (hypnoComponent.CurState)
             {
-                case TargettingState.Normal:
+                case HypnosisState.Normal:
                     return player.transform.position;
-                case TargettingState.Hypnotized:
+                case HypnosisState.Hypnotized:
                 {
                     var e = EnemyTracker.getLowesHpNormalEnemy();
                     if (e != null)
@@ -96,7 +92,7 @@ namespace Core.Combat
 
                     return getRandomDir();
                 }
-                case TargettingState.Berserk:
+                case HypnosisState.Berserk:
                 {
                     return getRandomDir();
                 }
@@ -120,7 +116,7 @@ namespace Core.Combat
 
         //     private void OnTriggerEnter(Collider other)
         //     {
-        //         if (state == TargettingState.Hypnotized)
+        //         if (state == HypnosisState.Hypnotized)
         //         {
         //             var e = other.GetComponent<EnemyEntity>();
         //             if (e != null && !e.IsHypnotized)
@@ -132,7 +128,7 @@ namespace Core.Combat
         //
         //     private void OnTriggerExit(Collider other)
         //     {
-        //         if (state == TargettingState.Hypnotized)
+        //         if (state == HypnosisState.Hypnotized)
         //         {
         //             var e = other.GetComponent<EnemyEntity>();
         //             if (e != null )
@@ -142,12 +138,5 @@ namespace Core.Combat
         //         }
         //     }
         // }
-
-        public enum TargettingState
-        {
-            Normal,
-            Hypnotized,
-            Berserk,
-        }
     }
 }

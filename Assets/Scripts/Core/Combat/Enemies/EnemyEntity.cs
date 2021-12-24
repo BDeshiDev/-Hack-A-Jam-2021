@@ -14,19 +14,6 @@ namespace Core.Combat
         public bool IsHypnotized => hypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
-        public float hypnoDOTstartRate = .25f;
-        public float hypnoDOTMaxRate = 2f;
-        public FiniteTimer hypnoDOTIncreaseTimer = new FiniteTimer(0,9f);
-        public bool hypnoDOTActive = false;
-        
-        
-        /// <summary>
-        /// at t = T% hypnodamage taken at T%/100 health and so on
-        /// </summary>
-        public AnimationCurve hypnoDamageVsHealthCurve = AnimationCurve.EaseInOut(0,1,1,0);
-        public float hypnoDamageHealthScalingFactor = 5;
-        public float hypnoRecoveryPerHealthDamage = .5f;
-        
 
         /// <summary>
         /// Health and hypnosis are modified
@@ -35,17 +22,12 @@ namespace Core.Combat
         public override void takeDamage(DamageInfo damage)
         {
             base.takeDamage(damage);
-            float hypnoDamage = calcHypnoDamage(damage);
+            float hypnoDamage = hypnoComponent.calcHypnoDamage(damage);
 
             hypnoComponent.modifyAmount(hypnoDamage);
         }
 
-        public float calcHypnoDamage(DamageInfo damage)
-        {
-            return ( 1 +  hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio) * hypnoDamageHealthScalingFactor)
-                   * damage.hypnoDamage
-                   - (hypnoComponent.IsHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
-        }
+
         
         protected override void Awake()
         {
@@ -55,46 +37,55 @@ namespace Core.Combat
             targetter = GetComponent<EnemyTargetResolver>();
         }
 
-        protected virtual void Update()
-        {
-            if (hypnoComponent.IsHypnotized)
-            {
-                hypnoDOTIncreaseTimer.updateTimer(Time.deltaTime);
-            }
-
-            if (hypnoDOTActive)
-            {
-                var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
-                healthComponent.reduceAmount(dotDamage);
-            }
-        }
-
-
-
         private void OnEnable()
         {
             if(hypnoComponent != null)
             {
                 hypnoComponent.Hypnotized += OnHypnotized;
                 hypnoComponent.HypnosisRecovered += HypnosisRecovered;
+                hypnoComponent.Berserked += HandleBerserked;
+
             }
+
+            if (healthComponent != null)
+            {
+                healthComponent.Emptied += handleDeath;
+            }
+
             EnemyTracker.addNewActiveEnemy(this);
         }
-        
+
+
+
         private void OnDisable()
         {
             if(hypnoComponent != null)
             {
                 hypnoComponent.Hypnotized -= OnHypnotized;
                 hypnoComponent.HypnosisRecovered -= HypnosisRecovered;
+                hypnoComponent.Berserked -= HandleBerserked;
             }
             EnemyTracker.removeInactiveEnemy(this);
-
+        }
+        
+        private void handleDeath(ResourceComponent obj)
+        {
+            Debug.Log(gameObject + " has died " + gameObject);
+            Destroy(gameObject);
         }
 
         protected void HypnosisRecovered()
         {
             targetter.handleNormalState();
+
+            targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
+        }
+
+
+        protected void HandleBerserked()
+        {
+            targetter.handleBerserk();
+
             targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
         }
 
@@ -102,7 +93,6 @@ namespace Core.Combat
         {
             Debug.Log("hypnotised " +gameObject , gameObject);
 
-            hypnoDOTActive = true;
 
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;

@@ -17,8 +17,6 @@ public class HypnoGaugeView : MonoBehaviour
     public void updateHypnoGaugeFill(ResourceComponent resourceComponent)
     {
         hypnoGaugeFillSpriter.GetPropertyBlock(hypnGaugeFillPropertyBlock);
-        // Debug.Log("fill hips " + resourceComponent.Ratio);
-        // hypnGaugeFillPropertyBlock.SetColor("SOMECOLOR", );
         hypnGaugeFillPropertyBlock.SetFloat("FillHeight",resourceComponent.Ratio );
 
         
@@ -39,12 +37,6 @@ public class HypnoGaugeView : MonoBehaviour
     {
         updateHypnoGaugeFill(hypnoComponent);
     }
-
-    private void Update()
-    {
-        updateHypnoGaugeFill(hypnoComponent);
-    }
-
 
     private void OnEnable()
     {
