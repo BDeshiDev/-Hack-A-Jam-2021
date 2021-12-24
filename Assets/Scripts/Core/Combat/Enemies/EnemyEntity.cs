@@ -1,6 +1,8 @@
 ﻿using System;
+using BDeshi.Utility;
 using Core.Combat.Enemies;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.Serialization;
 
 namespace Core.Combat
@@ -12,7 +14,12 @@ namespace Core.Combat
         public bool IsHypnotized => hypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
-
+        public float hypnoDOTstartRate = .25f;
+        public float hypnoDOTMaxRate = 2f;
+        public FiniteTimer hypnoDOTIncreaseTimer = new FiniteTimer(0,9f);
+        public bool hypnoDOTActive = false;
+        
+        
         /// <summary>
         /// at t = T% hypnodamage taken at T%/100 health and so on
         /// </summary>
@@ -47,8 +54,20 @@ namespace Core.Combat
             spriter = GetComponent<SpriteRenderer>();
             targetter = GetComponent<EnemyTargetResolver>();
         }
-        
-        
+
+        protected virtual void Update()
+        {
+            if (hypnoComponent.IsHypnotized)
+            {
+                hypnoDOTIncreaseTimer.updateTimer(Time.deltaTime);
+            }
+
+            if (hypnoDOTActive)
+            {
+                var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
+                healthComponent.reduceAmount(dotDamage);
+            }
+        }
 
 
 
@@ -82,6 +101,8 @@ namespace Core.Combat
         protected void OnHypnotized()
         {
             Debug.Log("hypnotised " +gameObject , gameObject);
+
+            hypnoDOTActive = true;
 
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;

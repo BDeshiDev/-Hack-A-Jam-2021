@@ -3128,26 +3128,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6374371920892130086, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.8584906
-      objectReference: {fileID: 0}
-    - target: {fileID: 6374371920892130086, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.8434602
-      objectReference: {fileID: 0}
-    - target: {fileID: 6374371920892130086, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.64386797
-      objectReference: {fileID: 0}
-    - target: {fileID: 6374371920892130086, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6374371920892130087, guid: ba4f1866855436f4197668f8f8430cd9,
         type: 3}
       propertyPath: m_RootOrder
@@ -3208,16 +3188,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rusher
       objectReference: {fileID: 0}
-    - target: {fileID: 6374371920892130141, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: normalHypnosisRecoveryRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6374371920892130141, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: hypnotizedStateHypoRecoveryRate
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba4f1866855436f4197668f8f8430cd9, type: 3}
 --- !u!1001 &6415456996566399828
@@ -3227,60 +3197,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6415456995961926888, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456995961926888, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456995961926890, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711875, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711875, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.8584906
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711875, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.8434602
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711875, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.64386797
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711875, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711877, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: m_Name
       value: Gunner
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711878, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: normalHypnosisRecoveryRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415456996822711878, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: hypnotizedStateHypoRecoveryRate
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711884, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
@@ -3336,11 +3256,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873212399435638228, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba839b5d6927fc489fec36c5ea4dc20, type: 3}

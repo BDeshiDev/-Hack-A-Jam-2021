@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMask:
     serializedVersion: 2
-    m_Bits: 1196032
+    m_Bits: 147456
   obstacleMask:
     serializedVersion: 2
     m_Bits: 524288

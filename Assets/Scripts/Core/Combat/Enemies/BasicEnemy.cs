@@ -14,6 +14,8 @@ namespace Core.Combat.Enemies
         [SerializeField] AttackState attackState;
         public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
         public bool canRecoverCooldown = true;
+
+
         public override EventDrivenStateMachine<Events> createFSM()
         {
             EventDrivenStateMachine<Events> fsm = new EventDrivenStateMachine<Events>(maintainRangeState);
@@ -36,8 +38,9 @@ namespace Core.Combat.Enemies
             return fsm;
         }
 
-        void Update()
+        protected override  void Update()
         {
+            base.Update();
             if (canRecoverCooldown)
             {
                 attackCoolDown.safeUpdateTimer(Time.deltaTime);
