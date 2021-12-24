@@ -29,9 +29,7 @@ namespace Core.Combat
         {
             base.takeDamage(damage);
             float hypnoDamage = calcHypnoDamage(damage);
-            Debug.Log(damage + "actual hypno->" + hypnoDamage
-                      + "factor " + healthComponent.Ratio + "  " + 
-                      hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio ));
+
             hypnoComponent.modifyAmount(hypnoDamage);
         }
 
@@ -78,8 +76,7 @@ namespace Core.Combat
         protected void HypnosisRecovered()
         {
             targetter.handleNormalState();
-            targetter.gameObject.layer = targetter.TargettingInfo.EnemyLayer.LayerIndex;
-            spriter.color = Color.yellow;
+            targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
         }
 
         protected void OnHypnotized()
@@ -87,9 +84,7 @@ namespace Core.Combat
             Debug.Log("hypnotised " +gameObject , gameObject);
 
             targetter.handleHypnosis();
-            targetter.gameObject.layer = targetter.TargettingInfo.PlayerLayer.LayerIndex;
-            
-            spriter.color = Color.cyan;
+            targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
         }
     }
     

@@ -14,11 +14,11 @@ namespace Core.Combat
         /// <summary>
         /// Assume that this will be single layer and we can assign to go.layer directly
         /// </summary>
-        public SingleUnityLayer PlayerLayer;
+        [FormerlySerializedAs("PlayerLayer")] public SingleUnityLayer HypnotizedLayer;
         /// <summary>
         /// Assume that this will be single layer and we can assign to go.layer directly
         /// </summary>
-        public SingleUnityLayer EnemyLayer;
+        [FormerlySerializedAs("EnemyLayer")] public SingleUnityLayer NormalLayer;
         public LayerMask getCombinedLayerMask()
         {
             return damageMask | obstacleMask;

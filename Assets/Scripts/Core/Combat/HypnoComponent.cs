@@ -15,6 +15,12 @@ namespace Core.Combat
         
         public event Action HypnosisRecovered;
         public event Action Hypnotized;
+
+        private void Awake()
+        {
+            hypnosisRecoveryRate = normalHypnosisRecoveryRate;
+        }
+
         private void Update()
         {
             reduceAmount(Time.deltaTime * hypnosisRecoveryRate);
