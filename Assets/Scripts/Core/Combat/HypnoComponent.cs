@@ -9,7 +9,13 @@ namespace Core.Combat
 {
     public class HypnoComponent: ResourceComponent
     {
-        public float hypnosisRecoveryRate = 1;
+        [FormerlySerializedAs("hypnosisRecoveryRate")] 
+        public float startingHypnosisRecoveryRate = 1;
+        public float finalHypnosisRecoveryRate = 10;
+        public AnimationCurve hypnoRecoverySpeedCurve = AnimationCurve.EaseInOut(0,0,1,1);
+        public FiniteTimer hypnoRecoverySpeedChangeTimer = new FiniteTimer(0, 15f);
+        [SerializeField] float curHypnosisRecoveryRate = 1;
+        
         public float normalHypnosisRecoveryRate = 1;
         public float hypnotizedStateHypoRecoveryRate = 3;
         public bool IsHypnotized => curState == HypnosisState.Hypnotized;
@@ -27,9 +33,14 @@ namespace Core.Combat
         /// at t = T% hypnodamage taken at T%/100 health and so on
         /// </summary>
         public AnimationCurve hypnoDamageVsHealthCurve = AnimationCurve.EaseInOut(0,1,1,0);
-        public float hypnoDamageHealthScalingFactor = 5;
+        public float hypnoDamageHealthScalingFactor = 1;
         public float hypnoRecoveryPerHealthDamage = .5f;
-        
+        /// <summary>
+        /// gradually lose maxHypno according to this.
+        /// </summary>
+        public float maxHypnoLossRate;
+
+        public float actualMaxHypno;
         public event Action HypnosisRecovered;
         public event Action Hypnotized;
         public event Action Berserked;
@@ -46,7 +57,7 @@ namespace Core.Combat
         {
             if (!IsBerserked && !IsHypnotized)
             {
-                hypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate;
+                curHypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate;
                 curState = HypnosisState.Hypnotized;
                 hypnoDOTActive = true;
                 Hypnotized?.Invoke();
@@ -71,7 +82,7 @@ namespace Core.Combat
                 Berserked?.Invoke();
             }else if (IsHypnotized)
             {
-                hypnosisRecoveryRate = normalHypnosisRecoveryRate;
+                curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
                 curState = HypnosisState.Normal;
 
                 HypnosisRecovered?.Invoke();
@@ -89,7 +100,7 @@ namespace Core.Combat
         
         private void Awake()
         {
-            hypnosisRecoveryRate = normalHypnosisRecoveryRate;
+            curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
             healthComponent = GetComponent<HealthComponent>();
         }
         protected virtual void Update()
@@ -100,9 +111,16 @@ namespace Core.Combat
                 
                 var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
                 healthComponent.reduceAmount(dotDamage);
+                
+                hypnoRecoverySpeedChangeTimer.safeUpdateTimer(Time.deltaTime);
+                curHypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate = Mathf.Lerp(
+                    startingHypnosisRecoveryRate,
+                    finalHypnosisRecoveryRate,
+                    hypnoRecoverySpeedCurve.Evaluate(hypnoRecoverySpeedChangeTimer.Ratio)
+                );
             }
             
-            reduceAmount(Time.deltaTime * hypnosisRecoveryRate);
+            reduceAmount(Time.deltaTime * curHypnosisRecoveryRate);
 
             
             //might be too op 

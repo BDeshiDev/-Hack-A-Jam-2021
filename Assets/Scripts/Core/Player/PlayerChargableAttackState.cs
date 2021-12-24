@@ -45,7 +45,6 @@ namespace Core.Player
 
         public override void ExitState()
         {
-            Debug.Log("Exit charge " + pickedAttack);
             if(pickedAttack!= null)
                 pickedAttack.ExitState();
             pickedAttack = null;

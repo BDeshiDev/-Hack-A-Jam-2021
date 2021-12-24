@@ -1,5 +1,106 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1767842370366126216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4462911073337145116}
+  - component: {fileID: 1992277780999593746}
+  - component: {fileID: 5783893638828739485}
+  - component: {fileID: 8495557897369424772}
+  m_Layer: 14
+  m_Name: BerserkStates
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4462911073337145116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767842370366126216}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6415456996607402368}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1992277780999593746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767842370366126216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a553e62e2e87494a8c44b6a98be3e9ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 6415456996822711879}
+  minRange: 0.5
+  maxrange: 8
+  backOffSpeedMultiplier: 0.3
+  forwardSpeedMultiplier: 1.2
+  lookAtTarget: 1
+  distChangeTimer:
+    timer: 0
+    maxValue: 0.5
+  curDir: {x: 0, y: 0, z: 0}
+--- !u!114 &5783893638828739485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767842370366126216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b31148583a46ba98ccb17989ab68f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 6415456996822711879}
+  range: 6
+  maxTimer:
+    timer: 0
+    maxValue: 1
+  minTimer:
+    timer: 0
+    maxValue: 0.33
+  WasInRangeLastFrame: 0
+  lookAtTarget: 1
+  OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeedModifier: 2
+--- !u!114 &8495557897369424772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767842370366126216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d810cfe878340d5af7b10f6e1001e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blobEntity: {fileID: 6415456996822711879}
+  gun: {fileID: 6415456997197623925}
+  postShotWaitTimer:
+    timer: 0
+    maxValue: 0
 --- !u!1 &6415456996607402374
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,7 +129,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 9186037728025321791}
+  - {fileID: 4462911073337145116}
   m_Father: {fileID: 6415456996822711884}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,10 +151,12 @@ MonoBehaviour:
   minRange: 2
   maxrange: 8
   backOffSpeedMultiplier: 0.3
+  forwardSpeedMultiplier: 1
   lookAtTarget: 1
   distChangeTimer:
     timer: 0
     maxValue: 0.5
+  curDir: {x: 0, y: 0, z: 0}
 --- !u!114 &6415456996607402375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +185,7 @@ MonoBehaviour:
   OnPrepFinish:
     m_PersistentCalls:
       m_Calls: []
+  moveSpeedModifier: 1.67
 --- !u!1 &6415456996822711877
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,19 +361,23 @@ MonoBehaviour:
   spriter: {fileID: 0}
   fsmRunner: {fileID: 0}
   aimer: {fileID: 6415456996845152558}
-  hypnoComponent: {fileID: 0}
   targetter: {fileID: 0}
   berserkTimer:
     timer: 0
+    maxValue: 8
+  berserkTransitionTimer:
+    timer: 0
     maxValue: 6
-  maintainRangeState: {fileID: 6415456996607402369}
-  prepAttackState: {fileID: 6415456996607402375}
-  attackState: {fileID: 6415456997197623927}
+  normalMaintainRangeState: {fileID: 6415456996607402369}
+  normalPrepAttackState: {fileID: 6415456996607402375}
+  normalAttackState: {fileID: 7112558282308568999}
+  berserkMaintainRangeState: {fileID: 1992277780999593746}
+  berserkPrepAttackState: {fileID: 5783893638828739485}
+  berserkAttackState: {fileID: 8495557897369424772}
   attackCoolDown:
     timer: 0
     maxValue: 2
   berserkCoolDownMultiplier: 0.25
-  canRecoverCooldown: 1
 --- !u!114 &6415456996822711878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,11 +392,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max: 40
   cur: 0
-  hypnosisRecoveryRate: 1
+  startingHypnosisRecoveryRate: 3
+  finalHypnosisRecoveryRate: 6
+  hypnoRecoverySpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.13816828
+      outSlope: 0.13816828
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.14152439
+    - serializedVersion: 3
+      time: 0.96490514
+      value: 0.34633958
+      inSlope: 0.859247
+      outSlope: 0.859247
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13611154
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hypnoRecoverySpeedChangeTimer:
+    timer: 0
+    maxValue: 15
+  curHypnosisRecoveryRate: 1
   normalHypnosisRecoveryRate: 2
   hypnotizedStateHypoRecoveryRate: 5
   hypnoDOTstartRate: 0.25
-  hypnoDOTMaxRate: 2
+  hypnoDOTMaxRate: 4
   hypnoDOTIncreaseTimer:
     timer: 0
     maxValue: 9
@@ -315,8 +463,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  hypnoDamageHealthScalingFactor: 5
+  hypnoDamageHealthScalingFactor: 1.5
   hypnoRecoveryPerHealthDamage: 0.5
+  maxHypnoLossRate: 0
+  actualMaxHypno: 0
   curState: 0
 --- !u!114 &6415456996822711885
 MonoBehaviour:
@@ -411,7 +561,6 @@ GameObject:
   - component: {fileID: 6415456997197623924}
   - component: {fileID: 6415456997197623926}
   - component: {fileID: 6415456997197623925}
-  - component: {fileID: 6415456997197623927}
   m_Layer: 14
   m_Name: Gun
   m_TagString: Untagged
@@ -502,13 +651,97 @@ MonoBehaviour:
   shotPoint: {fileID: 6415456995557536398}
   prefab: {fileID: 7937409385446727007, guid: b875bd687cd77b945974b0f015d6bb44, type: 3}
   targetter: {fileID: 1061881115}
---- !u!114 &6415456997197623927
+--- !u!1 &8692291967010758842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9186037728025321791}
+  - component: {fileID: 2977584803869460922}
+  - component: {fileID: 5622293358087497251}
+  - component: {fileID: 7112558282308568999}
+  m_Layer: 14
+  m_Name: NormalStates
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9186037728025321791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692291967010758842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6415456996607402368}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2977584803869460922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6415456997197623883}
+  m_GameObject: {fileID: 8692291967010758842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a553e62e2e87494a8c44b6a98be3e9ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 6415456996822711879}
+  minRange: 2
+  maxrange: 8
+  backOffSpeedMultiplier: 0.3
+  forwardSpeedMultiplier: 1
+  lookAtTarget: 1
+  distChangeTimer:
+    timer: 0
+    maxValue: 0.5
+  curDir: {x: 0, y: 0, z: 0}
+--- !u!114 &5622293358087497251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692291967010758842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b31148583a46ba98ccb17989ab68f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 6415456996822711879}
+  range: 8
+  maxTimer:
+    timer: 0
+    maxValue: 2
+  minTimer:
+    timer: 0
+    maxValue: 0.33
+  WasInRangeLastFrame: 0
+  lookAtTarget: 1
+  OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeedModifier: 1.25
+--- !u!114 &7112558282308568999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692291967010758842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d810cfe878340d5af7b10f6e1001e42, type: 3}

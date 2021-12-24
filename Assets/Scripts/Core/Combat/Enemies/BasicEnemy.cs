@@ -9,43 +9,51 @@ namespace Core.Combat.Enemies
 {
     public class BasicEnemy : EnemyEntity
     {
-        [SerializeField] MaintainRangeState maintainRangeState;
-        [SerializeField] PrepAttackState prepAttackState;
-        [SerializeField] AttackState attackState;
+        [SerializeField] MaintainRangeState normalMaintainRangeState;
+        [SerializeField] PrepAttackState normalPrepAttackState;
+        [SerializeField] AttackState normalAttackState;
+        
+        [SerializeField] MaintainRangeState berserkMaintainRangeState;
+        [SerializeField] PrepAttackState berserkPrepAttackState;
+        [SerializeField] AttackState berserkAttackState;
         public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
         public float berserkCoolDownMultiplier = .25f;
-        public bool canRecoverCooldown = true;
 
 
         public override EventDrivenStateMachine<Events> createFSM()
         {
-            EventDrivenStateMachine<Events> fsm = new EventDrivenStateMachine<Events>(maintainRangeState);
+            fsm = new EventDrivenStateMachine<Events>(normalMaintainRangeState);
             
+            setBasicUpStates(normalMaintainRangeState, normalPrepAttackState, normalAttackState);
+            setBasicUpStates(berserkMaintainRangeState, berserkPrepAttackState, berserkAttackState);
+            
+            
+            fsm.addGlobalEventTransition(Events.Berserk, berserkMaintainRangeState);
+            return fsm;
+        }
+        //flow of fsm is same for berserk and nonberserk states
+        //only diff is the values
+        //which is tied to different state instances
+        void setBasicUpStates(MaintainRangeState maintainRangeState,PrepAttackState prepAttackState, AttackState attackState)
+        {
             fsm.addTransition(maintainRangeState, prepAttackState,
-                                () =>  attackCoolDown.isComplete,
-                                () => { 
-                                    attackCoolDown.reset();
-                                    canRecoverCooldown = false;
-                                });
+                () =>  attackCoolDown.isComplete);
             
             fsm.addTransition(prepAttackState, attackState,()=> prepAttackState.IsComplete);
             fsm.addTransition(attackState, maintainRangeState,
                 ()=> attackState.IsComplete,
                 () =>
                 {
-                    canRecoverCooldown = true;
+                    attackCoolDown.reset();
                 });
-            
-            return fsm;
         }
 
         protected override  void Update()
         {
             base.Update();
-            if (canRecoverCooldown)
-            {
-                attackCoolDown.safeUpdateTimer(Time.deltaTime);
-            }
+
+            attackCoolDown.safeUpdateTimer(Time.deltaTime);
+            
         }
 
         protected override void HandleBerserked()
@@ -53,6 +61,7 @@ namespace Core.Combat.Enemies
             base.HandleBerserked();
             
             attackCoolDown.reset( attackCoolDown.maxValue * berserkCoolDownMultiplier);
+            fsm.handleEvent(Events.Berserk);
         }
     }
 }

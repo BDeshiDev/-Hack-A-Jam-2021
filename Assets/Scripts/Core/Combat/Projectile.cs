@@ -73,7 +73,7 @@ namespace Core.Combat
                     var d = hit.collider.GetComponent<IDamagable>();
                     d.takeDamage(damage);
                 }
-
+                // Debug.Log(gameObject + " hit " +hit.collider ,  hit.collider);
                 handleHit();
                 transform.position += ShotDir * hit.distance;
             }

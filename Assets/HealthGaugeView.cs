@@ -59,6 +59,14 @@ public class HealthGaugeView : MonoBehaviour
     private void handleBerserked()
     {
         Fillspriter.color = berserkColor;
+        
+        Fillspriter.GetPropertyBlock(propBlock);
+        
+        // propBlock.SetColor("SOMECOLOR", );
+        propBlock.SetFloat("FillHeight",1  );
+
+        
+        Fillspriter.SetPropertyBlock(propBlock);
     }
 
     private void OnDisable()

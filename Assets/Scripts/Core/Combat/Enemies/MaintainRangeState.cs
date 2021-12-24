@@ -11,9 +11,10 @@ namespace Core.Combat.Enemies
         [FormerlySerializedAs("range")] [SerializeField] float minRange = 8;
         [FormerlySerializedAs("range")] [SerializeField] float maxrange = 8;
         [SerializeField] private float backOffSpeedMultiplier = .7f;
+        [SerializeField] private float forwardSpeedMultiplier = 1f;
         [SerializeField] bool lookAtTarget = true;
         public FiniteTimer distChangeTimer = new FiniteTimer(.5f);
-        private Vector3 curDir;
+        [SerializeField]private Vector3 curDir;
         public override void EnterState()
         {
             distChangeTimer.reset();
@@ -27,7 +28,7 @@ namespace Core.Combat.Enemies
                 distChangeTimer.reset();
                 if (!vecToTarget.exceedSqrDist(minRange))
                 {
-                    curDir = vecToTarget.normalized;
+                    curDir = vecToTarget.normalized * forwardSpeedMultiplier;
                 }
                 else if(vecToTarget.exceedSqrDist(maxrange))
                 {

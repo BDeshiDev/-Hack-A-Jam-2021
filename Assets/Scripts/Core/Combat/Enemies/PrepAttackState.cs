@@ -14,6 +14,7 @@ namespace Core.Combat.Enemies
         [SerializeField] bool lookAtTarget = true;
         [SerializeField] UnityEvent OnPrepStart;
         [SerializeField] UnityEvent OnPrepFinish;
+        public float moveSpeedModifier = 1.67f;
         public bool IsComplete => maxTimer.isComplete || (WasInRangeLastFrame && minTimer.isComplete);
         public override void EnterState()
         {
@@ -28,7 +29,7 @@ namespace Core.Combat.Enemies
             var vecToTarget = (entity.Targetter.getTargetPos() - entity.transform.position);
             if (vecToTarget.exceedSqrDist(range))
             {
-                entity.MoveComponent.moveInputThisFrame = vecToTarget.normalized;
+                entity.MoveComponent.moveInputThisFrame = vecToTarget.normalized * moveSpeedModifier;
                 WasInRangeLastFrame = false;
                 minTimer.reset();
             }

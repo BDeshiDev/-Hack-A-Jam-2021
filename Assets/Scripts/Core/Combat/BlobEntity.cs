@@ -53,9 +53,10 @@ namespace Core.Combat
             
             
             //global
-            Hurt,
-            Death,
+            // Hurt,
+            // Death,
             Dash,
+            Berserk
         }
     }
 }
