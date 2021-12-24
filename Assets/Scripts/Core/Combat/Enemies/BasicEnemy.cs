@@ -13,6 +13,7 @@ namespace Core.Combat.Enemies
         [SerializeField] PrepAttackState prepAttackState;
         [SerializeField] AttackState attackState;
         public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
+        public float berserkCoolDownMultiplier = .25f;
         public bool canRecoverCooldown = true;
 
 
@@ -38,14 +39,20 @@ namespace Core.Combat.Enemies
             return fsm;
         }
 
-        protected void Update()
+        protected override  void Update()
         {
+            base.Update();
             if (canRecoverCooldown)
             {
                 attackCoolDown.safeUpdateTimer(Time.deltaTime);
             }
         }
-        
-        
+
+        protected override void HandleBerserked()
+        {
+            base.HandleBerserked();
+            
+            attackCoolDown.reset( attackCoolDown.maxValue * berserkCoolDownMultiplier);
+        }
     }
 }

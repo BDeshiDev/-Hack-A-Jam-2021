@@ -17,13 +17,13 @@ namespace Core.Combat
 
 
         public Transform player;
-
+        public Transform lastTarget = null;
         public EnemyEntity mostAggroedTarget = null;
         public Dictionary<EnemyEntity, float> aggroTracker = new Dictionary<EnemyEntity, float>();
         private float aggroGainRate = .33f;
 
         [SerializeField]FiniteTimer randomDirTimer = new FiniteTimer(1.85f);
-        Vector3 lastRandomDir = Vector3.zero;
+        Vector3 lastTargetPoint = Vector3.zero;
         private HypnoComponent hypnoComponent;
 
 
@@ -81,39 +81,74 @@ namespace Core.Combat
             switch (hypnoComponent.CurState)
             {
                 case HypnosisState.Normal:
-                    return player.transform.position;
+                    return setTarget(player.transform);
                 case HypnosisState.Hypnotized:
                 {
                     var e = EnemyTracker.getLowesHpNormalEnemy();
                     if (e != null)
                     {
-                        return e.transform.position;
+                        return setTarget(e.transform);
                     }
 
-                    return getRandomDir();
+                    return setTargetToRandomPoint();
                 }
                 case HypnosisState.Berserk:
                 {
-                    return getRandomDir();
+                    if (randomDirTimer.isComplete)
+                    {
+                        randomDirTimer.reset();
+                
+                        if (Random.Range(0,2) != 0)
+                        {
+                            var e = EnemyTracker.getRandomEnemy();
+                            if (e != null)
+                            {
+                                return setTarget(e.transform);
+                            }
+                    
+                        }
+                        else
+                        {
+                            return setTarget(player.transform);
+                        }
+                
+                    }
+
+                    return setTargetToRandomPoint();
                 }
             }
 
-            return getRandomDir();
-
+            return setTargetToRandomPoint();
         }
 
-        public Vector2 getRandomDir()
+        private Vector3 setTarget(Transform t)
         {
+            lastTarget = t;
+            lastTargetPoint = t.position;
+            return lastTargetPoint;
+        }
+        
+        private Vector3 setTargetToRandomPoint()
+        {
+            
             if (randomDirTimer.isComplete)
             {
+                lastTarget = null;
                 randomDirTimer.reset();
-                lastRandomDir = Random.onUnitSphere;
+                lastTargetPoint = transform.position + Random.onUnitSphere * 1000;
             }
-
-            return lastRandomDir;
+            return lastTargetPoint;
         }
 
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = lastTarget == null ? Color.red : Color.green;
+
+            if(lastTarget != null)
+                Gizmos.DrawWireSphere( lastTarget.position , 1.5f);
+            Gizmos.DrawLine(transform.position, lastTargetPoint);
+        }
         //     private void OnTriggerEnter(Collider other)
         //     {
         //         if (state == HypnosisState.Hypnotized)

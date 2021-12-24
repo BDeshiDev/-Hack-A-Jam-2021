@@ -12,8 +12,8 @@ namespace Core.Combat
         public float hypnosisRecoveryRate = 1;
         public float normalHypnosisRecoveryRate = 1;
         public float hypnotizedStateHypoRecoveryRate = 3;
-        public bool IsHypnotized => CurState == HypnosisState.Hypnotized;
-        public bool IsBerserked => CurState == HypnosisState.Berserk;
+        public bool IsHypnotized => curState == HypnosisState.Hypnotized;
+        public bool IsBerserked => curState == HypnosisState.Berserk;
         
         public float hypnoDOTstartRate = .25f;
         public float hypnoDOTMaxRate = 2f;
@@ -32,8 +32,11 @@ namespace Core.Combat
         public event Action HypnosisRecovered;
         public event Action Hypnotized;
         public event Action Berserked;
-        
-        public HypnosisState CurState { get; private set; }
+
+        private bool forceBerserk = false;
+
+        public HypnosisState CurState => curState;
+        [SerializeField] private HypnosisState curState;
 
         private HealthComponent healthComponent;
         
@@ -43,24 +46,32 @@ namespace Core.Combat
             if (!IsBerserked && !IsHypnotized)
             {
                 hypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate;
-                CurState = HypnosisState.Hypnotized;
+                curState = HypnosisState.Hypnotized;
+                hypnoDOTActive = true;
                 Hypnotized?.Invoke();
             }
 
             base.handleCapped();
         }
-        
+
+        public void forceBerserkState()
+        {
+            forceBerserk = true;
+            forceEmpty();
+        }
+
 
         public override void handleEmptied()
         {
-            if (!IsBerserked && healthComponent.Ratio < berserkThreshold)
+            if (!IsBerserked && (healthComponent.Ratio < berserkThreshold || forceBerserk))
             {
-                CurState = HypnosisState.Berserk;
+                curState = HypnosisState.Berserk;
                 Berserked?.Invoke();
             }else if (IsHypnotized)
             {
                 hypnosisRecoveryRate = normalHypnosisRecoveryRate;
-                
+                curState = HypnosisState.Normal;
+
                 HypnosisRecovered?.Invoke();
             }
             base.handleEmptied();
@@ -70,7 +81,7 @@ namespace Core.Combat
         {
             return ( 1 +  hypnoDamageVsHealthCurve.Evaluate(healthComponent.Ratio) * hypnoDamageHealthScalingFactor)
                    * damage.hypnoDamage
-                   - (IsHypnotized? 1 : 0) * hypnoRecoveryPerHealthDamage;
+                   - (IsHypnotized? 1 : 0) *damage.healthDamage * hypnoRecoveryPerHealthDamage;
         }
         
         
@@ -83,7 +94,7 @@ namespace Core.Combat
         {
             if (IsHypnotized)
             {
-                hypnoDOTIncreaseTimer.updateTimer(Time.deltaTime);
+                hypnoDOTIncreaseTimer.safeUpdateTimer(Time.deltaTime);
                 
                 var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
                 healthComponent.reduceAmount(dotDamage);
@@ -100,8 +111,13 @@ namespace Core.Combat
             // }
         }
 
-        
 
+        public override void modifyAmount(float changeAmount)
+        {
+            if(IsBerserked)
+                return;
+            base.modifyAmount(changeAmount);
+        }
     }
     
     public enum HypnosisState

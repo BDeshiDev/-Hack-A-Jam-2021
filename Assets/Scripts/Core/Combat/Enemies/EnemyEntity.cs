@@ -14,7 +14,7 @@ namespace Core.Combat
         public bool IsHypnotized => hypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
-
+        [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6f);
         /// <summary>
         /// Health and hypnosis are modified
         /// </summary>
@@ -27,8 +27,17 @@ namespace Core.Combat
             hypnoComponent.modifyAmount(hypnoDamage);
         }
 
+        protected virtual void Update()
+        {
+            if (hypnoComponent.IsBerserked)
+            {
+                if (berserkTimer.tryCompleteTimer(Time.deltaTime))
+                {
+                    actuallyDie();
+                }
+            }
+        }
 
-        
         protected override void Awake()
         {
             base.Awake();
@@ -70,6 +79,18 @@ namespace Core.Combat
         
         private void handleDeath(ResourceComponent obj)
         {
+            if (hypnoComponent.hypnoDOTActive)
+            {
+                hypnoComponent.forceBerserkState();
+            }
+            else
+            {
+                actuallyDie();
+            }
+        }
+
+        void actuallyDie()
+        {
             Debug.Log(gameObject + " has died " + gameObject);
             Destroy(gameObject);
         }
@@ -82,18 +103,18 @@ namespace Core.Combat
         }
 
 
-        protected void HandleBerserked()
+        protected virtual void HandleBerserked()
         {
-            targetter.handleBerserk();
+            Debug.Log("berserked  " +gameObject , gameObject);
 
+            targetter.handleBerserk();
             targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
         }
 
         protected void OnHypnotized()
         {
             Debug.Log("hypnotised " +gameObject , gameObject);
-
-
+            
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
         }

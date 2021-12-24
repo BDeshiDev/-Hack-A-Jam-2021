@@ -42,7 +42,7 @@ namespace Core.Combat
         /// MOdify resource amount clamped by max and min properly
         /// </summary>
         /// <param name="changeAmount">USE -VE IF IT'S DAMAGE </param>
-        public void modifyAmount(float changeAmount)
+        public virtual void modifyAmount(float changeAmount)
         {
             if(changeAmount < 0)
             {
@@ -74,6 +74,17 @@ namespace Core.Combat
 
             RatioChanged?.Invoke(this);
         }
+
+        public void forceEmpty()
+        {
+            if(cur >= 0)
+            {
+                cur = 0;
+                handleEmptied();
+            }
+            RatioChanged?.Invoke(this);
+        }
+
         public virtual void handleEmptied(){
             Emptied?.Invoke(this);
         }
