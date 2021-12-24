@@ -14,14 +14,13 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
     public SpriteRenderer spriter2;
     
     //won't be used by anything else for the jam, so modularity not necessary
-    public IEnumerator summon(Vector3 position, EnemyEntity prefab)
+    public IEnumerator summon(Vector3 position, EnemyEntity prefab, List<EnemyEntity> spawned)
     {
         transform.position = position;
         transform.localScale = Vector3.zero;
         var c = spriter1.color;
         c.a = 0;
         spriter1.color = spriter2.color = c;
-        Debug.Log("anim start");
 
         Tween t = DOTween.Sequence()
                 .Append(transform.DOScale(Vector3.one*1.3f, animDuration*.8f))
@@ -30,10 +29,10 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
             .Insert(0,spriter2.DOFade(1,animDuration))
             ;
         yield return t.WaitForCompletion();
-        Debug.Log("anim done");
         var e = PoolManager.Instance.enemyPool.get(prefab);
         e.transform.position = position;
         Spawner.Instance.trackEnemy(e);
+        spawned.Add(e);
         
         ReturnCallback?.Invoke(this);
     }

@@ -105,6 +105,7 @@ namespace Core.Combat
 
         void actuallyDie()
         {
+            Debug.Log(gameObject +"actualy die");
             invokeDeathEvent();
             ReturnCallback?.Invoke(this);
             // Destroy(gameObject);
