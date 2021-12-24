@@ -23,7 +23,7 @@ namespace Core.Combat
             spriter.enabled = true;
             hitbox.startDetection();
             
-            Debug.Log("enter" + gameObject);
+            // Debug.Log("enter" + gameObject);
             running = true;
         }
 
@@ -41,7 +41,7 @@ namespace Core.Combat
             spriter.enabled = false;
             hitbox.stopDetection();
 
-            Debug.Log("exit"+ gameObject);
+            // Debug.Log("exit"+ gameObject);
             running = false;
 
         }

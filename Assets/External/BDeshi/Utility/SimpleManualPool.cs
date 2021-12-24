@@ -9,12 +9,12 @@ namespace BDeshi.Utility
 {
     /// <summary>
     /// manual pool for POCOs
-    /// Creation is done through the Func<T>
+    /// Creation is done through the Func
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class SimpleManualPool<T>
     {
-        [SerializeField] private List<T> pool;//no stack cuz now the whole pool class is serializable!
+        [SerializeField] private List<T> pool;
         private Func<T> CreationMethod;
 
         public SimpleManualPool(Func<T> creationMethod)

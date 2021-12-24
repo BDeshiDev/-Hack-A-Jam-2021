@@ -40,7 +40,13 @@ namespace Core.Combat
         
         private void Start()
         {
-            fsm = createFSM();
+            initializeFSM();
+        }
+        
+        public void initializeFSM()
+        {
+            if(fsm == null)
+                fsm = createFSM();
             fsmRunner.Initialize(fsm);
         }
 

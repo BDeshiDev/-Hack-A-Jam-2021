@@ -11,6 +11,8 @@ namespace Core.Combat
         public HealthComponent HealthComponent=> healthComponent;
         [SerializeField] protected HealthComponent healthComponent;
         public bool isInvulnerable;
+        
+        public event Action<CombatEntity> Died;
         protected virtual void Awake()
         {
             if (healthComponent == null)
@@ -36,5 +38,11 @@ namespace Core.Combat
             processDamage(ref damage);
             healthComponent.reduceAmount(damage.healthDamage);
         }
+
+        protected virtual void invokeDeathEvent()
+        {
+            Died?.Invoke(this);
+        }
+
     }
 }

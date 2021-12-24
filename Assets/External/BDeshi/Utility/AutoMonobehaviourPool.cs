@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-
-
 namespace BDeshi.Utility
 {
-    /// <summary>
-    /// Simple pool with normal instantiation automated.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class SimpleManualMonoBehaviourPool<T> where T : MonoBehaviour
+    public class AutoMonobehaviourPool<T> where T : MonoBehaviour, AutoPoolable<T>
     {
         private List<T> pool;
         protected T prefab;
         private Transform spawnParent;
 
-        public SimpleManualMonoBehaviourPool(T prefab, int initialCount, Transform spawnParent = null)
+        public AutoMonobehaviourPool(T prefab, int initialCount, Transform spawnParent = null)
         {
             this.prefab = prefab;
             this.spawnParent = spawnParent;
@@ -43,6 +37,7 @@ namespace BDeshi.Utility
         void createAndAddToPool()
         {
             var item = createItem();
+            
             item.gameObject.SetActive(false);
             pool.Add(item);
         }
@@ -60,7 +55,9 @@ namespace BDeshi.Utility
             {
                 item = createItem();
             }
-
+            item.ReturnCallback += returnItem;
+            item.initialize();
+            
             return item;
         }
 
@@ -72,13 +69,18 @@ namespace BDeshi.Utility
             }
         }
 
-        public void returnItem(T item)
+        void returnItem(T item)
         {
             item.gameObject.SetActive(false);
+            item.ReturnCallback -= returnItem;
+
             pool.Add(item);
         }
     }
-
-
-
+    
+    public interface AutoPoolable<T>
+    {
+        void initialize();
+        event Action<T> ReturnCallback;
+    }
 }

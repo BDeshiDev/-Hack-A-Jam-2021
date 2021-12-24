@@ -1,6 +1,8 @@
 ﻿using bdeshi.levelloading;
+using Core.Combat;
 using Core.Combat.Enemies;
 using Core.Input;
+using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,6 +34,7 @@ namespace Core.Misc
             {
                 GameStateManager.PlayModeEnterCleanup();
                 EnemyTracker.PlayModeEnterCleanup();
+                PoolManager.PlayModeEnterCleanup();
             }
         }
     }

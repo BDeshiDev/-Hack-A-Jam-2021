@@ -57,6 +57,16 @@ namespace Core.Combat
         //     }
         // }
 
+        public void initialize()
+        {
+            randomDirTimer.complete();
+            handleNormalState();
+            
+            mostAggroedTarget = null;
+            aggroTracker.Clear();
+            // aggroTracker.Add(player);
+        }
+
         private void Update()
         {
             randomDirTimer.safeUpdateTimer(Time.deltaTime);
@@ -67,15 +77,13 @@ namespace Core.Combat
         {
             player = GameObject.FindWithTag("Player").transform;
             self = GetComponent<EnemyEntity>();
-
         }
 
         private void Start()
         {
             hypnoComponent = self.HypnoComponent;
             
-            randomDirTimer.complete();
-            handleNormalState();
+            initialize();
         }
 
         /// <summary>

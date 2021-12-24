@@ -1,4 +1,5 @@
-﻿using BDeshi.Utility;
+﻿using System;
+using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour, AutoPoolable<Projectile>
     {
         public Vector3 sizeFactor = Vector3.one;
         public Vector3 CurSize => sizeFactor.multiplyDimensions(transform.localScale);
@@ -26,7 +27,7 @@ namespace Core.Combat
             transform.allignToDir(dir);
             //projectiles should no magically change damagelayers if enemy gets brainwashed
             //maybe lasers  but I'm not bothering with that now
-            this.TargetingInfo = targetingInfo;
+            TargetingInfo = targetingInfo;
             durationTimer.reset();
             
             spriter.sortingLayerID = SortingLayer.NameToID(targetingInfo.projectileSortingLayer);
@@ -95,8 +96,15 @@ namespace Core.Combat
 
         public void handleEnd()
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            ReturnCallback?.Invoke(this);
         }
 
+        public void initialize()
+        {
+            //assume that the caller will call the other one for now
+        }
+
+        public event Action<Projectile> ReturnCallback;
     }
 }

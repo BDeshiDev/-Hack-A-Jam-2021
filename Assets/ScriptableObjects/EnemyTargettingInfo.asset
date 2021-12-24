@@ -23,3 +23,4 @@ MonoBehaviour:
   NormalLayer:
     m_LayerIndex: 14
   projectileSortingLayer: EnemyProjectile
+  ProjectileColor: {r: 1, g: 0.5989302, b: 0, a: 1}

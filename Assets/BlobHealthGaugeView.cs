@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Core.Combat;
 using UnityEngine;
 
-public class HealthGaugeView : MonoBehaviour
+public class BlobHealthGaugeView : MonoBehaviour
 {
     public HealthComponent healthComponent;
     public SpriteRenderer Fillspriter;
@@ -19,14 +19,14 @@ public class HealthGaugeView : MonoBehaviour
     public void updateHealthGaugeFill(ResourceComponent resourceComponent)
     {
         Fillspriter.color = hypnoComponent.IsBerserked
-                            ? Color.yellow 
+                            ? berserkColor
                             : hypnoComponent.IsInBerserkRange
-                                ? berserkColor
+                                ? berserkRangeColor
                                 : normalColor;
         Fillspriter.GetPropertyBlock(propBlock);
         
         // propBlock.SetColor("SOMECOLOR", );
-        propBlock.SetFloat("FillHeight",hypnoComponent.IsBerserked? 1 : resourceComponent.Ratio );
+        propBlock.SetFloat(FillHeight,hypnoComponent.IsBerserked? 1 : resourceComponent.Ratio );
 
         
         Fillspriter.SetPropertyBlock(propBlock);
@@ -56,7 +56,7 @@ public class HealthGaugeView : MonoBehaviour
         }
     }
 
-    private void handleBerserked()
+    private void handleBerserked(HypnoComponent obj)
     {
         Fillspriter.color = berserkColor;
         

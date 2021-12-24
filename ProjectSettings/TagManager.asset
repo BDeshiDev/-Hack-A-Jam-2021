@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Props
+    uniqueID: 1528955615
+    locked: 0
   - name: PlayerAttack
     uniqueID: 2237514563
     locked: 0

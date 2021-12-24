@@ -36,7 +36,9 @@ namespace Core.Combat.ShotPattern
                 Vector3 curShotDir =  Quaternion.AngleAxis(startAngle + i * shotAngleGap, Vector3.forward) 
                                       * shotDir;
 
-                var p = Object.Instantiate(prefab);
+                // var p = Object.Instantiate(prefab);
+                var p = spawn(prefab);
+
                 p.initialize(shotPoint.position + curShotDir * spawnRadius, curShotDir, targettingInfo);
             }
 

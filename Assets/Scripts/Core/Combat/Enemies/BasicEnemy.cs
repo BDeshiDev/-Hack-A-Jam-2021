@@ -56,9 +56,9 @@ namespace Core.Combat.Enemies
             
         }
 
-        protected override void HandleBerserked()
+        protected override void HandleBerserked(HypnoComponent obj)
         {
-            base.HandleBerserked();
+            base.HandleBerserked(obj);
             
             attackCoolDown.reset( attackCoolDown.maxValue * berserkCoolDownMultiplier);
             fsm.handleEvent(Events.Berserk);

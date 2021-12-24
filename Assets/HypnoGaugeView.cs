@@ -17,20 +17,20 @@ public class HypnoGaugeView : MonoBehaviour
     public void updateHypnoGaugeFill(ResourceComponent resourceComponent)
     {
         hypnoGaugeFillSpriter.GetPropertyBlock(hypnGaugeFillPropertyBlock);
-        hypnGaugeFillPropertyBlock.SetFloat("FillHeight",resourceComponent.Ratio );
+        hypnGaugeFillPropertyBlock.SetFloat(FillHeight,resourceComponent.Ratio );
 
         
         hypnoGaugeFillSpriter.SetPropertyBlock(hypnGaugeFillPropertyBlock);
     }
 
     private void Awake()
-    {
+    {   
         hypnoComponent = GetComponentInParent<HypnoComponent>();
         hypnGaugeFillPropertyBlock = new MaterialPropertyBlock();
         hypnoGaugeFillSpriter.color = normalColor;
     
         
-        handleHypnosisRecovery();
+        handleHypnosisRecovery(hypnoComponent);
     }
 
     private void Start()
@@ -48,12 +48,12 @@ public class HypnoGaugeView : MonoBehaviour
         }
     }
 
-    private void handleHypnosisRecovery()
+    private void handleHypnosisRecovery(HypnoComponent obj)
     {
         hypnoGaugeFillSpriter.color = normalColor;
     }
 
-    private void handleHypnotized()
+    private void handleHypnotized(HypnoComponent obj)
     {
         hypnoGaugeFillSpriter.color = hypnotizedColor;
     }

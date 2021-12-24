@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
-    public abstract class EnemyEntity: BlobEntity
+    public abstract class EnemyEntity: BlobEntity, AutoPoolable<EnemyEntity>
     {
         public HypnoComponent HypnoComponent { get; private set; }
 
@@ -90,7 +90,8 @@ namespace Core.Combat
             EnemyTracker.removeInactiveEnemy(this);
         }
         
-        private void handleDeath(ResourceComponent obj)
+
+        protected void handleDeath(ResourceComponent healthComp)
         {
             if (HypnoComponent.hypnoDOTActive)
             {
@@ -104,10 +105,12 @@ namespace Core.Combat
 
         void actuallyDie()
         {
-            Destroy(gameObject);
+            invokeDeathEvent();
+            ReturnCallback?.Invoke(this);
+            // Destroy(gameObject);
         }
 
-        protected void HypnosisRecovered()
+        protected void HypnosisRecovered(HypnoComponent obj)
         {
             targetter.handleNormalState();
 
@@ -115,19 +118,34 @@ namespace Core.Combat
         }
 
 
-        protected virtual void HandleBerserked()
+        protected virtual void HandleBerserked(HypnoComponent obj)
         {
 
             targetter.handleBerserk();
             targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
         }
 
-        protected void OnHypnotized()
+        protected void OnHypnotized(HypnoComponent obj)
         {
-            
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
         }
+
+
+        public void initialize()
+        {
+            HypnoComponent.initialize();
+            healthComponent.fullyRestore();
+            
+            targetter.initialize();
+            berserkTimer.reset();
+            berserkTransitionTimer.reset();
+            
+            initializeFSM();
+        }
+        
+
+        public event Action<EnemyEntity> ReturnCallback;
     }
     
     

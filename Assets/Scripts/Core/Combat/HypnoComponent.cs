@@ -1,4 +1,5 @@
 ﻿using System;
+using BDeshi.BTSM;
 using BDeshi.Utility;
 using Core.Combat.Enemies;
 using UnityEngine;
@@ -35,15 +36,10 @@ namespace Core.Combat
         public AnimationCurve hypnoDamageVsHealthCurve = AnimationCurve.EaseInOut(0,1,1,0);
         public float hypnoDamageHealthScalingFactor = 1;
         public float hypnoRecoveryPerHealthDamage = .5f;
-        /// <summary>
-        /// gradually lose maxHypno according to this.
-        /// </summary>
-        public float maxHypnoLossRate;
 
-        public float actualMaxHypno;
-        public event Action HypnosisRecovered;
-        public event Action Hypnotized;
-        public event Action Berserked;
+        public event Action<HypnoComponent> HypnosisRecovered;
+        public event Action<HypnoComponent> Hypnotized;
+        public event Action<HypnoComponent> Berserked;
 
         private bool forceBerserk = false;
 
@@ -58,9 +54,7 @@ namespace Core.Combat
             if (!IsBerserked && !IsHypnotized)
             {
                 curHypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate;
-                curState = HypnosisState.Hypnotized;
-                hypnoDOTActive = true;
-                Hypnotized?.Invoke();
+                enterState(HypnosisState.Hypnotized);
             }
 
             base.handleCapped();
@@ -78,14 +72,12 @@ namespace Core.Combat
         {
             if (!IsBerserked && (IsInBerserkRange || forceBerserk))
             {
-                curState = HypnosisState.Berserk;
-                Berserked?.Invoke();
+                forceBerserk = false;
+                enterState(HypnosisState.Berserk);
             }else if (IsHypnotized)
             {
                 curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
-                curState = HypnosisState.Normal;
-
-                HypnosisRecovered?.Invoke();
+                enterState(HypnosisState.Normal);
             }
             base.handleEmptied();
         }
@@ -100,9 +92,18 @@ namespace Core.Combat
         
         private void Awake()
         {
-            curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
             healthComponent = GetComponent<HealthComponent>();
+            initialize();
         }
+
+        public void initialize()
+        {
+            curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
+            hypnoRecoverySpeedChangeTimer.reset();
+            hypnoDOTIncreaseTimer.reset();
+            enterState(HypnosisState.Normal);
+        }
+
         protected virtual void Update()
         {
             if (IsHypnotized)
@@ -139,6 +140,28 @@ namespace Core.Combat
             if(IsBerserked)
                 return;
             base.modifyAmount(changeAmount);
+        }
+
+        public void enterState(HypnosisState state)
+        {
+            curState = state;
+            switch (curState)
+            {
+                case HypnosisState.Normal:
+                    HypnosisRecovered?.Invoke(this);
+                    break;
+                case HypnosisState.Berserk:
+                    curState = HypnosisState.Berserk;   
+                    Berserked?.Invoke(this);
+                    break;
+                case HypnosisState.Hypnotized:
+                    curState = HypnosisState.Hypnotized;
+                    hypnoDOTActive = true;
+                    Hypnotized?.Invoke(this);
+                    break;
+                default:
+                    break;
+            }
         }
     }
     

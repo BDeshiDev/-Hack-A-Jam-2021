@@ -20,9 +20,9 @@ public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
     public static StateBase inGameOptionMenuState  { get; }= new GameState("Options Menu");
     
     
-    protected override void init()
+    protected override void initialize()
     {
-        base.init();
+        base.initialize();
         
         optionMenuState.AsChildOf(titleMenuState);
         pauseMenuState.AsChildOf(gamePlayState);
@@ -54,7 +54,7 @@ public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
         if(Instance.fsm.curState != null)
             return;
         
-        Instance.init();
+        Instance.initialize();
     }
 
 
