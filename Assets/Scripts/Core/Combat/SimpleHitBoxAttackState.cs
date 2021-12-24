@@ -10,7 +10,7 @@ namespace Core.Combat
         [SerializeField] private HitBox hitbox;
         [SerializeField] private FiniteTimer attackTimer = new FiniteTimer(0, .2f);
         public override bool IsComplete => attackTimer.isComplete;
-        
+        private bool running = false;
         private void Awake()
         {
             attackTimer.complete();
@@ -22,6 +22,9 @@ namespace Core.Combat
             attackTimer.reset();
             spriter.enabled = true;
             hitbox.startDetection();
+            
+            Debug.Log("enter" + gameObject);
+            running = true;
         }
 
         public override void Tick()
@@ -37,6 +40,10 @@ namespace Core.Combat
         {
             spriter.enabled = false;
             hitbox.stopDetection();
+
+            Debug.Log("exit"+ gameObject);
+            running = false;
+
         }
     }
 }

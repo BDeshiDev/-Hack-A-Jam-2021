@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 6415456996822711879}
-  range: 8
+  minRange: 2
+  maxrange: 8
   backOffSpeedMultiplier: 0.3
   lookAtTarget: 1
   distChangeTimer:
@@ -64,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 6415456996822711879}
-  range: 4
+  range: 8
   maxTimer:
     timer: 0
     maxValue: 2
@@ -256,6 +257,40 @@ MonoBehaviour:
   aimer: {fileID: 6415456996845152558}
   hypnoComponent: {fileID: 0}
   targetter: {fileID: 0}
+  berserkTimer:
+    timer: 0
+    maxValue: 6
+  maintainRangeState: {fileID: 6415456996607402369}
+  prepAttackState: {fileID: 6415456996607402375}
+  attackState: {fileID: 6415456997197623927}
+  attackCoolDown:
+    timer: 0
+    maxValue: 2
+  berserkCoolDownMultiplier: 0.25
+  canRecoverCooldown: 1
+--- !u!114 &6415456996822711878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415456996822711877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be689a6f981e45d7bfab854b11cf4a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 40
+  cur: 0
+  hypnosisRecoveryRate: 1
+  normalHypnosisRecoveryRate: 2
+  hypnotizedStateHypoRecoveryRate: 5
+  hypnoDOTstartRate: 0.25
+  hypnoDOTMaxRate: 2
+  hypnoDOTIncreaseTimer:
+    timer: 0
+    maxValue: 9
+  hypnoDOTActive: 0
   hypnoDamageVsHealthCurve:
     serializedVersion: 2
     m_Curve:
@@ -282,31 +317,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   hypnoDamageHealthScalingFactor: 5
   hypnoRecoveryPerHealthDamage: 0.5
-  maintainRangeState: {fileID: 6415456996607402369}
-  prepAttackState: {fileID: 6415456996607402375}
-  attackState: {fileID: 6415456997197623927}
-  attackCoolDown:
-    timer: 0
-    maxValue: 2
-  canRecoverCooldown: 1
---- !u!114 &6415456996822711878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6415456996822711877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be689a6f981e45d7bfab854b11cf4a7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 40
-  cur: 0
-  hypnosisRecoveryRate: 1
-  normalHypnosisRecoveryRate: 2
-  hypnotizedStateHypoRecoveryRate: 5
-  isHypnotized: 0
+  curState: 0
 --- !u!114 &6415456996822711885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,8 +363,8 @@ MonoBehaviour:
     type: 2}
   berserkTargettingInfo: {fileID: 11400000, guid: 2f93fbcb96abdb84d9b5b7c845aec34a,
     type: 2}
-  state: 0
   player: {fileID: 0}
+  lastTarget: {fileID: 0}
   mostAggroedTarget: {fileID: 0}
   randomDirTimer:
     timer: 0
@@ -515,6 +526,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6415456996822711884}
     m_Modifications:
+    - target: {fileID: 730768388, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
+      propertyPath: berserkRangeColor.g
+      value: 0.29922482
+      objectReference: {fileID: 0}
     - target: {fileID: 2350914425013974793, guid: 4c35e914b0dc4ec42ba1ebb3da752d11,
         type: 3}
       propertyPath: m_Name

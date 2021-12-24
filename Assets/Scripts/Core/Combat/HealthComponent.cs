@@ -2,7 +2,7 @@
 {
     public class HealthComponent : ResourceComponent
     {
-        private void Awake()
+        private void Start()
         {
             fullyRestore();
         }

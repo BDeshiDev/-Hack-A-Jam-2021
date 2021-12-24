@@ -9,9 +9,10 @@ namespace Core.Combat
 {
     public abstract class EnemyEntity: BlobEntity
     {
-        [SerializeField] protected HypnoComponent hypnoComponent;
+        public HypnoComponent HypnoComponent { get; private set; }
+
         public EnemyTargetResolver Targetter => targetter;
-        public bool IsHypnotized => hypnoComponent.IsHypnotized;
+        public bool IsHypnotized => HypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
         [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6f);
@@ -22,14 +23,14 @@ namespace Core.Combat
         public override void takeDamage(DamageInfo damage)
         {
             base.takeDamage(damage);
-            float hypnoDamage = hypnoComponent.calcHypnoDamage(damage);
+            float hypnoDamage = HypnoComponent.calcHypnoDamage(damage);
 
-            hypnoComponent.modifyAmount(hypnoDamage);
+            HypnoComponent.modifyAmount(hypnoDamage);
         }
 
         protected virtual void Update()
         {
-            if (hypnoComponent.IsBerserked)
+            if (HypnoComponent.IsBerserked)
             {
                 if (berserkTimer.tryCompleteTimer(Time.deltaTime))
                 {
@@ -41,18 +42,18 @@ namespace Core.Combat
         protected override void Awake()
         {
             base.Awake();
-            hypnoComponent = GetComponent<HypnoComponent>();
+            HypnoComponent = GetComponent<HypnoComponent>();
             spriter = GetComponent<SpriteRenderer>();
             targetter = GetComponent<EnemyTargetResolver>();
         }
 
         private void OnEnable()
         {
-            if(hypnoComponent != null)
+            if(HypnoComponent != null)
             {
-                hypnoComponent.Hypnotized += OnHypnotized;
-                hypnoComponent.HypnosisRecovered += HypnosisRecovered;
-                hypnoComponent.Berserked += HandleBerserked;
+                HypnoComponent.Hypnotized += OnHypnotized;
+                HypnoComponent.HypnosisRecovered += HypnosisRecovered;
+                HypnoComponent.Berserked += HandleBerserked;
 
             }
 
@@ -68,20 +69,20 @@ namespace Core.Combat
 
         private void OnDisable()
         {
-            if(hypnoComponent != null)
+            if(HypnoComponent != null)
             {
-                hypnoComponent.Hypnotized -= OnHypnotized;
-                hypnoComponent.HypnosisRecovered -= HypnosisRecovered;
-                hypnoComponent.Berserked -= HandleBerserked;
+                HypnoComponent.Hypnotized -= OnHypnotized;
+                HypnoComponent.HypnosisRecovered -= HypnosisRecovered;
+                HypnoComponent.Berserked -= HandleBerserked;
             }
             EnemyTracker.removeInactiveEnemy(this);
         }
         
         private void handleDeath(ResourceComponent obj)
         {
-            if (hypnoComponent.hypnoDOTActive)
+            if (HypnoComponent.hypnoDOTActive)
             {
-                hypnoComponent.forceBerserkState();
+                HypnoComponent.forceBerserkState();
             }
             else
             {

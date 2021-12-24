@@ -2,12 +2,14 @@
 using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Combat.Enemies
 {
     public  class MaintainRangeState: EnemyStatebase
     {
-        [SerializeField] float range = 8;
+        [FormerlySerializedAs("range")] [SerializeField] float minRange = 8;
+        [FormerlySerializedAs("range")] [SerializeField] float maxrange = 8;
         [SerializeField] private float backOffSpeedMultiplier = .7f;
         [SerializeField] bool lookAtTarget = true;
         public FiniteTimer distChangeTimer = new FiniteTimer(.5f);
@@ -23,11 +25,11 @@ namespace Core.Combat.Enemies
             if(distChangeTimer.tryCompleteTimer(Time.deltaTime))
             {
                 distChangeTimer.reset();
-                if (vecToTarget.exceedSqrDist(range))
+                if (!vecToTarget.exceedSqrDist(minRange))
                 {
                     curDir = vecToTarget.normalized;
                 }
-                else
+                else if(vecToTarget.exceedSqrDist(maxrange))
                 {
                     curDir = -vecToTarget.normalized * backOffSpeedMultiplier;
                 }

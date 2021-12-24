@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace BDeshi.Utility.Extensions
@@ -6,6 +7,27 @@ namespace BDeshi.Utility.Extensions
     public static class Csharp
     {
         public static T getRandomItem<T>(this List<T> list) => list[Random.Range(0, list.Count)];
+        [CanBeNull]
+        public static T getRandomItemExcluding<T>(this List<T> list, T item)
+        {
+            if (list.Count <= 0)
+                return default(T);
+            int randomIndex = list.getRandomIndex(list.Count);
+            if (list[randomIndex].Equals(item))
+            {
+                if (list.Count == 1)
+                    return default(T);
+                else
+                {
+                    return list[(randomIndex + 1) % list.Count];
+                }
+            }
+            else
+            {
+                return list[randomIndex];
+            }
+
+        }
         public static int getRandomIndex<T>(this List<T> list, int maxIndexPlusOne) => Random.Range(0, maxIndexPlusOne);
         public static T getRandomItem<T>(this List<T> list, int maxIndexPlusOne) => list[Random.Range(0, maxIndexPlusOne)];
 

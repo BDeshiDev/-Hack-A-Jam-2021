@@ -14,6 +14,7 @@ namespace Core.Combat
         public float hypnotizedStateHypoRecoveryRate = 3;
         public bool IsHypnotized => curState == HypnosisState.Hypnotized;
         public bool IsBerserked => curState == HypnosisState.Berserk;
+        public bool IsInBerserkRange => healthComponent.Ratio < berserkThreshold;
         
         public float hypnoDOTstartRate = .25f;
         public float hypnoDOTMaxRate = 2f;
@@ -53,7 +54,8 @@ namespace Core.Combat
 
             base.handleCapped();
         }
-
+        
+        [ContextMenu("force berserk")]
         public void forceBerserkState()
         {
             forceBerserk = true;
@@ -63,7 +65,7 @@ namespace Core.Combat
 
         public override void handleEmptied()
         {
-            if (!IsBerserked && (healthComponent.Ratio < berserkThreshold || forceBerserk))
+            if (!IsBerserked && (IsInBerserkRange || forceBerserk))
             {
                 curState = HypnosisState.Berserk;
                 Berserked?.Invoke();
@@ -109,6 +111,8 @@ namespace Core.Combat
             //     var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
             //     healthComponent.reduceAmount(dotDamage);
             // }
+            
+            
         }
 
 

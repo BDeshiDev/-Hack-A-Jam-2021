@@ -7,5 +7,6 @@ namespace Core.Combat
     {
         [SerializeField] protected BlobEntity blobEntity;
         public abstract bool IsComplete { get; }
+        // public abstract bool CanBeCancelled { get; }
     }
 }

@@ -10,13 +10,23 @@ public class HealthGaugeView : MonoBehaviour
     public SpriteRenderer Fillspriter;
     private MaterialPropertyBlock propBlock;
     private static readonly int FillHeight = Shader.PropertyToID("FillHeight");
-
+    private HypnoComponent hypnoComponent;
+    
+    public Color berserkColor = Color.yellow;
+    public Color berserkRangeColor = Color.red;
+    public Color normalColor = Color.blue;
+    
     public void updateHealthGaugeFill(ResourceComponent resourceComponent)
     {
+        Fillspriter.color = hypnoComponent.IsBerserked
+                            ? Color.yellow 
+                            : hypnoComponent.IsInBerserkRange
+                                ? berserkColor
+                                : normalColor;
         Fillspriter.GetPropertyBlock(propBlock);
         
         // propBlock.SetColor("SOMECOLOR", );
-        propBlock.SetFloat("FillHeight",resourceComponent.Ratio );
+        propBlock.SetFloat("FillHeight",hypnoComponent.IsBerserked? 1 : resourceComponent.Ratio );
 
         
         Fillspriter.SetPropertyBlock(propBlock);
@@ -26,6 +36,7 @@ public class HealthGaugeView : MonoBehaviour
     private void Awake()
     {
         healthComponent = GetComponentInParent<HealthComponent>();
+        hypnoComponent = healthComponent.GetComponent<HypnoComponent>();
         propBlock = new MaterialPropertyBlock();
     }
 
@@ -41,7 +52,13 @@ public class HealthGaugeView : MonoBehaviour
         if (healthComponent != null)
         {
             healthComponent.RatioChanged += updateHealthGaugeFill;
+            hypnoComponent.Berserked += handleBerserked;
         }
+    }
+
+    private void handleBerserked()
+    {
+        Fillspriter.color = berserkColor;
     }
 
     private void OnDisable()
@@ -49,6 +66,7 @@ public class HealthGaugeView : MonoBehaviour
         if (healthComponent != null)
         {
             healthComponent.RatioChanged -= updateHealthGaugeFill;
+            hypnoComponent.Berserked -= handleBerserked;
         }
     }
 }

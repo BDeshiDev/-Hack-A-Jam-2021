@@ -9,7 +9,7 @@ namespace Core.Combat
     public class CombatEntity: MonoBehaviour, IDamagable
     {
         public HealthComponent HealthComponent=> healthComponent;
-        [SerializeField]protected HealthComponent healthComponent;
+        [SerializeField] protected HealthComponent healthComponent;
         public bool isInvulnerable;
         protected virtual void Awake()
         {

@@ -7,7 +7,6 @@ namespace Core.Player
 {
     public class PlayerChargableAttackState: PlayerState
     {
-        private FiniteTimer chargeTimer = new FiniteTimer();
         public bool IsComplete => pickedAttack != null && pickedAttack.IsComplete;
         public float moveSpeedMult = .65f;
 
@@ -16,7 +15,6 @@ namespace Core.Player
         public  override void EnterState()
         {
             pickedAttack = null;
-            
         }
 
         public override void Tick()
@@ -36,14 +34,21 @@ namespace Core.Player
 
         public void handleChargeReleased()
         {
+            if(pickedAttack!= null)
+            {
+                pickedAttack.ExitState();
+            }
+            
             pickedAttack = chargedAttacks.getItemAndReset();
             pickedAttack.EnterState();
         }
 
         public override void ExitState()
         {
+            Debug.Log("Exit charge " + pickedAttack);
             if(pickedAttack!= null)
                 pickedAttack.ExitState();
+            pickedAttack = null;
         }
     }
 }

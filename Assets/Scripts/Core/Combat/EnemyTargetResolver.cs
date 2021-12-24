@@ -25,6 +25,7 @@ namespace Core.Combat
         [SerializeField]FiniteTimer randomDirTimer = new FiniteTimer(1.85f);
         Vector3 lastTargetPoint = Vector3.zero;
         private HypnoComponent hypnoComponent;
+        private EnemyEntity self;
 
 
         //not worth a fsm
@@ -65,7 +66,13 @@ namespace Core.Combat
         private void Awake()
         {
             player = GameObject.FindWithTag("Player").transform;
-            hypnoComponent = GetComponent<HypnoComponent>();
+            self = GetComponent<EnemyEntity>();
+
+        }
+
+        private void Start()
+        {
+            hypnoComponent = self.HypnoComponent;
             
             randomDirTimer.complete();
             handleNormalState();
@@ -94,25 +101,28 @@ namespace Core.Combat
                 }
                 case HypnosisState.Berserk:
                 {
-                    if (randomDirTimer.isComplete)
+                    if (Random.Range(0,2) != 0)
                     {
-                        randomDirTimer.reset();
-                
-                        if (Random.Range(0,2) != 0)
+                        if (randomDirTimer.isComplete)
                         {
-                            var e = EnemyTracker.getRandomEnemy();
+                            randomDirTimer.reset();
+                            var e = EnemyTracker.getRandomEnemy(self);
                             if (e != null)
                             {
                                 return setTarget(e.transform);
                             }
-                    
-                        }
-                        else
+
+                        }else if (lastTarget != null)
                         {
-                            return setTarget(player.transform);
+                            return lastTarget.position;
                         }
-                
+
                     }
+                    else
+                    {
+                        return setTarget(player.transform);
+                    }
+
 
                     return setTargetToRandomPoint();
                 }

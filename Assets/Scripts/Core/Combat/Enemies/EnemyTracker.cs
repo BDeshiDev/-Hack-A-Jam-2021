@@ -44,13 +44,12 @@ namespace Core.Combat.Enemies
         }
         
         [CanBeNull]
-        public static EnemyEntity getRandomEnemy()
+        public static EnemyEntity getRandomEnemy(EnemyEntity exclude)
         {
             //health does not change quickly so this shouldn't be too bad
-            if(Instance.activeEnemies.Count <= 0)
+            if(Instance.activeEnemies.Count <= 2)
                 return null;
-            
-            return Instance.activeEnemies.getRandomItem();
+            return Instance.activeEnemies.getRandomItemExcluding(exclude);
         }
     }
 }
