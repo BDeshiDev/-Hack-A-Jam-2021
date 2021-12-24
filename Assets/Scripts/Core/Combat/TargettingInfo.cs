@@ -20,6 +20,7 @@ namespace Core.Combat
         /// </summary>
         [FormerlySerializedAs("EnemyLayer")] public SingleUnityLayer NormalLayer;
         public string projectileSortingLayer;
+        public Color ProjectileColor = Color.cyan;
 
         public LayerMask getCombinedLayerMask()
         {

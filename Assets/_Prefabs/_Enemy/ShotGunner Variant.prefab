@@ -7,10 +7,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6415456996822711873, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711877, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: m_Name
-      value: ShotGunner
+      value: ShotGunner Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711884, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}

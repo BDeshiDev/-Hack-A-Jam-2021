@@ -317,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInputThisFrame: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
-  speed: 5
+  speed: 3
 --- !u!61 &6415456996822711872
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -656,7 +656,11 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: SingleShotPattern, ns: Core.Combat.ShotPattern, asm: Assembly-CSharp}
+      type: {class: FanShotPattern, ns: Core.Combat.ShotPattern, asm: Assembly-CSharp}
+      data:
+        spawnRadius: 0.25
+        angle: 360
+        count: 13
 --- !u!1 &8692291967010758842
 GameObject:
   m_ObjectHideFlags: 0
