@@ -42,7 +42,8 @@ namespace Core.Combat.Enemies
             {
                 attackCoolDown.safeUpdateTimer(Time.deltaTime);
             }
-
         }
+        
+        
     }
 }

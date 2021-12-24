@@ -19,7 +19,7 @@ namespace Core.Combat
         public AnimationCurve hypnoDamageVsHealthCurve = AnimationCurve.EaseInOut(0,1,1,0);
         public float hypnoDamageHealthScalingFactor = 5;
         public float hypnoRecoveryPerHealthDamage = .5f;
-
+        
 
         /// <summary>
         /// Health and hypnosis are modified
