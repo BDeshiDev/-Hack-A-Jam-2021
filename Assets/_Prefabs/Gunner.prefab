@@ -165,7 +165,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 0.922, g: 0.922, b: 0.922, a: 0.3764706}
+  m_Color: {r: 0.64386797, g: 0.8434602, b: 0.8584906, a: 1}
   m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 0
@@ -304,8 +304,8 @@ MonoBehaviour:
   max: 40
   cur: 0
   hypnosisRecoveryRate: 1
-  normalHypnosisRecoveryRate: 1
-  hypnotizedStateHypoRecoveryRate: 3
+  normalHypnosisRecoveryRate: 2
+  hypnotizedStateHypoRecoveryRate: 5
   isHypnotized: 0
 --- !u!114 &6415456996822711885
 MonoBehaviour:
@@ -348,7 +348,7 @@ MonoBehaviour:
   targettingInfo: {fileID: 0}
   normalTargettingInfo: {fileID: 11400000, guid: 0cdc7b3a5f466aa4894972f3bb03a817,
     type: 2}
-  hypnotizedTargettingInfo: {fileID: 11400000, guid: 5f798a7a5bb49634d82d102766cb6d83,
+  hypnotizedTargettingInfo: {fileID: 11400000, guid: 13cd31778d7d00f41b34844293cce867,
     type: 2}
   berserkTargettingInfo: {fileID: 11400000, guid: 2f93fbcb96abdb84d9b5b7c845aec34a,
     type: 2}

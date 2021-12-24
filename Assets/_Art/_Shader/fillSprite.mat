@@ -38,7 +38,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - FillHeight: 0.302
+    - FillHeight: 0.895
     - FillHeight1: 1
     - _EmissionIntensity: 2.2
     m_Colors: []
