@@ -44,7 +44,7 @@ TagManager:
   - name: PlayerAttack
     uniqueID: 2237514563
     locked: 0
-  - name: AllyProjectile
+  - name: HypnoProjectile
     uniqueID: 250279349
     locked: 0
   - name: Enemy

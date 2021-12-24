@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BDeshi.Utility;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Core.Combat
@@ -14,6 +15,5 @@ namespace Core.Combat
         [SerializeField] protected TargettingInfo targettingInfo;
         
         public abstract Vector3 getTargetPos();
-        
     }
 }

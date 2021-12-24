@@ -19,6 +19,8 @@ namespace Core.Combat
         /// Assume that this will be single layer and we can assign to go.layer directly
         /// </summary>
         [FormerlySerializedAs("EnemyLayer")] public SingleUnityLayer NormalLayer;
+        public string projectileSortingLayer;
+
         public LayerMask getCombinedLayerMask()
         {
             return damageMask | obstacleMask;

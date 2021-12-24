@@ -110,3 +110,4 @@ MonoBehaviour:
   damage:
     healthDamage: 10
     hypnoDamage: 0
+  spriter: {fileID: 7937409385446727008}

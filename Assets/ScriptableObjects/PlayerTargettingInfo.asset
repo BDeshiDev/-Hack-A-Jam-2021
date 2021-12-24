@@ -22,3 +22,4 @@ MonoBehaviour:
     m_LayerIndex: 20
   NormalLayer:
     m_LayerIndex: 14
+  projectileSortingLayer: PlayerAttack

@@ -18,6 +18,7 @@ namespace Core.Combat
         public TargettingInfo TargetingInfo;
         public Vector3 ShotDir => transform.right;
         public DamageInfo damage;
+        [SerializeField]private SpriteRenderer spriter;
 
         public void initialize(Vector3 spawnPos, Vector3 dir, TargettingInfo targetingInfo)
         {
@@ -27,6 +28,7 @@ namespace Core.Combat
             //maybe lasers  but I'm not bothering with that now
             this.TargetingInfo = targetingInfo;
             durationTimer.reset();
+            spriter.sortingLayerID = SortingLayer.NameToID(targetingInfo.projectileSortingLayer);
         }
 
         void Update()
