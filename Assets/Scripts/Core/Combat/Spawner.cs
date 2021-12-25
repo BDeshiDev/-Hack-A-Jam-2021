@@ -102,7 +102,7 @@ namespace Core.Combat
 
             e.HypnoComponent.Hypnotized -= handleSpawnedEnemyHypnotized;
             e.HypnoComponent.HypnosisRecovered -= handleSpawnedEnemyDeHypnotized;
-            e.HypnoComponent.Berserked -= handleSpawnedEnemyDeHypnotized;
+            e.HypnoComponent.Berserked -= handleSpawnedEnemyHypnotized;
         }
         
         public void trackEnemy(EnemyEntity e)
@@ -111,7 +111,7 @@ namespace Core.Combat
             
             e.HypnoComponent.Hypnotized += handleSpawnedEnemyHypnotized;
             e.HypnoComponent.HypnosisRecovered += handleSpawnedEnemyDeHypnotized;
-            e.HypnoComponent.Berserked += handleSpawnedEnemyDeHypnotized;
+            e.HypnoComponent.Berserked += handleSpawnedEnemyHypnotized;
         }
 # if UNITY_EDITOR
         private List<HypnoComponent> hypnos = new List<HypnoComponent>();

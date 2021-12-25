@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1061881115, guid: 4ba839b5d6927fc489fec36c5ea4dc20, type: 3}
+      propertyPath: randomDirTimer.maxValue
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711873, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: speed
@@ -15,7 +19,7 @@ PrefabInstance:
     - target: {fileID: 6415456996822711877, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: m_Name
-      value: ShotGunner
+      value: ShotGunner Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711884, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
@@ -92,5 +96,52 @@ PrefabInstance:
       propertyPath: shotPattern.spawnRadius
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunShotTimer.maxValue
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunshotRounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunshotRounds.Array.data[1].gunShot
+      value: 
+      objectReference: {fileID: 6249601981136790396}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunshotRounds.Array.data[2].gunShot
+      value: 
+      objectReference: {fileID: 6249601981136790396}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunshotRounds.Array.data[0].shotTimeNormalized
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunshotRounds.Array.data[1].shotTimeNormalized
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: gunshotRounds.Array.data[2].shotTimeNormalized
+      value: 0.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba839b5d6927fc489fec36c5ea4dc20, type: 3}
+--- !u!114 &6249601981136790396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6415456997197623925, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+    type: 3}
+  m_PrefabInstance: {fileID: 1131322449703358729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcfb2025d704a7cacbe9a89d1b0e295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

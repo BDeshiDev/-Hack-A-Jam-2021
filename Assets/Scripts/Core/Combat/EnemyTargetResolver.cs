@@ -131,7 +131,8 @@ namespace Core.Combat
                     }
                     else
                     {
-                        return setTarget(player.transform);
+                        if(player != null)
+                            return setTarget(player.transform);
                     }
 
 

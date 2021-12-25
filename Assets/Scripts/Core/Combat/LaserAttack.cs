@@ -11,7 +11,8 @@ namespace Core.Combat
         [SerializeField] float laserLen = 55;
         [SerializeField] LineRenderer liner;
         [SerializeField] private DamageInfo damagePerHit;
-        [SerializeField] private FiniteTimer laserDuration = new FiniteTimer(.8f);
+        [SerializeField] private FiniteTimer laserDuration = new FiniteTimer(.3f);
+        [SerializeField] private FiniteTimer laserShotWaitDuration = new FiniteTimer(.4f);
         [SerializeField] Color baseColor = Color.red;
         
         
@@ -52,7 +53,7 @@ namespace Core.Combat
         public override void EnterState()
         {
             laserDuration.reset();
-            showLaser(true);
+            showLaser(false);
         }
 
         public void showLaser()
@@ -88,11 +89,27 @@ namespace Core.Combat
 
         public override void Tick()
         {
-            laserDuration.safeUpdateTimer(Time.deltaTime);
+            if (laserShotWaitDuration.isComplete)
+            {
+                laserDuration.safeUpdateTimer(Time.deltaTime);
             
-            Color endColor = baseColor;
-            endColor.a = 0;
-            setColor(Color.Lerp(baseColor, endColor, laserDuration.Ratio));
+                Color endColor = baseColor;
+                endColor.a = 0;
+                setColor(Color.Lerp(baseColor, endColor, laserDuration.Ratio));
+            }
+            else
+            {
+                if (laserShotWaitDuration.tryCompleteTimer(Time.deltaTime))
+                {
+                    showLaser(true);
+                }
+                else
+                {
+                    showLaser(false);
+                }
+            }
+
+
             
             // prevent mutihiy before adding this
             // updateLaserEndpoints(true);

@@ -10,8 +10,7 @@ namespace Core.Combat
     public abstract class EnemyEntity: BlobEntity, AutoPoolable<EnemyEntity>
     {
         public HypnoComponent HypnoComponent { get; private set; }
-
-        public EnemyTargetResolver Targetter => targetter;
+        public override TargetResolverComponent TargetResolverComponent => targetter;
         public bool IsHypnotized => HypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;

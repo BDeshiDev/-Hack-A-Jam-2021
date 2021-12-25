@@ -18,6 +18,7 @@ namespace Core.Combat
         protected EventDrivenStateMachine<Events> fsm;
         public Vector2 LastLookDir { get; private set; }
         public abstract EventDrivenStateMachine<Events> createFSM();
+        public abstract TargetResolverComponent TargetResolverComponent { get; }
 
         protected override void Awake()
         {

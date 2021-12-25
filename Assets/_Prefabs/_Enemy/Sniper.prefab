@@ -275,6 +275,9 @@ MonoBehaviour:
   laserDuration:
     timer: 0
     maxValue: 0.8
+  laserShotWaitDuration:
+    timer: 0
+    maxValue: 0.4
   baseColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2562301842690669729
 GameObject:
@@ -331,6 +334,9 @@ MonoBehaviour:
   laserDuration:
     timer: 0
     maxValue: 2
+  laserShotWaitDuration:
+    timer: 0
+    maxValue: 0.4
   baseColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &6889034083840998525
 SpriteRenderer:
@@ -715,7 +721,7 @@ MonoBehaviour:
   mostAggroedTarget: {fileID: 0}
   randomDirTimer:
     timer: 0
-    maxValue: 1.85
+    maxValue: 0.5
 --- !u!1 &3279443308717313393
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +809,9 @@ MonoBehaviour:
   laserDuration:
     timer: 0
     maxValue: 2
+  laserShotWaitDuration:
+    timer: 0
+    maxValue: 0.4
   baseColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &5269913612329054782
 SpriteRenderer:

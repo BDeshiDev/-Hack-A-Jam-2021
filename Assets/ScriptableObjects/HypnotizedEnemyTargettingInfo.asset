@@ -23,4 +23,5 @@ MonoBehaviour:
   NormalLayer:
     m_LayerIndex: 14
   projectileSortingLayer: HypnoProjectile
-  ProjectileColor: {r: 0.050147414, g: 0.61, b: 0, a: 1}
+  ProjectileColorPrimary: {r: 0.050147414, g: 0.61, b: 0, a: 1}
+  ProjectileColorSecondary: {r: 0.03666663, g: 0.44, b: 0, a: 1}

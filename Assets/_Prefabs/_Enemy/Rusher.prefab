@@ -171,6 +171,9 @@ MonoBehaviour:
   OnPrepStart:
     m_PersistentCalls:
       m_Calls: []
+  OnPrepTick:
+    m_PersistentCalls:
+      m_Calls: []
   OnPrepFinish:
     m_PersistentCalls:
       m_Calls: []
@@ -253,6 +256,9 @@ MonoBehaviour:
   WasInRangeLastFrame: 0
   lookAtTarget: 1
   OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepTick:
     m_PersistentCalls:
       m_Calls: []
   OnPrepFinish:
@@ -347,6 +353,9 @@ MonoBehaviour:
   WasInRangeLastFrame: 0
   lookAtTarget: 1
   OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepTick:
     m_PersistentCalls:
       m_Calls: []
   OnPrepFinish:
@@ -495,6 +504,9 @@ MonoBehaviour:
   WasInRangeLastFrame: 0
   lookAtTarget: 1
   OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepTick:
     m_PersistentCalls:
       m_Calls: []
   OnPrepFinish:
@@ -876,7 +888,7 @@ MonoBehaviour:
   mostAggroedTarget: {fileID: 0}
   randomDirTimer:
     timer: 0
-    maxValue: 1.85
+    maxValue: 0.5
 --- !u!114 &7283351451064670967
 MonoBehaviour:
   m_ObjectHideFlags: 0

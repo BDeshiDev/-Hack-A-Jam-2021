@@ -3,18 +3,16 @@ using UnityEngine;
 
 namespace Core.Combat
 {
-    public class Gun: MonoBehaviour
+    public class GunShot: MonoBehaviour
     {
-        public Transform shotPoint;
         //#TODO pools
         public Projectile prefab;
-        public EnemyTargetResolver targetter;
 
         [SerializeReferenceButton]
         [SerializeReference] 
         [SerializeField]
         private ShotPattern.ShotPattern shotPattern = new FanShotPattern();
-        public void shoot()
+        public void shoot(Transform shotPoint, TargetResolverComponent targetter)
         {
             shotPattern.shoot(prefab, shotPoint, targetter.TargettingInfo);
 

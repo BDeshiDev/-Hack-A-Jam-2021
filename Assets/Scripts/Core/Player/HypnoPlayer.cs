@@ -13,7 +13,8 @@ namespace Core.Player
         [SerializeField] PlayerIdleState idleState;
         [SerializeField] PlayerChargableAttackState chargableAttackState;
         [SerializeField] PlayerDashState dashState;
-
+        public override TargetResolverComponent TargetResolverComponent => playerTargetter;
+        TargetResolverComponent playerTargetter;
         
 
         public override void look(Vector3 dir, Vector3 aimPoint)
@@ -38,6 +39,14 @@ namespace Core.Player
 
             return fsm;
         }
+
+
+        protected override void Awake()
+        {
+            base.Awake();
+            playerTargetter = GetComponent<PlayerTargetResolver>();
+        }
+
 
         private void OnEnable()
         {
