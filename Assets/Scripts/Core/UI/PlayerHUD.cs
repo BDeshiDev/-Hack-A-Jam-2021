@@ -9,7 +9,7 @@ namespace Core.UI
         [SerializeField] private HealthComponent healthComponent;
         // [SerializeField] private ModularGun gun;
 
-        // [SerializeField] private PlayerAmmoViewController ammoViewController;
+        [SerializeField] private PlayerAmmoViewController ammoViewController;
         [SerializeField] private PlayerHealthViewController healthViewController;
 
         private void OnEnable()
@@ -25,12 +25,10 @@ namespace Core.UI
         private void refreshHUD()
         {
             var p = GameObject.FindGameObjectWithTag("Player");
-            Debug.Log("HUD target " + p , p);
             healthComponent = p.GetComponent<HealthComponent>();
-            // gun = p.gun.GetComponent<ModularGun>();
+            AmmoComponent ammoComponent = p.GetComponentInChildren<AmmoComponent>();
 
-            // ammoViewController.init(gun);
-
+            ammoViewController.init(ammoComponent);
             healthViewController.init(healthComponent);
         }
 

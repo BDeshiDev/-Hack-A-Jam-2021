@@ -21,6 +21,8 @@ namespace Core.Combat
             ammoComponent = GetComponent<AmmoComponent>();
             gun = GetComponent<Gun>();
             gun.ShotFired.AddListener(resetReloadTimer);
+            
+            
         }
         
 
@@ -28,11 +30,7 @@ namespace Core.Combat
         {
             ammoReloadTimer.reset();
         }
-
-        private void startReload(AmmoComponent a)
-        {
-            reload();
-        }
+        
 
         private void reload()
         {

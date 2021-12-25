@@ -19,6 +19,7 @@ namespace Core.Combat
         [SerializeField] protected FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
 
         public float berserkCoolDownMultiplier = .5f;
+        public float berserkHypnoDamageConversionFactor = .08f;
         public float normalCoolDownDuration = 2f;
 
         /// <summary>
@@ -31,7 +32,14 @@ namespace Core.Combat
             float hypnoDamage = HypnoComponent.calcHypnoDamage(damage);
 
             HypnoComponent.modifyAmount(hypnoDamage);
+
+            //in berserk state, make berserk last less when hit
+            if (HypnoComponent.IsBerserked)
+            {
+                berserkTimer.updateTimer(damage.hypnoDamage * berserkHypnoDamageConversionFactor);
+            }
         }
+        
 
         protected virtual void Update()
         {
