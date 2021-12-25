@@ -19,8 +19,12 @@ namespace Core.Combat
         /// Assume that this will be single layer and we can assign to go.layer directly
         /// </summary>
         [FormerlySerializedAs("EnemyLayer")] public SingleUnityLayer NormalLayer;
-        public string projectileSortingLayer;
-        public Color ProjectileColor = Color.cyan;
+        [SerializeField] string projectileSortingLayer;
+        
+        public int ProjectileSortingLayerID =>SortingLayer.NameToID(projectileSortingLayer);
+        [FormerlySerializedAs("ProjectileColor")] 
+        public Color ProjectileColorPrimary = Color.cyan;
+        public Color ProjectileColorSecondary = Color.cyan;
 
         public LayerMask getCombinedLayerMask()
         {

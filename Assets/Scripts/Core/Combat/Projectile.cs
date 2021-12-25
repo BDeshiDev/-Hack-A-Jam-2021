@@ -29,9 +29,9 @@ namespace Core.Combat
             //maybe lasers  but I'm not bothering with that now
             TargetingInfo = targetingInfo;
             durationTimer.reset();
-            
-            spriter.sortingLayerID = SortingLayer.NameToID(targetingInfo.projectileSortingLayer);
-            spriter.color = targetingInfo.ProjectileColor;
+
+            spriter.sortingLayerID = targetingInfo.ProjectileSortingLayerID;
+            spriter.color = targetingInfo.ProjectileColorPrimary;
         }
 
         void Update()

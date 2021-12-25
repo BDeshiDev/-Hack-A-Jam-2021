@@ -13,6 +13,7 @@ namespace Core.Combat.Enemies
         public bool WasInRangeLastFrame = false;
         [SerializeField] bool lookAtTarget = true;
         [SerializeField] UnityEvent OnPrepStart;
+        [SerializeField] UnityEvent OnPrepTick;
         [SerializeField] UnityEvent OnPrepFinish;
         public float moveSpeedModifier = 1.67f;
         public bool IsComplete => maxTimer.isComplete || (WasInRangeLastFrame && minTimer.isComplete);
@@ -46,6 +47,8 @@ namespace Core.Combat.Enemies
             }
 
             maxTimer.safeUpdateTimer(Time.deltaTime);
+            
+            OnPrepTick.Invoke();
         }
 
         public override void ExitState()
