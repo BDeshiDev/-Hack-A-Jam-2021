@@ -97,6 +97,8 @@ namespace Core.Combat
             switch (hypnoComponent.CurState)
             {
                 case HypnosisState.Normal:
+                    if(player == null)
+                        return setTargetToRandomPoint();
                     return setTarget(player.transform);
                 case HypnosisState.Hypnotized:
                 {

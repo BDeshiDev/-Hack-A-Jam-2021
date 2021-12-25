@@ -11,9 +11,8 @@ public class GamePlayState : MonoBehaviourStateBase
     public const String TutorialScene =  "TutorialScene" ;
     
     public String levelSceneName = "";
-    
-    
-    
+
+    public CanvasGroup gameplayHudGroup;
 
     public void setInitiallevelSceneName(string levelName)
     {
@@ -23,7 +22,9 @@ public class GamePlayState : MonoBehaviourStateBase
 
     public override void EnterState()
     {
-        Debug.Log(levelSceneName + " loaded level");
+        Debug.Log(levelSceneName + " loaded level ");
+
+        gameplayHudGroup.alpha = 1;
         
         SceneManager.LoadScene(levelSceneName);
         GameStateManager.Instance.InvokeGameplaySceneChanged();
@@ -31,11 +32,12 @@ public class GamePlayState : MonoBehaviourStateBase
 
     public override void Tick()
     {
-        
+
     }
 
     public override void ExitState()
     {
-        
+        gameplayHudGroup.alpha = 0;
+
     }
 }

@@ -1,20 +1,22 @@
 ﻿using BDeshi.BTSM;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core
 {
     public class GameOverState : MonoBehaviourStateBase
     {
         [SerializeField] private CanvasGroup gameOverImageContainer;
-        [SerializeField] float fadeInTime = .33f;
+        [FormerlySerializedAs("fadeInTime")] [SerializeField] float fadeTime = .33f;
         private Tween tween;
         public Tween  createTween()
         {
             var t = DOTween.Sequence()
-                .Append(gameOverImageContainer.DOFade(1,fadeInTime ))
+                .Append(gameOverImageContainer.DOFade(1,fadeTime ))
                 .SetUpdate(true)
-                .SetAutoKill(false);
+                .SetAutoKill(false)
+                .SetRecyclable(true);
             t.onComplete += ()=>gameOverImageContainer.interactable = true;
 
             return t;
@@ -48,7 +50,11 @@ namespace Core
         public override void ExitState()
         {
             if(tween.IsPlaying())
-                tween.Rewind();
+            {
+                tween.Complete();
+            }
+            gameOverImageContainer.interactable = false;
+            gameOverImageContainer.DOFade(0,fadeTime);
             
             GameStateManager.Instance.unPause();
             Time.timeScale = 1;

@@ -87,13 +87,13 @@ namespace Core.Input
 
         private void HandlePaused()
         {
-            Debug.Log("pause input");
+            // Debug.Log("pause input");
             map.FindActionMap("Gameplay").Disable();
         }
 
         private void handleUnPaused()
         {
-            Debug.Log("resume input");
+            // Debug.Log("resume input");
 
             map.FindActionMap("Gameplay").Enable();
         }

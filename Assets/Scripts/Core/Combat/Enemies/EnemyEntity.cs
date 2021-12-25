@@ -17,6 +17,7 @@ namespace Core.Combat
         [SerializeField] protected EnemyTargetResolver targetter;
         [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6f);
         [SerializeField] private FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
+        
         /// <summary>
         /// Health and hypnosis are modified
         /// </summary>

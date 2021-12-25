@@ -107,8 +107,8 @@ namespace BDeshi.BTSM
             if (newState != null && (newState != curState || forceEnterIfSameState))
             {
 
-                if (DebugContext)
-                    Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
+                // if (DebugContext)
+                //     Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
 
                 if(callEnter)
                     recursiveTransitionToState(newState);

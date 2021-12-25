@@ -26,7 +26,7 @@ public class GameStateManager : MonoBehaviourSingletonPersistent<GameStateManage
 
     public event Action Paused;
     public event Action UnPaused;
-    public event Action GameplaySceneChanged;
+    public event Action GameplaySceneRefresh;
     
 
     protected override void initialize()
@@ -89,10 +89,15 @@ public class GameStateManager : MonoBehaviourSingletonPersistent<GameStateManage
         return true;
     }
 
-
     public void InvokeGameplaySceneChanged()
     {
-        GameplaySceneChanged?.Invoke();
+        StartCoroutine(doInvokeGameplaySceneChanged());
+    }
+    //unity requires 1 frame delay before checking loaded scene
+    IEnumerator doInvokeGameplaySceneChanged()
+    {
+        yield return null;
+        GameplaySceneRefresh?.Invoke();
     }
 
     public void handleEvent(Event e)

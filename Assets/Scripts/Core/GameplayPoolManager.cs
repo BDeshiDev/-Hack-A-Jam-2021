@@ -27,7 +27,7 @@ namespace Core
 
         private void Start()
         {
-            GameStateManager.Instance.GameplaySceneChanged += handleLevelChange;
+            GameStateManager.Instance.GameplaySceneRefresh += handleLevelChange;
         }
 
         private void handleLevelChange()
