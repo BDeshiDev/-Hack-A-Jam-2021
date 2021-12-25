@@ -7,9 +7,9 @@ namespace Core.Combat
     public class ResourceComponent : MonoBehaviour
     {
         public float Max => max;
-        [SerializeField] float max = 100;
+        [SerializeField] protected float max = 100;
         public float Cur => cur;
-        [SerializeField] float cur;
+        [SerializeField] protected float cur;
 
         public float Ratio => ((float)cur) / max;
 

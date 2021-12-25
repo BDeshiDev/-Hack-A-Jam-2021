@@ -38,6 +38,16 @@ namespace BDeshi.BTSM
         {
             transitionTo(startingState, callEnter);
         }
+        
+        public void exitCurState()
+        {
+            State cur = curState;
+            while (cur != null)
+            {
+                cur.ExitState();
+                cur = cur.Parent;
+            }
+        }
 
         public void Tick()
         {
@@ -50,10 +60,10 @@ namespace BDeshi.BTSM
                 {
                     newState = activeTransition.SuccessState;
                     activeTransition.TakenLastTime = true;
-#if DEBUG
-                    if (DebugContext)
-                        Debug.Log("from " + (curState.FullStateName ) + "To " + activeTransition, DebugContext);
-#endif
+// #if DEBUG
+//                     if (DebugContext)
+//                         Debug.Log("from " + (curState.FullStateName ) + "To " + activeTransition, DebugContext);
+// #endif
                     activeTransition.OnTaken?.Invoke();
                     break;
                 }
@@ -103,7 +113,6 @@ namespace BDeshi.BTSM
         /// </param>
         public void transitionTo(State newState, bool callEnter = true, bool forceEnterIfSameState = false)
         {
-            Debug.Log($"{newState}--{newState != curState} --{forceEnterIfSameState}--calleneter:{callEnter}");
             if (newState != null && (newState != curState || forceEnterIfSameState))
             {
 

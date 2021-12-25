@@ -15,7 +15,7 @@ namespace Core.Combat
         public bool IsHypnotized => HypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
-        [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6f);
+        [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6.5f);
         [SerializeField] private FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
         
         /// <summary>
@@ -108,8 +108,8 @@ namespace Core.Combat
         {
             Debug.Log(gameObject +"actualy die");
             invokeDeathEvent();
-            
-            forceReturn();
+
+            normalReturn();
             // Destroy(gameObject);
         }
 
@@ -135,7 +135,7 @@ namespace Core.Combat
         }
 
 
-        public void initialize()
+        public virtual void initialize()
         {
             HypnoComponent.initialize();
             healthComponent.fullyRestore();
@@ -143,17 +143,26 @@ namespace Core.Combat
             targetter.initialize();
             berserkTimer.reset();
             berserkTransitionTimer.reset();
-            
+
             initializeFSM();
         }
 
-        public void forceReturn()
+        public void handleForceReturn()
         {
-            ReturnCallback?.Invoke(this);
+            if (fsm != null && fsm.curState != null)
+            {
+                fsm.exitCurState();
+            }
+        }
+
+        void normalReturn()
+        {
+            handleForceReturn();
+            NormalReturnCallback?.Invoke(this);
         }
 
 
-        public event Action<EnemyEntity> ReturnCallback;
+        public event Action<EnemyEntity> NormalReturnCallback;
     }
     
     

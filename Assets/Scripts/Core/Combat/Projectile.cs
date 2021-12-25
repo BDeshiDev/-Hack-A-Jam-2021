@@ -97,7 +97,7 @@ namespace Core.Combat
         public void handleEnd()
         {
             // Destroy(gameObject);
-            forceReturn();
+            NormalReturn();
         }
 
         public void initialize()
@@ -105,11 +105,17 @@ namespace Core.Combat
             
         }
 
-        public void forceReturn()
+        public void handleForceReturn()
         {
-            ReturnCallback?.Invoke(this);
+            
+        }
+        
+        public void NormalReturn()
+        {
+            handleForceReturn();
+            NormalReturnCallback?.Invoke(this);
         }
 
-        public event Action<Projectile> ReturnCallback;
+        public event Action<Projectile> NormalReturnCallback;
     }
 }

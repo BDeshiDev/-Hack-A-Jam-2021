@@ -98,6 +98,7 @@ namespace Core.Combat
 
         public void initialize()
         {
+            cur = 0;
             curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
             hypnoRecoverySpeedChangeTimer.reset();
             hypnoDOTIncreaseTimer.reset();

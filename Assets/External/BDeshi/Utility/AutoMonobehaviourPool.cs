@@ -12,6 +12,7 @@ namespace BDeshi.Utility
         
         protected T prefab;
         private Transform spawnParent;
+        public bool debug = false;
 
         public AutoMonobehaviourPool(T prefab, int initialCount, Transform spawnParent = null)
         {
@@ -64,7 +65,7 @@ namespace BDeshi.Utility
             {
                 item = createItem();
             }
-            item.ReturnCallback += handleNormalReturn;
+            item.NormalReturnCallback += handleNormalNormalReturn;
             item.initialize();
             
             loaned.Add(item);
@@ -84,6 +85,8 @@ namespace BDeshi.Utility
         {
             foreach (var item in loaned)
             {
+                Debug.Log(item + "forcereturn");
+                item.handleForceReturn();
                 handleReturnInternal(item);
             }
             
@@ -91,7 +94,7 @@ namespace BDeshi.Utility
         }
 
 
-        void handleNormalReturn(T item)
+        void handleNormalNormalReturn(T item)
         {
             handleReturnInternal(item);
             loaned.Remove(item);
@@ -100,7 +103,7 @@ namespace BDeshi.Utility
         void handleReturnInternal(T item)
         {
             item.gameObject.SetActive(false);
-            item.ReturnCallback -= handleNormalReturn;
+            item.NormalReturnCallback -= handleNormalNormalReturn;
 
             pool.Add(item);
         }
@@ -109,7 +112,11 @@ namespace BDeshi.Utility
     public interface AutoPoolable<T>
     {
         void initialize();
-        void forceReturn();
-        event Action<T> ReturnCallback;
+        /// <summary>
+        /// Do cleanup before returning to pool
+        /// SHOULD NOT INVOKE NormalReturnCallback
+        /// </summary>
+        void handleForceReturn();
+        event Action<T> NormalReturnCallback;
     }
 }

@@ -34,7 +34,7 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
         spawner.trackEnemy(e);
         spawned.Add(e);
         
-        ReturnCallback?.Invoke(this);
+        NormalReturnCallback?.Invoke(this);
     }
 
     public void initialize()
@@ -42,11 +42,10 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
         
     }
 
-    public void forceReturn()
+    public void handleForceReturn()
     {
         StopAllCoroutines();
-        ReturnCallback?.Invoke(this);
     }
 
-    public event Action<SummoningCircle> ReturnCallback;
+    public event Action<SummoningCircle> NormalReturnCallback;
 }

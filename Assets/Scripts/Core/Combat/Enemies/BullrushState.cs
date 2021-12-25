@@ -45,6 +45,7 @@ namespace Core.Combat.Enemies
 
         public override void ExitState()
         {
+            Debug.Log("unbullrush");
             bullrushHitBox.stopDetection();
         }
     }

@@ -29,7 +29,11 @@ namespace Core
         {
             GameStateManager.Instance.GameplaySceneRefresh += handleLevelChange;
         }
-
+        private void OnDestroy()
+        {
+            if(GameStateManager.Instance != null)
+                GameStateManager.Instance.GameplaySceneRefresh -= handleLevelChange;
+        }
         private void handleLevelChange()
         {
             projectilePool.forceReturnAll();
@@ -58,6 +62,7 @@ namespace Core
 
         private int initialCount;
         private Transform spawnParent;
+
 
         public PrefabPoolPool(int initialCount, Transform spawnParent = null)
         {

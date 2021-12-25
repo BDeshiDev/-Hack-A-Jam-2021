@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using BDeshi.BTSM;
 using BDeshi.Utility;
 using UnityEngine;
@@ -16,8 +17,9 @@ namespace Core.Combat.Enemies
         [SerializeField] MaintainRangeState berserkMaintainRangeState;
         [SerializeField] PrepAttackState berserkPrepAttackState;
         [SerializeField] AttackState berserkAttackState;
-        public FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
-        public float berserkCoolDownMultiplier = .25f;
+        [SerializeField] FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
+        public float berserkCoolDownMultiplier = .5f;
+        public float normalCoolDownDuration = 2f;
 
 
         public override EventDrivenStateMachine<Events> createFSM()
@@ -54,6 +56,13 @@ namespace Core.Combat.Enemies
 
             attackCoolDown.safeUpdateTimer(Time.deltaTime);
             
+        }
+
+        public override void initialize()
+        {
+            base.initialize();
+            
+            attackCoolDown.reset(normalCoolDownDuration);
         }
 
         protected override void HandleBerserked(HypnoComponent obj)
