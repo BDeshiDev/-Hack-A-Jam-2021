@@ -14,7 +14,7 @@ namespace Core.Combat.Enemies
         public override bool IsComplete => bullrushTimer.isComplete && postBullrushTimer.isComplete;
         public float bullrushSpeedMultiplier = 2;
         public AnimationCurve bullrushSpeedCurve;
-        public HitBox bullrushHitBox;
+        public RectangleHitBox bullrushRectangleHitBox;
 
         public override void EnterState()
         {
@@ -45,7 +45,7 @@ namespace Core.Combat.Enemies
         public override void ExitState()
         {
 
-            bullrushHitBox.stopDetection();
+            bullrushRectangleHitBox.stopDetection();
         }
     }
 }

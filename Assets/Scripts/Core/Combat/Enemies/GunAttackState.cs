@@ -25,6 +25,7 @@ namespace Core.Combat.Enemies
         [SerializeField] float maxAngleChangePerSec = 50;
 
         [SerializeField] private Gun gun;
+        public Gun Gun => gun;
 
         public override void EnterState()
         {

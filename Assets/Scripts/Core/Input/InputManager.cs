@@ -126,7 +126,6 @@ namespace Core.Input
         public void updateCam()
         {
             cam = Camera.main;
-            cam = Camera.main;
         }
 
         private void AimAlongCancelled(InputAction.CallbackContext obj)

@@ -12,14 +12,13 @@ namespace Core.Player
     {
         [SerializeField] Transform shootIndicator;
         [SerializeField] PlayerIdleState idleState;
+        [SerializeField] GunAttackState playerGunState;
+
         //tested melee but it was too slow for the player.
         [SerializeField] PlayerChargableAttackState chargableAttackState;
         [SerializeField] PlayerDashState dashState;
         public override TargetResolverComponent TargetResolverComponent => playerTargetter;
         TargetResolverComponent playerTargetter;
-        
-        public GunAttackState playerGunState;
-        
         
 
         public override void look(Vector3 dir, Vector3 aimPoint)
@@ -45,11 +44,10 @@ namespace Core.Player
             // fsm.addEventHandler(chargableAttackState, Events.Attack1Release, chargableAttackState.handleChargeReleased);
             
             //can shoot from any state except dash
-            fsm.addEventTransition(idleState, Events.Attack1Held, playerGunState);
             fsm.addTransition(playerGunState, idleState, () => playerGunState.IsComplete);
-            fsm.addEventHandler(playerGunState, Events.Attack1Held,
-                () => { fsm.transitionTo(playerGunState, true, true); }
-                );
+            
+            fsm.addEventHandler(playerGunState, Events.Attack1Held, shootTransition);
+            fsm.addEventHandler(idleState, Events.Attack1Held, shootTransition);
             return fsm;
         }
 
@@ -60,6 +58,12 @@ namespace Core.Player
             playerTargetter = GetComponent<PlayerTargetResolver>();
         }
 
+        public void shootTransition()
+        {
+            Debug.Log("HOWWWWW");
+            if(playerGunState.Gun.CanFire)
+                fsm.transitionTo(playerGunState, true, true);
+        }
 
         private void OnEnable()
         {
@@ -86,6 +90,7 @@ namespace Core.Player
         {
             fsm.handleEvent(Events.Attack1Release);
         }
+        
 
         public void handleDashHeld()
         {

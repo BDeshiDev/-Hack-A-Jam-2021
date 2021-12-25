@@ -145,7 +145,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bullrushHitBox: {fileID: 2664062920105693704}
+  bullrushRectangleHitBox: {fileID: 2664062920105693704}
 --- !u!114 &417980354651326983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +425,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bullrushHitBox: {fileID: 6374371920858395545}
+  bullrushRectangleHitBox: {fileID: 6374371920858395545}
 --- !u!1 &6374371920468186284
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,6 +917,7 @@ MonoBehaviour:
     timer: 0
     maxValue: 2
   berserkCoolDownMultiplier: 0.5
+  berserkHypnoDamageConversionFactor: 0.08
   normalCoolDownDuration: 2
   normalMaintainRangeState: {fileID: 6374371920468186291}
   normalPrepAttackState: {fileID: 6374371920468186285}

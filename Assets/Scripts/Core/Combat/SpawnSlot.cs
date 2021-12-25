@@ -15,7 +15,6 @@ namespace Core.Combat
         public int min = 1;
         public List<EnemyEntity> spawned = new List<EnemyEntity>();
 
-        private Spawner spawner;
         public void setCount(ref int remainingTotalCount)
         {
             count = Random.Range(min, Mathf.Min(max + 1, remainingTotalCount));

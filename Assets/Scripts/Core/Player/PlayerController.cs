@@ -8,9 +8,11 @@ namespace Core.Player
     public class PlayerController:MonoBehaviour
     {
         private HypnoPlayer player;
+        private PlayerBombLauncher bomber;
         private void Awake()
         {
             player = GetComponent<HypnoPlayer>();
+            bomber = GetComponent<PlayerBombLauncher>();
         }
 
         private void Start()
@@ -19,8 +21,8 @@ namespace Core.Player
             
             InputManager.meleeButton.addPerformedCallback(gameObject, player.handleMeleeHeld);
             InputManager.meleeButton.addCancelledCallback(gameObject, player.handleMeleeReleased);
-            InputManager.bombButton.addPerformedCallback(gameObject, player.handleMeleeHeld);
-            InputManager.dashButton.addCancelledCallback(gameObject, player.handleDashHeld);
+            InputManager.dashButton.addPerformedCallback(gameObject, player.handleDashHeld);
+            InputManager.bombButton.addPerformedCallback(gameObject, bomber.handleBombLaunchAttempt);
         }
     }
 }

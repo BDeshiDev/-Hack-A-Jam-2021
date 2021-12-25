@@ -1,23 +1,25 @@
 ﻿using System.Collections.Generic;
-using BDeshi.Utility.Extensions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
-    public class HitBox: MonoBehaviour
+    public abstract class HitBox : MonoBehaviour
     {
-        [SerializeField]HitBoxStatus status;
+        [SerializeField] protected HitBoxStatus status;
         public TargetResolverComponent targetter;
         public DamageInfo damagePerHit;
         private HashSet<IDamagable> damaged = new HashSet<IDamagable>();
         public bool showIfInactive = false;
+
+        protected abstract void drawGizmo();
+        protected abstract Collider2D[] getOverlaps();
+        
         public void startDetection()
         {
             status = HitBoxStatus.Active;
             damaged.Clear();
         }
-        
+
         public void stopDetection()
         {
             status = HitBoxStatus.Inactive;
@@ -28,10 +30,7 @@ namespace Core.Combat
         {
             if(status != HitBoxStatus.Inactive)
             {
-                var results = Physics2D.OverlapBoxAll(transform.position,
-                    transform.lossyScale,
-                    transform.get2dAngle(),
-                    targetter.TargettingInfo.DamageMask);
+                var results = getOverlaps();
                 foreach (var result in results)
                 {
                     var d = result.GetComponent<IDamagable>();
@@ -42,6 +41,7 @@ namespace Core.Combat
                 }
             }
         }
+
         
         
         private void OnDrawGizmosSelected()
@@ -54,15 +54,8 @@ namespace Core.Combat
                     ? Color.red
                     : Color.yellow;
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+            drawGizmo();
         }
 
-
-    }
-    public enum  HitBoxStatus
-    {
-        Inactive,
-        Active,
-        Damaging,
     }
 }

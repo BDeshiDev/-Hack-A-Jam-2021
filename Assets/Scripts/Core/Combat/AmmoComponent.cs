@@ -52,7 +52,6 @@ namespace Core.Combat
         public void reload(int ammo)
         {
             curAmmo = Mathf.Clamp(curAmmo + ammo, 0 , maxAmmo );
-            Debug.Log(curAmmo + "-- " + ammo );
             onAmountChanged?.Invoke(this);
         }
 

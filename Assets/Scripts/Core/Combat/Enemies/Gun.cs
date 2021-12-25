@@ -13,6 +13,7 @@ namespace Core.Combat.Enemies
         [SerializeField] private UnityEvent BlankFired;
 
         [CanBeNull][SerializeField] private AmmoComponent ammoComponent;
+        public bool CanFire => ammoComponent == null || ammoComponent.CurAmmo >= 1;
 
         public virtual void shoot(GunShot gunShot, TargetResolverComponent targetResolverComponent)
         {

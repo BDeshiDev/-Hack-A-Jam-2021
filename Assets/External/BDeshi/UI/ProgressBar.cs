@@ -16,9 +16,14 @@ namespace BDeshi.UI
             cleanup();
         }
 
-        public virtual void updateFromRatio(ResourceComponent r)
+        public virtual void updateFromRatio(ResourceComponent resourceComponent)
         {
-            slider.value = r.Ratio;
+            slider.value = resourceComponent.Ratio;
+        }
+        
+        public virtual void updateFromRatio(float ratio)
+        {
+            slider.value = ratio;
         }
         
         

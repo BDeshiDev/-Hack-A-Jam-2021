@@ -7,7 +7,7 @@ namespace Core.Combat
     public class SimpleHitBoxAttackState : AttackState
     {
         public SpriteRenderer spriter;
-        [SerializeField] private HitBox hitbox;
+        [SerializeField] private RectangleHitBox hitbox;
         [SerializeField] private FiniteTimer attackTimer = new FiniteTimer(0, .2f);
         public override bool IsComplete => attackTimer.isComplete;
         private bool running = false;

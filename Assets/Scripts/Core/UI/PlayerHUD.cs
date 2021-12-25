@@ -1,4 +1,5 @@
 using System;
+using BDeshi.UI;
 using Core.Combat;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ namespace Core.UI
 
         [SerializeField] private PlayerAmmoViewController ammoViewController;
         [SerializeField] private PlayerHealthViewController healthViewController;
-
+        [SerializeField] private PlayerBombLauncher bomber;
+        [SerializeField] private ImageFillBar bombRechargeBar;
         private void OnEnable()
         {
             GameStateManager.Instance.GameplaySceneRefresh += refreshHUD;
@@ -26,10 +28,14 @@ namespace Core.UI
         {
             var p = GameObject.FindGameObjectWithTag("Player");
             healthComponent = p.GetComponent<HealthComponent>();
-            AmmoComponent ammoComponent = p.GetComponentInChildren<AmmoComponent>();
-
-            ammoViewController.init(ammoComponent);
             healthViewController.init(healthComponent);
+
+            bomber = p.GetComponent<PlayerBombLauncher>();
+            //not necessary to unsub for jam since this will get destroyed 
+            bomber.BombChargeUpdated += bombRechargeBar.updateFromRatio;
+            bombRechargeBar.updateFromRatio(bomber.bombRechargeTimer.Ratio);
+            AmmoComponent ammoComponent = p.GetComponentInChildren<AmmoComponent>();
+            ammoViewController.init(ammoComponent);
         }
 
         void Start()

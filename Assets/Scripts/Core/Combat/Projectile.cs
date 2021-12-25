@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace Core.Combat
 {
-    public class Projectile : MonoBehaviour, AutoPoolable<Projectile>
+    public class Projectile : MonoBehaviour, AutoPoolable<Projectile>, IDamagable
     {
         public Vector3 sizeFactor = Vector3.one;
         public Vector3 CurSize => sizeFactor.multiplyDimensions(transform.localScale);
@@ -118,5 +118,9 @@ namespace Core.Combat
         }
 
         public event Action<Projectile> NormalReturnCallback;
+        public void takeDamage(DamageInfo damage)
+        {
+            handleHit();
+        }
     }
 }
