@@ -17,7 +17,7 @@ namespace Core.Combat.Enemies
         [SerializeField] 
         FiniteTimer gunShotTimer = new FiniteTimer(1.8f);
         /// <summary>
-        /// Loop through this during timer based on gunshotIndex, index++ when the time is matched and the shot isfired 
+        /// Loop through this during timer based on gunshotIndex, index++ when the time is matched and the shot is fired 
         /// </summary>
         [SerializeField] List<GunShotRound> gunshotRounds = new List<GunShotRound>();
         [SerializeField] private TargetResolverComponent targetResolverComponent;

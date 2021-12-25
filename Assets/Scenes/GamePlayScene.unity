@@ -3064,7 +3064,7 @@ PrefabInstance:
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
       propertyPath: waves.Array.data[0].slots.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
@@ -3079,7 +3079,7 @@ PrefabInstance:
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
       propertyPath: waves.Array.data[0].slots.Array.data[0].min
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
@@ -3089,6 +3089,16 @@ PrefabInstance:
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
       propertyPath: waves.Array.data[0].slots.Array.data[1].min
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
+        type: 3}
+      propertyPath: waves.Array.data[0].slots.Array.data[2].max
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
+        type: 3}
+      propertyPath: waves.Array.data[0].slots.Array.data[2].min
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
@@ -3125,13 +3135,19 @@ PrefabInstance:
         type: 3}
       propertyPath: waves.Array.data[0].slots.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 6415456996822711879, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+      objectReference: {fileID: 6415456996822711879, guid: 50d1f586eb4f02542aade7cceb7d6411,
         type: 3}
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
       propertyPath: waves.Array.data[0].slots.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 6374371920892130082, guid: ba4f1866855436f4197668f8f8430cd9,
+      objectReference: {fileID: 6249601980773642062, guid: 03ef1f5d435cbe344bf1c9a9f24d56c9,
+        type: 3}
+    - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
+        type: 3}
+      propertyPath: waves.Array.data[0].slots.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 1245527008119019561, guid: c1043d13e7b44fe469d5b77e9deeb624,
         type: 3}
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
@@ -3149,7 +3165,7 @@ PrefabInstance:
         type: 3}
       propertyPath: waves.Array.data[1].slots.Array.data[2].prefab
       value: 
-      objectReference: {fileID: 6374371920892130082, guid: ba4f1866855436f4197668f8f8430cd9,
+      objectReference: {fileID: 7283351451064670967, guid: ba4f1866855436f4197668f8f8430cd9,
         type: 3}
     - target: {fileID: 2704489498283460994, guid: bf5895ebe032e7042be54b36259df64e,
         type: 3}
@@ -3352,11 +3368,6 @@ PrefabInstance:
         type: 3}
       propertyPath: backOffSpeedMultiplier
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554705193655888869, guid: ba4f1866855436f4197668f8f8430cd9,
-        type: 3}
-      propertyPath: preBullrushBackOffTimer.maxValue
-      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6374371920892130087, guid: ba4f1866855436f4197668f8f8430cd9,
         type: 3}
