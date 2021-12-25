@@ -4,13 +4,14 @@ namespace BDeshi.BTSM
 {
     public class FSMRunner: MonoBehaviour
     {
-        public StateMachine fsm { get; private set; }
+        public StateMachine fsm;
         /// <summary>
         /// Calls fsm.enter
         /// </summary>
         public  void Initialize(StateMachine fsm, bool callEnter = true)
         {
             this.fsm = fsm;
+            fsm.DebugContext = gameObject;
             fsm.enter(callEnter);
         }
         

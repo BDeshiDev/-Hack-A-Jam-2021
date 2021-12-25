@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BDeshi.Utility;
 using Core.Input;
-using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
@@ -10,14 +9,15 @@ using Random = UnityEngine.Random;
 namespace Core.Combat
 {
     
-    public class Spawner: MonoBehaviourSingletonPersistent<Spawner>
+    public partial class Spawner: MonoBehaviour
     {
         public Transform arena;
         [SerializeField] Vector2 spawnPadding = 2f * Vector2.one;
         [SerializeField] Vector2 spawnRange;
         [SerializeField] private int waveIndex = 0;
-        [SerializeField] private SummoningCircle summoningCirclePrefab;
         [SerializeField] private int actualWaveCount = 0;
+        public SummoningCircle summoningCirclePrefab;
+
         public List<Wave> waves;
         public event Action<int> waveCompleted;
         public int remainingCountInWave = 0;
@@ -28,57 +28,6 @@ namespace Core.Combat
         public void Start()
         {
             spawnNextWave();
-        }
-
-        [Serializable]
-        public class SpawnSlot
-        {
-            public EnemyEntity prefab;
-            public int count;
-            public int max = 2;
-            public int min = 1;
-            public List<EnemyEntity> spawned = new List<EnemyEntity>();
-            public void setCount(ref int remainingTotalCount)
-            {
-                count = Random.Range(min, Mathf.Min(max + 1, remainingTotalCount));
-                remainingTotalCount-= count;
-            }
-
-            public void startSpawn()
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    var summoningCircle = PoolManager.Instance.summoningCircles.get(Spawner.Instance.summoningCirclePrefab);
-                    Spawner.Instance.StartCoroutine(
-                        summoningCircle.summon(Spawner.Instance.findSafeSpawnSpot(), prefab, spawned)
-                    );
-                }
-            
-
-            }
-        }
-        
-        [Serializable]
-        public class Wave
-        {
-            
-            public List<SpawnSlot> slots;
-            public  int totalCount;
-            public void startSpawn()
-            {
-                int runningSpawnCount = totalCount;
-                Spawner.Instance.remainingCountInWave += runningSpawnCount;
-                foreach (var s in slots)
-                {
-                    s.setCount(ref runningSpawnCount);
-                    s.startSpawn();
-
-                    if (runningSpawnCount == 0)
-                        break;
-                }
-                Spawner.Instance.remainingCountInWave -= runningSpawnCount;
-            }
-            
         }
 
         public Vector2 findSafeSpawnSpot()
@@ -92,12 +41,12 @@ namespace Core.Combat
             return arena.position + point;
         }
 
-        protected override void initialize()
+        private void Awake()
         {
             spawnRange = new Vector2(
                 (arena.transform.localScale.x - spawnPadding.x),
                 (arena.transform.localScale.y - spawnPadding.y)
-                    );
+            );
         }
 
         void spawnNextWave()
@@ -110,12 +59,12 @@ namespace Core.Combat
                 actualWaveCount++;
                 if (waveIndex == (waves.Count - 1) && repeatLastWave)
                 {
-                    waves[waveIndex].startSpawn();
+                    waves[waveIndex].startSpawn(this);
                 }
                 else
                 {                    
 
-                    waves[waveIndex++].startSpawn();
+                    waves[waveIndex++].startSpawn(this);
                 }
 
                 Debug.Log($"spawning wave {waveIndex}(actually : {actualWaveCount}) started");
@@ -147,7 +96,7 @@ namespace Core.Combat
 
         void unTrackEnemy(EnemyEntity e)
         {
-            e.Died -= Spawner.Instance.handleSpawnedEnemyDeath;
+            e.Died -= handleSpawnedEnemyDeath;
 
             e.HypnoComponent.Hypnotized -= handleSpawnedEnemyHypnotized;
             e.HypnoComponent.HypnosisRecovered -= handleSpawnedEnemyDeHypnotized;

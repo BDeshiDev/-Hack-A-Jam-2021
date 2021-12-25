@@ -103,12 +103,13 @@ namespace BDeshi.BTSM
         /// </param>
         public void transitionTo(State newState, bool callEnter = true, bool forceEnterIfSameState = false)
         {
+            Debug.Log($"{newState}--{newState != curState} --{forceEnterIfSameState}--calleneter:{callEnter}");
             if (newState != null && (newState != curState || forceEnterIfSameState))
             {
-#if DEBUG
+
                 if (DebugContext)
                     Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
-#endif
+
                 if(callEnter)
                     recursiveTransitionToState(newState);
                 else

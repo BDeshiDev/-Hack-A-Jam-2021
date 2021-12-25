@@ -1,4 +1,5 @@
 ﻿using System;
+using BDeshi.Utility;
 using UnityEngine;
 
 namespace Core.Combat
@@ -44,7 +45,7 @@ namespace Core.Combat
         {
             if(changeAmount < 0)
             {
-                if (cur < Mathf.Abs(changeAmount))
+                if (cur <= Mathf.Abs(changeAmount))
                 {
                     if(cur > 0)
                     {

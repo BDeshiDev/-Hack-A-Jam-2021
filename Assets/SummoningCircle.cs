@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Utility;
+using Core;
 using Core.Combat;
-using DefaultNamespace;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,9 +14,9 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
     public SpriteRenderer spriter2;
     
     //won't be used by anything else for the jam, so modularity not necessary
-    public IEnumerator summon(Vector3 position, EnemyEntity prefab, List<EnemyEntity> spawned)
+    public IEnumerator summon(Spawner spawner, EnemyEntity prefab, List<EnemyEntity> spawned)
     {
-        transform.position = position;
+        transform.position = spawner.findSafeSpawnSpot();
         transform.localScale = Vector3.zero;
         var c = spriter1.color;
         c.a = 0;
@@ -28,11 +28,10 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
             .Insert(0,spriter1.DOFade(1,animDuration))
             .Insert(0,spriter2.DOFade(1,animDuration))
             ;
-        // Debug.Log(t == null);
         yield return t.WaitForCompletion();
-        var e = PoolManager.Instance.enemyPool.get(prefab);
-        e.transform.position = position;
-        Spawner.Instance.trackEnemy(e);
+        var e = GameplayPoolManager.Instance.enemyPool.get(prefab);
+        e.transform.position = transform.position;
+        spawner.trackEnemy(e);
         spawned.Add(e);
         
         ReturnCallback?.Invoke(this);
@@ -41,6 +40,12 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
     public void initialize()
     {
         
+    }
+
+    public void forceReturn()
+    {
+        StopAllCoroutines();
+        ReturnCallback?.Invoke(this);
     }
 
     public event Action<SummoningCircle> ReturnCallback;

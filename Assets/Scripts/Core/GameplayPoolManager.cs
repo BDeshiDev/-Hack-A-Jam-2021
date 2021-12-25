@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using bdeshi.utility;
 using BDeshi.Utility;
 using Core.Combat;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Core
 {
     /// <summary>
-    /// Single place for pools. Ugly but sufficient for the jam
+    /// Single place for pools. 
+    /// Will automatically return objects on level change.
     /// </summary>
-    public class PoolManager: MonoBehaviourLazySingleton<PoolManager>
+    public class GameplayPoolManager: MonoBehaviourLazySingleton<GameplayPoolManager>
     {
         public PrefabPoolPool<Projectile> projectilePool;
         public PrefabPoolPool<EnemyEntity> enemyPool;
@@ -19,10 +19,32 @@ namespace DefaultNamespace
         protected override void initialize()
         {
             base.initialize();
-            projectilePool = new PrefabPoolPool<Projectile>(20, new GameObject("Projectiles").transform);
-            enemyPool = new PrefabPoolPool<EnemyEntity>(3, new GameObject("Enemies").transform);
-            summoningCircles = new PrefabPoolPool<SummoningCircle>(1, new GameObject("summingCircles").transform);
+            
+            projectilePool = new PrefabPoolPool<Projectile>(20, createParent("Projectiles"));
+            enemyPool = new PrefabPoolPool<EnemyEntity>(3, createParent("Enemies"));
+            summoningCircles = new PrefabPoolPool<SummoningCircle>(1, createParent("summingCircles"));
         }
+
+        private void Start()
+        {
+            GameStateManager.Instance.GameplaySceneChanged += handleLevelChange;
+        }
+
+        private void handleLevelChange()
+        {
+            projectilePool.forceReturnAll();
+            enemyPool.forceReturnAll();
+            summoningCircles.forceReturnAll();
+        }
+
+        public Transform createParent(string name)
+        {
+            var go = new GameObject(name).transform;
+            go.SetParent(transform);
+
+            return go.transform;
+        }
+        
     }
     
     /// <summary>
@@ -53,5 +75,14 @@ namespace DefaultNamespace
 
             return pool.getItem();
         }
+
+        public void forceReturnAll()
+        {
+            foreach (var pool in pools)
+            {
+                pool.Value.returnAll();
+            }
+        }
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using DefaultNamespace;
 using UnityEngine;
 
 namespace Core.Combat.ShotPattern
@@ -11,7 +10,7 @@ namespace Core.Combat.ShotPattern
 
         protected Projectile spawn(Projectile prefab)
         {
-            return PoolManager.Instance.projectilePool.get(prefab); 
+            return GameplayPoolManager.Instance.projectilePool.get(prefab); 
         }
     }
 }

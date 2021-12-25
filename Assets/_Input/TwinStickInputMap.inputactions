@@ -301,29 +301,8 @@
         {
             "name": "UI",
             "id": "3074ea19-eb4c-4b88-9542-30a06bbe6082",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "a2fec4ec-395e-4aaa-be6b-cc64fbf62c00",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "5c2f9842-b6f0-4ec0-9f84-590ff261349a",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "kb&mouse",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [

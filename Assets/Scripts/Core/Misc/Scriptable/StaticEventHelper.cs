@@ -17,6 +17,12 @@ namespace Core.Misc.Scriptable
             GameStateManager.setInitialState(GameStateManager.Instance.gamePlayState);
         }
         
+        public void restartLevel()
+        {
+            GameStateManager.Instance.handleEvent(GameStateManager.Event.PlayGame);
+        }
+
+        
         public void setNormalLevelInitial()
         {
             GameStateManager.Instance.gamePlayState.setInitiallevelSceneName(GamePlayState.GamePlayScene);

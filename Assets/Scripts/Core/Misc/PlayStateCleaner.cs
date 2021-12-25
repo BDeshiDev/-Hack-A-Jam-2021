@@ -2,7 +2,6 @@
 using Core.Combat;
 using Core.Combat.Enemies;
 using Core.Input;
-using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,10 +31,10 @@ namespace Core.Misc
             }
             else if (playModeState == PlayModeStateChange.ExitingEditMode)
             {
-                GameStateManager.PlayModeEnterCleanup();
+                // GameStateManager.PlayModeEnterCleanup();
                 EnemyTracker.PlayModeEnterCleanup();
-                PoolManager.PlayModeEnterCleanup();
-                GameStateManager.PlayModeEnterCleanup();
+                GameplayPoolManager.PlayModeEnterCleanup();
+                // GameStateManager.PlayModeEnterCleanup();
             }
         }
     }

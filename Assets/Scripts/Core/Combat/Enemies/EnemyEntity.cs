@@ -107,7 +107,8 @@ namespace Core.Combat
         {
             Debug.Log(gameObject +"actualy die");
             invokeDeathEvent();
-            ReturnCallback?.Invoke(this);
+            
+            forceReturn();
             // Destroy(gameObject);
         }
 
@@ -144,7 +145,12 @@ namespace Core.Combat
             
             initializeFSM();
         }
-        
+
+        public void forceReturn()
+        {
+            ReturnCallback?.Invoke(this);
+        }
+
 
         public event Action<EnemyEntity> ReturnCallback;
     }

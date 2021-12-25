@@ -25,7 +25,7 @@ namespace Core.Combat
         {
             transform.position = spawnPos;
             transform.allignToDir(dir);
-            //projectiles should no magically change damagelayers if enemy gets brainwashed
+            //projectiles should not magically change damagelayers if enemy gets brainwashed
             //maybe lasers  but I'm not bothering with that now
             TargetingInfo = targetingInfo;
             durationTimer.reset();
@@ -97,12 +97,17 @@ namespace Core.Combat
         public void handleEnd()
         {
             // Destroy(gameObject);
-            ReturnCallback?.Invoke(this);
+            forceReturn();
         }
 
         public void initialize()
         {
-            //assume that the caller will call the other one for now
+            
+        }
+
+        public void forceReturn()
+        {
+            ReturnCallback?.Invoke(this);
         }
 
         public event Action<Projectile> ReturnCallback;

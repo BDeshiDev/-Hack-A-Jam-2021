@@ -1,8 +1,10 @@
+using System;
 using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using ShieldSan.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Core.Input
 {
@@ -42,9 +44,11 @@ namespace Core.Input
         [SerializeField]private InputActionReference dashAction;
         [SerializeField]private InputActionReference meleeAction;
         [SerializeField]private InputActionReference bombAction;
+        
         [SerializeField]private InputActionReference debugAction1;
         [SerializeField]private InputActionReference debugAction2;
         [SerializeField]private InputActionReference debugAction3;
+
 
         public static InputButtonSlot meleeButton = new InputButtonSlot();
         public static InputButtonSlot bombButton = new InputButtonSlot();
@@ -54,12 +58,53 @@ namespace Core.Input
         public static InputButtonSlot debugButton1 = new InputButtonSlot();
         public static InputButtonSlot debugButton2 = new InputButtonSlot();
         public static InputButtonSlot debugButton3 = new InputButtonSlot();
-        
 
+
+        private void Start()
+        {
+
+            if (GameStateManager.Instance!= null)
+            {
+                
+                if(GameStateManager.Instance.IsPaused)
+                    HandlePaused();
+                else
+                    handleUnPaused();
+                
+                GameStateManager.Instance.Paused += HandlePaused;
+                GameStateManager.Instance.UnPaused += handleUnPaused;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (GameStateManager.Instance != null)
+            {
+                GameStateManager.Instance.Paused -= HandlePaused;
+                GameStateManager.Instance.UnPaused -= handleUnPaused;
+            }
+        }
+
+        private void HandlePaused()
+        {
+            Debug.Log("pause input");
+            map.FindActionMap("Gameplay").Disable();
+        }
+
+        private void handleUnPaused()
+        {
+            Debug.Log("resume input");
+
+            map.FindActionMap("Gameplay").Enable();
+        }
 
 
         void Update()
         {
+            if(GameStateManager.Instance.IsPaused)
+            {
+                return;
+            }
             updateAim();
         }
 
@@ -67,13 +112,9 @@ namespace Core.Input
         {
             updateCam();
         }
+        
 
-        public void updateCam()
-        {
-            cam = Camera.main;
-        }
-
-
+    
         private void AimAlongPerformed(InputAction.CallbackContext obj)
         {
             GamePadAimActive = true;
@@ -81,6 +122,13 @@ namespace Core.Input
 
             gamepadVal = Vector2.zero;
         }
+        
+        public void updateCam()
+        {
+            cam = Camera.main;
+            cam = Camera.main;
+        }
+
         private void AimAlongCancelled(InputAction.CallbackContext obj)
         {
             GamePadAimActive = false;
@@ -144,7 +192,9 @@ namespace Core.Input
         
         public void updateAim()
         {
-            if(AimOrigin != null)
+            if(cam == null)
+                updateCam();
+            if(cam != null && AimOrigin != null)
                 calculateAimPoint(AimOrigin.position, 5, out aimPoint);
         }
 

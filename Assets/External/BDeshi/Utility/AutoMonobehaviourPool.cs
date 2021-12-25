@@ -8,6 +8,8 @@ namespace BDeshi.Utility
     public class AutoMonobehaviourPool<T> where T : MonoBehaviour, AutoPoolable<T>
     {
         private List<T> pool;
+        private HashSet<T> loaned = new HashSet<T>();
+        
         protected T prefab;
         private Transform spawnParent;
 
@@ -25,12 +27,19 @@ namespace BDeshi.Utility
 
         T createItem()
         {
+            T item = default(T);
+                        
             if (spawnParent != null)
             {
-                return Object.Instantiate(this.prefab, spawnParent,false);
+                item = Object.Instantiate(this.prefab, spawnParent,false);
+            }
+            else
+            {
+                item = Object.Instantiate(this.prefab);
             }
 
-            return Object.Instantiate(this.prefab);
+
+            return item;
         }
 
 
@@ -55,8 +64,10 @@ namespace BDeshi.Utility
             {
                 item = createItem();
             }
-            item.ReturnCallback += returnItem;
+            item.ReturnCallback += handleNormalReturn;
             item.initialize();
+            
+            loaned.Add(item);
             
             return item;
         }
@@ -69,10 +80,27 @@ namespace BDeshi.Utility
             }
         }
 
-        void returnItem(T item)
+        public void returnAll()
+        {
+            foreach (var item in loaned)
+            {
+                handleReturnInternal(item);
+            }
+            
+            loaned.Clear();
+        }
+
+
+        void handleNormalReturn(T item)
+        {
+            handleReturnInternal(item);
+            loaned.Remove(item);
+        }
+
+        void handleReturnInternal(T item)
         {
             item.gameObject.SetActive(false);
-            item.ReturnCallback -= returnItem;
+            item.ReturnCallback -= handleNormalReturn;
 
             pool.Add(item);
         }
@@ -81,6 +109,7 @@ namespace BDeshi.Utility
     public interface AutoPoolable<T>
     {
         void initialize();
+        void forceReturn();
         event Action<T> ReturnCallback;
     }
 }

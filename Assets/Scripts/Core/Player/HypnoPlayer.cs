@@ -38,7 +38,21 @@ namespace Core.Player
 
             return fsm;
         }
+
+        private void OnEnable()
+        {
+            healthComponent.Emptied += handleDeath;
+        }
         
+        private void OnDisable()
+        {
+            healthComponent.Emptied -= handleDeath;
+        }
+
+        private void handleDeath(ResourceComponent obj)
+        {
+            GameStateManager.Instance.handleEvent(GameStateManager.Event.Gameover);
+        }
 
 
         public void handleMeleeHeld()
@@ -60,7 +74,6 @@ namespace Core.Player
         {
             base.Start();
             healthComponent.fullyRestore();
-            Debug.Log("aaaa" + healthComponent.Ratio +" "+ healthComponent.Cur);
         }
     }
 }

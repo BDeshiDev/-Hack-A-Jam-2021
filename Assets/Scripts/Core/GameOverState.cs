@@ -36,7 +36,7 @@ namespace Core
         {
             startTWeen();
             
-            GameStateManager.Instance.IsPaused = true;
+            GameStateManager.Instance.pause();
             Time.timeScale = 0;
         }
 
@@ -50,7 +50,7 @@ namespace Core
             if(tween.IsPlaying())
                 tween.Rewind();
             
-            GameStateManager.Instance.IsPaused = true;
+            GameStateManager.Instance.unPause();
             Time.timeScale = 1;
         }
     }

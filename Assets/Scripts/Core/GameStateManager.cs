@@ -1,16 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BDeshi.BTSM;
 using bdeshi.utility;
+using BDeshi.Utility;
 using Core;
+using Core.Combat;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
+public class GameStateManager : MonoBehaviourSingletonPersistent<GameStateManager>
 {
     [SerializeField] FSMRunner runner;
-    public bool IsPaused= false;
+    public bool IsPaused =>isPaused;
+    [SerializeField] bool isPaused = false;
     public EventDrivenStateMachine<Event> fsm { get; private set; }
+
     public static State initialState;
 
     //need to reference these
@@ -19,46 +24,85 @@ public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
     // public GameState inGameOptionMenuState;
     // public GameState optionMenuState;
 
+    public event Action Paused;
+    public event Action UnPaused;
+    public event Action GameplaySceneChanged;
     
+
     protected override void initialize()
     {
-        base.initialize();
-        
-        gameoverState.AsChildOf(gamePlayState);
+
 
         if (initialState == null)
             initialState = gamePlayState;
         
-        fsm = new EventDrivenStateMachine<GameStateManager.Event>(initialState);
+        fsm = new EventDrivenStateMachine<GameStateManager.Event>(initialState ?? gamePlayState);
         
-        fsm.addEventTransition(gamePlayState, Event.EndGame, gameoverState);
-        fsm.addEventHandler(gameoverState , Event.PlayGame, restartGamepLayLevel);
-        
+        fsm.addEventTransition(gamePlayState, Event.Gameover, gameoverState);
+        fsm.addEventHandler(gameoverState , Event.PlayGame, restartGameplayLevel);
         fsm.addEventHandler(gamePlayState, Event.TutorialComplete,() => enterGameplayLevel(gamePlayState.levelSceneName));
         
-        
         runner = gameObject.AddComponent<FSMRunner>();
-        runner.Initialize(fsm, false);
+        runner.fsm = fsm;
+        // runner.Initialize(fsm, false);
     }
     
+    private void Start()
+    {
+        if (!willGetDestroyed)
+        {
+            if (initialState != null)
+                runner.fsm.startingState = initialState;
+            runner.Initialize(fsm, false);
+        }
+    }
+
+    public void pause()
+    {
+        if (!IsPaused)
+        {
+            isPaused = true;
+            Paused?.Invoke();
+        }
+    }
+    
+    public void unPause()
+    {
+        if (IsPaused)
+        {
+            isPaused = false;
+            UnPaused?.Invoke();
+        }
+    }
+
     public static bool setInitialState(State s)
     {
-        
-        if(Instance.fsm == null || Instance.fsm.curState != null)
+
+        if(Instance.fsm.curState != null)
             return false;
         
         initialState = s;
-        Instance.initialize();
+        
+        Debug.Log($"GameState initial set: {s}, currently {Instance.fsm.curState}" );
+
         
         return true;
     }
-    
 
+
+    public void InvokeGameplaySceneChanged()
+    {
+        GameplaySceneChanged?.Invoke();
+    }
 
     public void handleEvent(Event e)
     {
         if(Instance != null)
+        {
+            Debug.Log($"{fsm.curState} handle {e} ");
             Instance.fsm.handleEvent(e);
+            Debug.Log($"{fsm.curState} now ");
+        }
     }
 
     //only two levels needed for the jam so this is sufficient
@@ -74,15 +118,16 @@ public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
         fsm.transitionTo(gamePlayState, true, true);
     }
     
-    public void restartGamepLayLevel()
+    public void restartGameplayLevel()
     {
+        Debug.Log(gamePlayState, gamePlayState);
         fsm.transitionTo(gamePlayState, true, true);
     }
     
     public enum Event
     {
         PlayGame,
-        EndGame,
+        Gameover,
         TutorialComplete,
     }
 

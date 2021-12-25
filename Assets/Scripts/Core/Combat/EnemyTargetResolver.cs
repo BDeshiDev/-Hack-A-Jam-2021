@@ -62,6 +62,7 @@ namespace Core.Combat
             randomDirTimer.complete();
             handleNormalState();
             
+            player = GameObject.FindWithTag("Player").transform;
             mostAggroedTarget = null;
             aggroTracker.Clear();
             // aggroTracker.Add(player);
@@ -75,7 +76,7 @@ namespace Core.Combat
 
         private void Awake()
         {
-            player = GameObject.FindWithTag("Player").transform;
+
             self = GetComponent<EnemyEntity>();
         }
 
