@@ -20,16 +20,15 @@ namespace Core.Combat.Enemies
         {
             bullrushTimer.reset();
             postBullrushTimer.reset();
+            bullrushDir = blobEntity.LastLookDir;
             //could be used as  general dashs state if input and player refs are moved.
             //Not necessary at the moment
-            bullrushDir = blobEntity.LastLookDir;
-            bullrushHitBox.startDetection();
         }
 
         public override void Tick()
         {
             if(!bullrushTimer.isComplete)
-            {
+            {   
                 bullrushTimer.updateTimer(Time.deltaTime);
 
                 blobEntity.MoveComponent.moveInputThisFrame = bullrushDir 
@@ -45,7 +44,7 @@ namespace Core.Combat.Enemies
 
         public override void ExitState()
         {
-            Debug.Log("unbullrush");
+
             bullrushHitBox.stopDetection();
         }
     }

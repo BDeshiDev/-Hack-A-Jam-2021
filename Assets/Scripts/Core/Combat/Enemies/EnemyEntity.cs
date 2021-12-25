@@ -17,7 +17,11 @@ namespace Core.Combat
         [SerializeField] protected EnemyTargetResolver targetter;
         [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6.5f);
         [SerializeField] private FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
-        
+        [SerializeField] protected FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
+
+        public float berserkCoolDownMultiplier = .5f;
+        public float normalCoolDownDuration = 2f;
+
         /// <summary>
         /// Health and hypnosis are modified
         /// </summary>
@@ -50,6 +54,8 @@ namespace Core.Combat
                     berserkTransitionTimer.updateTimer(Time.deltaTime);
                 }
             }
+            attackCoolDown.safeUpdateTimer(Time.deltaTime);
+
         }
 
         protected override void Awake()
@@ -123,9 +129,11 @@ namespace Core.Combat
 
         protected virtual void HandleBerserked(HypnoComponent obj)
         {
-
             targetter.handleBerserk();
             targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
+            
+            attackCoolDown.reset( attackCoolDown.maxValue * berserkCoolDownMultiplier);
+            fsm.handleEvent(Events.Berserk);
         }
 
         protected void OnHypnotized(HypnoComponent obj)
@@ -145,6 +153,8 @@ namespace Core.Combat
             berserkTransitionTimer.reset();
 
             initializeFSM();
+            
+            attackCoolDown.reset(normalCoolDownDuration);
         }
 
         public void handleForceReturn()

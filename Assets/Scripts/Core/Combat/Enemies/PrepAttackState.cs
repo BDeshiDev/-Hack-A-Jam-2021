@@ -16,6 +16,7 @@ namespace Core.Combat.Enemies
         [SerializeField] UnityEvent OnPrepFinish;
         public float moveSpeedModifier = 1.67f;
         public bool IsComplete => maxTimer.isComplete || (WasInRangeLastFrame && minTimer.isComplete);
+        public bool IsTimeout =>  maxTimer.isComplete;
         public override void EnterState()
         {
             maxTimer.reset();

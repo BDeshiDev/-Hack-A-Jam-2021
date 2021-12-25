@@ -2915,7 +2915,7 @@ PrefabInstance:
     - target: {fileID: 1400684792932973727, guid: 713121471e14c0041ac4049031764c52,
         type: 3}
       propertyPath: max
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1400684792932973734, guid: 713121471e14c0041ac4049031764c52,
         type: 3}
@@ -3348,6 +3348,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2554705193655888869, guid: ba4f1866855436f4197668f8f8430cd9,
+        type: 3}
+      propertyPath: backOffSpeedMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554705193655888869, guid: ba4f1866855436f4197668f8f8430cd9,
+        type: 3}
+      propertyPath: preBullrushBackOffTimer.maxValue
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6374371920892130087, guid: ba4f1866855436f4197668f8f8430cd9,
         type: 3}
       propertyPath: m_RootOrder

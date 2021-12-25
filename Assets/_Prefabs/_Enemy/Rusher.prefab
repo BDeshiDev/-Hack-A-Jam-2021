@@ -59,6 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5897848764729110539}
   - component: {fileID: 2554705193655888869}
+  - component: {fileID: 417980354651326983}
   m_Layer: 14
   m_Name: BullRushAttack
   m_TagString: Untagged
@@ -93,14 +94,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0815f48d17c940b992027f3c98dd5d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobEntity: {fileID: 6374371920892130082}
+  blobEntity: {fileID: 7283351451064670967}
   bullrushDir: {x: 0, y: 0}
   bullrushTimer:
     timer: 0
     maxValue: 0.9
   postBullrushTimer:
     timer: 0
-    maxValue: 0.9
+    maxValue: 0.8
   bullrushSpeedMultiplier: 3
   bullrushSpeedCurve:
     serializedVersion: 2
@@ -145,6 +146,35 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   bullrushHitBox: {fileID: 2664062920105693704}
+--- !u!114 &417980354651326983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2172345503712086886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b31148583a46ba98ccb17989ab68f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 7283351451064670967}
+  range: 0.2
+  maxTimer:
+    timer: 0
+    maxValue: 0.5
+  minTimer:
+    timer: 0
+    maxValue: 0.5
+  WasInRangeLastFrame: 0
+  lookAtTarget: 1
+  OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeedModifier: -0.6
 --- !u!1 &4021778303957065472
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a553e62e2e87494a8c44b6a98be3e9ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 6374371920892130082}
+  entity: {fileID: 7283351451064670967}
   minRange: 8
   maxrange: 8
   backOffSpeedMultiplier: 0.3
@@ -212,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b31148583a46ba98ccb17989ab68f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 6374371920892130082}
+  entity: {fileID: 7283351451064670967}
   range: 4
   maxTimer:
     timer: 0
@@ -270,6 +300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6374371919990639710}
+  - component: {fileID: 8708693650326646545}
   - component: {fileID: 6374371919990639711}
   m_Layer: 14
   m_Name: BullRushAttack
@@ -293,6 +324,35 @@ Transform:
   m_Father: {fileID: 6374371920468186290}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8708693650326646545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374371919990639705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b31148583a46ba98ccb17989ab68f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 7283351451064670967}
+  range: 0.2
+  maxTimer:
+    timer: 0
+    maxValue: 0.5
+  minTimer:
+    timer: 0
+    maxValue: 0.5
+  WasInRangeLastFrame: 0
+  lookAtTarget: 1
+  OnPrepStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrepFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeedModifier: -0.6
 --- !u!114 &6374371919990639711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0815f48d17c940b992027f3c98dd5d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobEntity: {fileID: 6374371920892130082}
+  blobEntity: {fileID: 7283351451064670967}
   bullrushDir: {x: 0, y: 0}
   bullrushTimer:
     timer: 0
@@ -313,7 +373,7 @@ MonoBehaviour:
   postBullrushTimer:
     timer: 0
     maxValue: 0.9
-  bullrushSpeedMultiplier: 3
+  bullrushSpeedMultiplier: 4
   bullrushSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -402,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a553e62e2e87494a8c44b6a98be3e9ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 6374371920892130082}
+  entity: {fileID: 7283351451064670967}
   minRange: 8
   maxrange: 8
   backOffSpeedMultiplier: 0.3
@@ -424,7 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b31148583a46ba98ccb17989ab68f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 6374371920892130082}
+  entity: {fileID: 7283351451064670967}
   range: 4
   maxTimer:
     timer: 0
@@ -517,7 +577,7 @@ MonoBehaviour:
   status: 0
   targetter: {fileID: 6374371920892130142}
   damagePerHit:
-    healthDamage: 30
+    healthDamage: 20
     hypnoDamage: 0
   showIfInactive: 0
 --- !u!1 &6374371920892130137
@@ -533,11 +593,11 @@ GameObject:
   - component: {fileID: 6374371920892130081}
   - component: {fileID: 6374371920892130080}
   - component: {fileID: 6374371920892130083}
-  - component: {fileID: 6374371920892130082}
   - component: {fileID: 6374371920892130141}
   - component: {fileID: 6374371920892130140}
   - component: {fileID: 6374371920892130143}
   - component: {fileID: 6374371920892130142}
+  - component: {fileID: 7283351451064670967}
   m_Layer: 14
   m_Name: Rusher
   m_TagString: Untagged
@@ -678,40 +738,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6374371920892130082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6374371920892130137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3b14261f0f845049b1915e3e43be825, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
-  isInvulnerable: 0
-  spriter: {fileID: 0}
-  fsmRunner: {fileID: 0}
-  aimer: {fileID: 6374371920638267522}
-  targetter: {fileID: 0}
-  berserkTimer:
-    timer: 0
-    maxValue: 6
-  berserkTransitionTimer:
-    timer: 0
-    maxValue: 6
-  normalMaintainRangeState: {fileID: 6374371920468186291}
-  normalPrepAttackState: {fileID: 6374371920468186285}
-  normalAttackState: {fileID: 6374371919990639711}
-  berserkMaintainRangeState: {fileID: 7021939281493712995}
-  berserkPrepAttackState: {fileID: 1932788759437587279}
-  berserkAttackState: {fileID: 2554705193655888869}
-  attackCoolDown:
-    timer: 0
-    maxValue: 2
-  berserkCoolDownMultiplier: 0.25
 --- !u!114 &6374371920892130141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,8 +825,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   hypnoDamageHealthScalingFactor: 1.5
   hypnoRecoveryPerHealthDamage: 0.5
-  maxHypnoLossRate: 0
-  actualMaxHypno: 0
   curState: 0
 --- !u!114 &6374371920892130140
 MonoBehaviour:
@@ -853,6 +877,43 @@ MonoBehaviour:
   randomDirTimer:
     timer: 0
     maxValue: 1.85
+--- !u!114 &7283351451064670967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374371920892130137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e424e762a78404899f37b60a1553da0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 0}
+  isInvulnerable: 0
+  spriter: {fileID: 0}
+  fsmRunner: {fileID: 0}
+  aimer: {fileID: 6374371920638267522}
+  targetter: {fileID: 0}
+  berserkTimer:
+    timer: 0
+    maxValue: 6.5
+  berserkTransitionTimer:
+    timer: 0
+    maxValue: 6
+  attackCoolDown:
+    timer: 0
+    maxValue: 2
+  berserkCoolDownMultiplier: 0.5
+  normalCoolDownDuration: 2
+  normalMaintainRangeState: {fileID: 6374371920468186291}
+  normalPrepAttackState: {fileID: 6374371920468186285}
+  preAttackBackoffState: {fileID: 8708693650326646545}
+  normalAttackState: {fileID: 6374371919990639711}
+  berserkMaintainRangeState: {fileID: 7021939281493712995}
+  berserkPrepAttackState: {fileID: 8708693650326646545}
+  berserkPreAttackBackoffState: {fileID: 417980354651326983}
+  berserkAttackState: {fileID: 2554705193655888869}
 --- !u!1001 &6374371920018451044
 PrefabInstance:
   m_ObjectHideFlags: 0

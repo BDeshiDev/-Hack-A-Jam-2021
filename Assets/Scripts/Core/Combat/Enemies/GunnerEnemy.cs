@@ -8,18 +8,15 @@ using UnityEngine.Serialization;
 
 namespace Core.Combat.Enemies
 {
-    public class BasicEnemy : EnemyEntity
+    public class GunnerEnemy : EnemyEntity
     {
         [SerializeField] MaintainRangeState normalMaintainRangeState;
         [SerializeField] PrepAttackState normalPrepAttackState;
         [SerializeField] AttackState normalAttackState;
-        
         [SerializeField] MaintainRangeState berserkMaintainRangeState;
         [SerializeField] PrepAttackState berserkPrepAttackState;
         [SerializeField] AttackState berserkAttackState;
-        [SerializeField] FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
-        public float berserkCoolDownMultiplier = .5f;
-        public float normalCoolDownDuration = 2f;
+
 
 
         public override EventDrivenStateMachine<Events> createFSM()
@@ -48,29 +45,6 @@ namespace Core.Combat.Enemies
                 {
                     attackCoolDown.reset();
                 });
-        }
-
-        protected override  void Update()
-        {
-            base.Update();
-
-            attackCoolDown.safeUpdateTimer(Time.deltaTime);
-            
-        }
-
-        public override void initialize()
-        {
-            base.initialize();
-            
-            attackCoolDown.reset(normalCoolDownDuration);
-        }
-
-        protected override void HandleBerserked(HypnoComponent obj)
-        {
-            base.HandleBerserked(obj);
-            
-            attackCoolDown.reset( attackCoolDown.maxValue * berserkCoolDownMultiplier);
-            fsm.handleEvent(Events.Berserk);
         }
     }
 }

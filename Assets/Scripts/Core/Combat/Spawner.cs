@@ -18,6 +18,8 @@ namespace Core.Combat
         [SerializeField] private int actualWaveCount = 0;
         public SummoningCircle summoningCirclePrefab;
 
+        public int lastReachedWave => actualWaveCount;
+        
         public List<Wave> waves;
         public event Action<int> waveCompleted;
         public int remainingCountInWave = 0;
