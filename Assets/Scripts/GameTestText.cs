@@ -18,7 +18,7 @@ public class GameTestText : MonoBehaviour
 
     private void Update()
     {
-        if (!GameStateManager.isPaused)
+        if (!GameStateManager.Instance.IsPaused)
         {
             if(timer.tryCompleteTimer(Time.deltaTime))
             {

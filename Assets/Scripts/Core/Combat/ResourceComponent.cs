@@ -22,13 +22,11 @@ namespace Core.Combat
 
         public void fullyRestore()
         {
-            if (IsEmpty)
-            {
-                cur = max;
-            }
-            else {
-                cur = max;
-            }
+            if(cur>=max)
+                return;
+
+            cur = max;
+            Capped?.Invoke(this);
 
             RatioChanged?.Invoke(this);
         }

@@ -101,9 +101,9 @@ namespace BDeshi.BTSM
         /// If true, call the enter function in the state(s) transitioned to
         /// Usecase: initialize curState without calling enter
         /// </param>
-        public void transitionTo(State newState, bool callEnter = true)
+        public void transitionTo(State newState, bool callEnter = true, bool forceEnterIfSameState = false)
         {
-            if (newState != null && newState != curState)
+            if (newState != null && (newState != curState || forceEnterIfSameState))
             {
 #if DEBUG
                 if (DebugContext)

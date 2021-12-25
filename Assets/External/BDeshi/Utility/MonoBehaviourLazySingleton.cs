@@ -62,6 +62,7 @@ namespace bdeshi.utility
         {
             appicationQuitting = false;
         }
+        
 
     }
 }

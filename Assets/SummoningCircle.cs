@@ -28,6 +28,7 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
             .Insert(0,spriter1.DOFade(1,animDuration))
             .Insert(0,spriter2.DOFade(1,animDuration))
             ;
+        // Debug.Log(t == null);
         yield return t.WaitForCompletion();
         var e = PoolManager.Instance.enemyPool.get(prefab);
         e.transform.position = position;

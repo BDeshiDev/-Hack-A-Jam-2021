@@ -39,7 +39,7 @@ Material:
     m_Ints: []
     m_Floats:
     - Vector1_60A18603: 2.2
-    - _EmissionIntensity: 0.36
+    - _EmissionIntensity: 2.2
     m_Colors:
     - Color_99455B67: {r: 1, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 0, b: 0, a: 0}

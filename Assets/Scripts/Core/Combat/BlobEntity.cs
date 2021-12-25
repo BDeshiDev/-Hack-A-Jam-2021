@@ -38,7 +38,7 @@ namespace Core.Combat
         }
         
         
-        private void Start()
+        protected virtual void Start()
         {
             initializeFSM();
         }

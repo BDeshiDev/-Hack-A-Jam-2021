@@ -13,6 +13,9 @@ namespace Core.Player
         [SerializeField] PlayerIdleState idleState;
         [SerializeField] PlayerChargableAttackState chargableAttackState;
         [SerializeField] PlayerDashState dashState;
+
+        
+
         public override void look(Vector3 dir, Vector3 aimPoint)
         {
             base.look(dir, aimPoint);
@@ -51,6 +54,13 @@ namespace Core.Player
         public void handleDashHeld()
         {
             fsm.handleEvent(Events.Dash);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            healthComponent.fullyRestore();
+            Debug.Log("aaaa" + healthComponent.Ratio +" "+ healthComponent.Cur);
         }
     }
 }

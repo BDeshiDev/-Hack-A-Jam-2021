@@ -5,48 +5,23 @@ namespace Core.Misc.Scriptable
     [CreateAssetMenu(menuName = "Scriptables/StaticEventHelper", fileName = "StaticEventHelper")]
     public class StaticEventHelper : ScriptableObject
     {
-        public void PauseGameEvent()
+        public void setGameoverStateInitial()
         {
-            GameStateManager.Instance.handleEvent(GameStateManager.Event.PauseToggle);
+            GameStateManager.setInitialState(GameStateManager.Instance.gameoverState);
         }
 
-        public void GoToTitleEvent()
+        
+        public void setTutorialLevelInitial()
         {
-            GameStateManager.Instance.handleEvent(GameStateManager.Event.GoToTitle);
+            GameStateManager.Instance.gamePlayState.setInitiallevelSceneName(GamePlayState.GamePlayScene);
+            GameStateManager.setInitialState(GameStateManager.Instance.gamePlayState);
         }
         
-        public void ViewOptionsEvent()
+        public void setNormalLevelInitial()
         {
-            GameStateManager.Instance.handleEvent(GameStateManager.Event.ViewOptions);
+            GameStateManager.Instance.gamePlayState.setInitiallevelSceneName(GamePlayState.GamePlayScene);
+            GameStateManager.setInitialState(GameStateManager.Instance.gamePlayState);
         }
-        
-          
-        public void PlayGameEvent()
-        {
-            GameStateManager.Instance.handleEvent(GameStateManager.Event.PlayGame);
-        }
-        
-        public void setPauseStateInitial()
-        {
-            GameStateManager.setInitialState(GameStateManager.pauseMenuState);
-        }
-
-        public void setTitleStateInitial()
-        {
-            GameStateManager.setInitialState(GameStateManager.titleMenuState);
-        }
-        
-        public void setViewOptionsStateInitial()
-        {
-            GameStateManager.setInitialState(GameStateManager.optionMenuState);
-        }
-        
-        
-        public void setGamplayStateInitial()
-        {
-            GameStateManager.setInitialState(GameStateManager.gamePlayState);
-        }
-
 
 
     }

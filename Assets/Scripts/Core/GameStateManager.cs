@@ -1,62 +1,58 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using BDeshi.BTSM;
 using bdeshi.utility;
+using Core;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
 {
     [SerializeField] FSMRunner runner;
-    public static bool isPaused { get; private set; } = false;
+    public bool IsPaused= false;
     public EventDrivenStateMachine<Event> fsm { get; private set; }
     public static State initialState;
 
-    public static StateBase titleMenuState { get; } = new TitleMenuState();
-    public static StateBase optionMenuState { get; } = new GameState("Options Menu");
-    public static StateBase gamePlayState { get; } = new GamePlayState();
-    public static StateBase pauseMenuState { get; } = new GamePausedState("PauseMenu");
-    public static StateBase inGameOptionMenuState  { get; }= new GameState("Options Menu");
-    
+    //need to reference these
+    public GamePlayState gamePlayState;
+    public GameOverState gameoverState;
+    // public GameState inGameOptionMenuState;
+    // public GameState optionMenuState;
+
     
     protected override void initialize()
     {
         base.initialize();
         
-        optionMenuState.AsChildOf(titleMenuState);
-        pauseMenuState.AsChildOf(gamePlayState);
-        inGameOptionMenuState.AsChildOf(pauseMenuState);
+        gameoverState.AsChildOf(gamePlayState);
 
         if (initialState == null)
             initialState = gamePlayState;
         
         fsm = new EventDrivenStateMachine<GameStateManager.Event>(initialState);
-        fsm.addEventTransition(titleMenuState, Event.ViewOptions, optionMenuState);
         
-        fsm.addEventTransition(gamePlayState, Event.PauseToggle, pauseMenuState);
+        fsm.addEventTransition(gamePlayState, Event.EndGame, gameoverState);
+        fsm.addEventHandler(gameoverState , Event.PlayGame, restartGamepLayLevel);
         
-        fsm.addEventTransition(pauseMenuState, Event.PauseToggle, gamePlayState);
-        fsm.addEventTransition(pauseMenuState, Event.ViewOptions, inGameOptionMenuState);
-        fsm.addEventTransition(optionMenuState, Event.ViewOptions, pauseMenuState);
+        fsm.addEventHandler(gamePlayState, Event.TutorialComplete,() => enterGameplayLevel(gamePlayState.levelSceneName));
         
-        fsm.addGlobalEventTransition(Event.PlayGame, gamePlayState);
-        fsm.addGlobalEventTransition(Event.GoToTitle, titleMenuState);
         
         runner = gameObject.AddComponent<FSMRunner>();
         runner.Initialize(fsm, false);
     }
     
-    public static void setInitialState(State s)
+    public static bool setInitialState(State s)
     {
+        
+        if(Instance.fsm == null || Instance.fsm.curState != null)
+            return false;
+        
         initialState = s;
-        
-        if(Instance.fsm.curState != null)
-            return;
-        
         Instance.initialize();
+        
+        return true;
     }
-
+    
 
 
     public void handleEvent(Event e)
@@ -64,101 +60,31 @@ public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
         if(Instance != null)
             Instance.fsm.handleEvent(e);
     }
+
+    //only two levels needed for the jam so this is sufficient
+    public void enterGameplayLevel(string levelName)
+    {
+        if (levelName == gamePlayState.levelSceneName)
+        {
+            return;
+        }
+
+        gamePlayState.levelSceneName = levelName;
+        
+        fsm.transitionTo(gamePlayState, true, true);
+    }
     
-    
+    public void restartGamepLayLevel()
+    {
+        fsm.transitionTo(gamePlayState, true, true);
+    }
     
     public enum Event
     {
-        PauseToggle,
         PlayGame,
-        ViewOptions,
-        GoToTitle,
+        EndGame,
+        TutorialComplete,
     }
 
-    public class GameState : StateBase
-    {
-        public GameState()
-        {
-        }
-
-        public GameState(string prefix)
-        {
-            this.Prefix = prefix;
-        }
-
-        public override void EnterState()
-        {
-            Debug.Log($"Enter {FullStateName}", GameStateManager.Instance);
-        }
-
-        public override void Tick()
-        {
-            
-        }
-
-        public override void ExitState()
-        {
-            
-        }
-    }
-    
-    public class GamePausedState: GameState
-    {
-        public GamePausedState(String prefix) : base(prefix)
-        {
-        }
-
-        public override void EnterState()
-        {
-            base.EnterState();
-            Debug.Log("paused");
-            isPaused = true;
-        }
-
-        public override void ExitState()
-        {
-            base.ExitState();
-            isPaused = false;
-        }
-    }
-    
+  
 }
-
-public class GamePlayState : StateBase
-{
-    public override void EnterState()
-    {
-        SceneManager.LoadScene("GamePlayScene");
-        Debug.Log("VAR");
-    }
-
-    public override void Tick()
-    {
-        
-    }
-
-    public override void ExitState()
-    {
-        
-    }
-}
-
-public class TitleMenuState : GameStateManager.GameState
-{
-    public override void EnterState()
-    {
-        SceneManager.LoadScene("TitleScene");
-    }
-
-    public override void Tick()
-    {
-        
-    }
-
-    public override void ExitState()
-    {
-        
-    }
-}
-
-

@@ -35,6 +35,7 @@ namespace Core.Misc
                 GameStateManager.PlayModeEnterCleanup();
                 EnemyTracker.PlayModeEnterCleanup();
                 PoolManager.PlayModeEnterCleanup();
+                GameStateManager.PlayModeEnterCleanup();
             }
         }
     }
