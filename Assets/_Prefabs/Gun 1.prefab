@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5255754624123825247}
   - component: {fileID: 5255754624123825245}
   - component: {fileID: 5255754624123825246}
+  - component: {fileID: 7712736669802163641}
   m_Layer: 14
   m_Name: Gun 1
   m_TagString: Untagged
@@ -98,9 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcfb2025d704a7cacbe9a89d1b0e295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotPoint: {fileID: 5255754625713581221}
   prefab: {fileID: 7937409385446727007, guid: b875bd687cd77b945974b0f015d6bb44, type: 3}
-  targetter: {fileID: 0}
   shotPattern:
     id: 0
   references:
@@ -111,6 +110,26 @@ MonoBehaviour:
         spawnRadius: 0.25
         angle: 360
         count: 13
+--- !u!114 &7712736669802163641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255754624123825248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13f498e2316c42b8bf2744a980e7dfb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotPoint: {fileID: 5255754625713581221}
+  ShotFired:
+    m_PersistentCalls:
+      m_Calls: []
+  BlankFired:
+    m_PersistentCalls:
+      m_Calls: []
+  ammoComponent: {fileID: 0}
 --- !u!1001 &8151849145425814299
 PrefabInstance:
   m_ObjectHideFlags: 0

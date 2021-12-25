@@ -78,6 +78,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 3652443391684646396}
+    - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
       propertyPath: gunShotTimer.maxValue
       value: 8
       objectReference: {fileID: 0}
@@ -123,5 +128,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bcfb2025d704a7cacbe9a89d1b0e295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3652443391684646396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8858965273859437458, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+    type: 3}
+  m_PrefabInstance: {fileID: 5206521891103155822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13f498e2316c42b8bf2744a980e7dfb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

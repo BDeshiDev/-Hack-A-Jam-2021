@@ -9,10 +9,6 @@ namespace Core.Combat.Enemies
 {
     public class GunAttackState : AttackState
     {
-        [FormerlySerializedAs("gun")] 
-        [SerializeField] GunShot gunShot;
-        public Transform shotPoint;
-        
         [FormerlySerializedAs("postShotWaitTimer")] 
         [SerializeField] 
         FiniteTimer gunShotTimer = new FiniteTimer(1.8f);
@@ -20,20 +16,15 @@ namespace Core.Combat.Enemies
         /// Loop through this during timer based on gunshotIndex, index++ when the time is matched and the shot is fired 
         /// </summary>
         [SerializeField] List<GunShotRound> gunshotRounds = new List<GunShotRound>();
-        [SerializeField] private TargetResolverComponent targetResolverComponent;
+        
         [SerializeField] private int gunShotIndex = 0;
         //Player can fire directly from enterstate
         [SerializeField] private bool shotFirstRoundAsap;
         //use for muzzle flashes
-        [SerializeField] private UnityEvent ShotFired;
-
         [SerializeField] private bool allowMidAttackDirectionChange = false;
         [SerializeField] float maxAngleChangePerSec = 50;
 
-        private void Awake()
-        {
-            targetResolverComponent = GetComponentInParent<TargetResolverComponent>();
-        }
+        [SerializeField] private Gun gun;
 
         public override void EnterState()
         {
@@ -46,6 +37,11 @@ namespace Core.Combat.Enemies
             }
         }
 
+        private void shootCurrentRound()
+        {
+            gun.shoot( gunshotRounds[gunShotIndex++].gunShot,blobEntity.TargetResolverComponent );
+        }
+
         public override void Tick()
         {
             gunShotTimer.safeUpdateTimer(Time.deltaTime);
@@ -56,13 +52,16 @@ namespace Core.Combat.Enemies
                     updateDirection();
                 }
 
-                if(gunshotRounds[gunShotIndex].shotTimeNormalized < gunShotTimer.Ratio)
+                if (gunShotIndex < gunshotRounds.Count
+                    && gunshotRounds[gunShotIndex].shotTimeNormalized < gunShotTimer.Ratio
+                )
                 {
                     shootCurrentRound();
                 }
             }
         }
-        
+
+        private Vector2 v;
         private void updateDirection()
         {
             Vector3 idealDir= (blobEntity.TargetResolverComponent.getTargetPos() - blobEntity.transform.position).normalized;
@@ -72,15 +71,10 @@ namespace Core.Combat.Enemies
                                 idealDir, 
                                 maxAngleChangePerSec * Time.deltaTime,
                                 1);//both already normalized, doesn't matter
+            
             blobEntity.lookAlong(newLookDir);
         }
 
-        void shootCurrentRound()
-        {
-            gunshotRounds[gunShotIndex++].gunShot.shoot(shotPoint,targetResolverComponent);
-            
-            ShotFired.Invoke();
-        }
 
         public override void ExitState()
         {
@@ -89,8 +83,7 @@ namespace Core.Combat.Enemies
 
         public override bool IsComplete => gunShotTimer.isComplete;
     }
-    
-            
+
     [Serializable]
     public class GunShotRound
     {

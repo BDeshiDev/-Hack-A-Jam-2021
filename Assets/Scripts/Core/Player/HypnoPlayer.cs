@@ -1,6 +1,7 @@
 ﻿using System;
 using BDeshi.BTSM;
 using Core.Combat;
+using Core.Combat.Enemies;
 using Core.Physics;
 using UnityEngine;
 
@@ -11,10 +12,14 @@ namespace Core.Player
     {
         [SerializeField] Transform shootIndicator;
         [SerializeField] PlayerIdleState idleState;
+        //tested melee but it was too slow for the player.
         [SerializeField] PlayerChargableAttackState chargableAttackState;
         [SerializeField] PlayerDashState dashState;
         public override TargetResolverComponent TargetResolverComponent => playerTargetter;
         TargetResolverComponent playerTargetter;
+        
+        public GunAttackState playerGunState;
+        
         
 
         public override void look(Vector3 dir, Vector3 aimPoint)
@@ -28,15 +33,23 @@ namespace Core.Player
             EventDrivenStateMachine<Events> fsm = new EventDrivenStateMachine<Events>(idleState);
             
             fsm.addTransition(dashState, idleState,()=> dashState.IsComplete);
-            fsm.addTransition(chargableAttackState, idleState,()=> chargableAttackState.IsComplete);
             
-            fsm.addEventTransition(idleState,Events.MeleeChargeStart, chargableAttackState );
 
             fsm.addGlobalEventTransition(Events.Dash, dashState);
-            fsm.addGlobalEventTransition(Events.MeleeChargeStart, chargableAttackState );
-
-            fsm.addEventHandler(chargableAttackState, Events.MeleeChargeRelease, chargableAttackState.handleChargeReleased);
-
+            
+            // disabled melee
+            // fsm.addTransition(chargableAttackState, idleState,()=> chargableAttackState.IsComplete);
+            // fsm.addEventTransition(idleState,Events.Attack1Held, chargableAttackState );
+            // fsm.addGlobalEventTransition(Events.Attack1Held, chargableAttackState );
+            
+            // fsm.addEventHandler(chargableAttackState, Events.Attack1Release, chargableAttackState.handleChargeReleased);
+            
+            //can shoot from any state except dash
+            fsm.addEventTransition(idleState, Events.Attack1Held, playerGunState);
+            fsm.addTransition(playerGunState, idleState, () => playerGunState.IsComplete);
+            fsm.addEventHandler(playerGunState, Events.Attack1Held,
+                () => { fsm.transitionTo(playerGunState, true, true); }
+                );
             return fsm;
         }
 
@@ -66,12 +79,12 @@ namespace Core.Player
 
         public void handleMeleeHeld()
         {
-            fsm.handleEvent(Events.MeleeChargeStart);
+            fsm.handleEvent(Events.Attack1Held);
         }
 
         public void handleMeleeReleased()
         {
-            fsm.handleEvent(Events.MeleeChargeRelease);
+            fsm.handleEvent(Events.Attack1Release);
         }
 
         public void handleDashHeld()

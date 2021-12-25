@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7937409385446727008}
   - component: {fileID: 7937409385446727007}
   m_Layer: 17
-  m_Name: Projectile
+  m_Name: hypno projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 7937409385446727006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.366, y: -0.261, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,47 +100,47 @@ MonoBehaviour:
   sizeFactor: {x: 1, y: 1, z: 1}
   durationTimer:
     timer: 0
-    maxValue: 3
-  speed: 20
+    maxValue: 1
+  speed: 60
   onHit:
     m_PersistentCalls:
       m_Calls: []
   knockbackForce: 6
   TargetingInfo: {fileID: 0}
   damage:
-    healthDamage: 10
-    hypnoDamage: 0
+    healthDamage: 0
+    hypnoDamage: 20
   spriter: {fileID: 7937409385446727008}
   speedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.3559208
-      inSlope: 12.128521
-      outSlope: 12.128521
+      value: 0.98106766
+      inSlope: -2.8398974
+      outSlope: -2.8398974
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.073919
+      outWeight: 0.13120466
     - serializedVersion: 3
-      time: 0.16197702
-      value: 0.9992839
-      inSlope: -0.06866526
-      outSlope: -0.06866526
+      time: 0.8346172
+      value: 0.039245605
+      inSlope: -0.028530175
+      outSlope: -0.028530175
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.32351664
     - serializedVersion: 3
       time: 1
-      value: 0.0070762634
-      inSlope: -2.2055922
-      outSlope: -2.2055922
-      tangentMode: 0
+      value: 0
+      inSlope: Infinity
+      outSlope: 0
+      tangentMode: 7
       weightedMode: 0
-      inWeight: 0.1178856
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

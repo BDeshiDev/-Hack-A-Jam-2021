@@ -20,6 +20,7 @@ namespace Core.Combat
         public Vector3 ShotDir => transform.right;
         public DamageInfo damage;
         [SerializeField]private SpriteRenderer spriter;
+        public AnimationCurve speedCurve = AnimationCurve.EaseInOut(0,1,0,0);
 
         public void initialize(Vector3 spawnPos, Vector3 dir, TargettingInfo targetingInfo)
         {
@@ -68,7 +69,7 @@ namespace Core.Combat
 
         private void move(float delta)
         {
-            var moveAmount = speed * delta;
+            var moveAmount = speedCurve.Evaluate(durationTimer.Ratio) *  speed * delta;
             var hit = queryCollision(moveAmount);
 
             if (hit && hit.collider != null)

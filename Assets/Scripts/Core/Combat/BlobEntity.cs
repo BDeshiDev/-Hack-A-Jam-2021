@@ -54,8 +54,8 @@ namespace Core.Combat
         public enum Events
         {
             //playerside
-            MeleeChargeStart,
-            MeleeChargeRelease,
+            Attack1Held,
+            Attack1Release,
             //EnemySide,
             
             

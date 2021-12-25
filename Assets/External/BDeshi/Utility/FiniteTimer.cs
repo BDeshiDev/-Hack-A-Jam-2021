@@ -86,10 +86,10 @@ namespace BDeshi.Utility
             reset();
         }
 
-        public void cyclicReset()
+        public void resetAndKeepExtra()
         {
-            if (Ratio > 1)
-                timer = maxValue * (Ratio - 1);
+            if (timer > maxValue)
+                timer -= maxValue;
             else
                 reset();
         }

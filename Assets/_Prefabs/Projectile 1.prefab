@@ -100,8 +100,8 @@ MonoBehaviour:
   sizeFactor: {x: 1, y: 1, z: 1}
   durationTimer:
     timer: 0
-    maxValue: 5
-  speed: 12
+    maxValue: 3
+  speed: 20
   onHit:
     m_PersistentCalls:
       m_Calls: []
@@ -111,3 +111,36 @@ MonoBehaviour:
     healthDamage: 4
     hypnoDamage: 0
   spriter: {fileID: 7937409385446727008}
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.3559208
+      inSlope: 12.128521
+      outSlope: 12.128521
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.073919
+    - serializedVersion: 3
+      time: 0.16197702
+      value: 0.9992839
+      inSlope: -0.06866526
+      outSlope: -0.06866526
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.0070762634
+      inSlope: -2.2055922
+      outSlope: -2.2055922
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1178856
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
