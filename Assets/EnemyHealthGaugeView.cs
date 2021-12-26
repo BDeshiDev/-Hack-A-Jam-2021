@@ -133,7 +133,7 @@ public class EnemyHealthGaugeView : MonoBehaviour
 
     private void handleBerserked(HypnoComponent obj)
     {
-        Fillspriter.color = berserkColor;
+        FillColorGroup.Color = berserkColor;
         
         setFillHeight(1);
 

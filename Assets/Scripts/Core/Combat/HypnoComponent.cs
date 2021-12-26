@@ -47,7 +47,9 @@ namespace Core.Combat
         [SerializeField] private HypnosisState curState;
 
         private HealthComponent healthComponent;
-        
+        private float dotRate;
+        [SerializeField] float normalStateDOTMultiplier = .3f;
+
 
         public override void handleCapped()
         {
@@ -111,8 +113,8 @@ namespace Core.Combat
             {
                 hypnoDOTIncreaseTimer.safeUpdateTimer(Time.deltaTime);
                 
-                var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
-                healthComponent.reduceAmount(dotDamage);
+                dotRate = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) ;
+                healthComponent.reduceAmount(dotRate * Time.deltaTime);
                 
                 hypnoRecoverySpeedChangeTimer.safeUpdateTimer(Time.deltaTime);
                 curHypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate = Mathf.Lerp(
@@ -125,12 +127,10 @@ namespace Core.Combat
             reduceAmount(Time.deltaTime * curHypnosisRecoveryRate);
 
             
-            //might be too op 
-            // if (hypnoDOTActive)
-            // {
-            //     var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
-            //     healthComponent.reduceAmount(dotDamage);
-            // }
+             if (hypnoDOTActive)
+             {
+                 healthComponent.reduceAmount(dotRate * normalStateDOTMultiplier * Time.deltaTime);
+             }
             
             
         }

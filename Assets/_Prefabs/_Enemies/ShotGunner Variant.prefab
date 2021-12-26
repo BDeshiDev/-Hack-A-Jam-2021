@@ -11,6 +11,62 @@ PrefabInstance:
       propertyPath: randomDirTimer.maxValue
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2131449354816671275, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.808
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572163947508649567, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165607984690255953, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9257aefbf03479e488a1d57abbf2a782,
+        type: 3}
     - target: {fileID: 6415456996822711873, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: speed
@@ -96,6 +152,12 @@ PrefabInstance:
       propertyPath: shotPattern.spawnRadius
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 6984828917176028159, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9257aefbf03479e488a1d57abbf2a782,
+        type: 3}
     - target: {fileID: 8495557897369424772, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: gunShotTimer.maxValue
