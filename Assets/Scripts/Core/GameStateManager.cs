@@ -119,7 +119,7 @@ public class GameStateManager : MonoBehaviourSingletonPersistent<GameStateManage
         }
 
         gamePlayState.levelSceneName = levelName;
-        
+
         fsm.transitionTo(gamePlayState, true, true);
     }
     

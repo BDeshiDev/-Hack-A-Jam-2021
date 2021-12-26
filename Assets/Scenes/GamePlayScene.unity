@@ -4242,6 +4242,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'projectile hit particles '
       objectReference: {fileID: 0}
+    - target: {fileID: 2554736976396568939, guid: 43dff263df4d19f42b71c8e8ca407634,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3032532925320823736, guid: 43dff263df4d19f42b71c8e8ca407634,
         type: 3}
       propertyPath: m_RootOrder

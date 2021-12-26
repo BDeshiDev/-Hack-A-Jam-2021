@@ -13,7 +13,6 @@ namespace Core.Combat
         public int count;
         public int max = 2;
         public int min = 1;
-        public List<EnemyEntity> spawned = new List<EnemyEntity>();
 
         public void setCount(ref int remainingTotalCount)
         {
@@ -26,12 +25,8 @@ namespace Core.Combat
             for (int i = 0; i < count; i++)
             {
                 var summoningCircle = GameplayPoolManager.Instance.summoningCircles.get(spawner.summoningCirclePrefab);
-                spawner.StartCoroutine(
-                    summoningCircle.summon(spawner, prefab, spawned)
-                );
+                summoningCircle.startSummon(prefab, spawner.findSafeSpawnSpot(), spawner.trackEnemy);
             }
-        
-
         }
     }
     

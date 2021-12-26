@@ -13,10 +13,17 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
     public SpriteRenderer spriter1;
     public SpriteRenderer spriter2;
     
-    //won't be used by anything else for the jam, so modularity not necessary
-    public IEnumerator summon(Spawner spawner, EnemyEntity prefab, List<EnemyEntity> spawned)
+    
+    public void startSummon(EnemyEntity prefab, Vector3 pos, Action<EnemyEntity> spawnCallback)
     {
-        transform.position = spawner.findSafeSpawnSpot();
+        StartCoroutine(summon(prefab, pos, spawnCallback));
+    }
+    
+    
+    //won't be used by anything else for the jam, so modularity not necessary
+    IEnumerator summon(EnemyEntity prefab, Vector3 pos, Action<EnemyEntity> spawnCallback)
+    {
+        transform.position = pos;
         transform.localScale = Vector3.zero;
         var c = spriter1.color;
         c.a = 0;
@@ -29,10 +36,11 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
             .Insert(0,spriter2.DOFade(1,animDuration))
             ;
         yield return t.WaitForCompletion();
+        
         var e = GameplayPoolManager.Instance.enemyPool.get(prefab);
         e.transform.position = transform.position;
-        spawner.trackEnemy(e);
-        spawned.Add(e);
+        
+        spawnCallback.Invoke(e);
         
         NormalReturnCallback?.Invoke(this);
     }

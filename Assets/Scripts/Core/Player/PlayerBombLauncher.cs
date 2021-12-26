@@ -23,6 +23,10 @@ public class PlayerBombLauncher : MonoBehaviour
     }
 
 
+    public void forceRemoveBOmb()
+    {
+        HasBomb = false;
+    }
 
     public void addBomb()
     {

@@ -83,6 +83,7 @@ namespace Core.Combat
                 spawnNextWave();
             }
         }
+        
 
         void unTrackEnemy(EnemyEntity e)
         {
