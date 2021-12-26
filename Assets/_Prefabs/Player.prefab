@@ -446,7 +446,7 @@ MonoBehaviour:
   aimer: {fileID: 1400684791892571351}
   shootIndicator: {fileID: 1400684793092645594}
   idleState: {fileID: 1400684791477581248}
-  playerGunState: {fileID: 4145769828623625087}
+  playerGunState: {fileID: 5152280660338205517}
   chargableAttackState: {fileID: 1400684793009360755}
   dashState: {fileID: 1400684793250076289}
 --- !u!114 &1400684792932973730
@@ -540,7 +540,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombRechargeTimer:
     timer: 0
-    maxValue: 12
+    maxValue: 15
+  dodgeBombChargeRecoverAmount: 1
   bomb: {fileID: 2797302074111290205}
 --- !u!1 &1400684793009360757
 GameObject:
@@ -775,7 +776,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2651448886972628739}
-  - component: {fileID: 4145769828623625087}
+  - component: {fileID: 5152280660338205517}
   m_Layer: 15
   m_Name: GunAttackState
   m_TagString: Untagged
@@ -797,7 +798,7 @@ Transform:
   m_Father: {fileID: 1400684791944056199}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4145769828623625087
+--- !u!114 &5152280660338205517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -806,7 +807,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3250906206293479774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d810cfe878340d5af7b10f6e1001e42, type: 3}
+  m_Script: {fileID: 11500000, guid: bd021f99aeb94f4487bb8dbc76f12411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blobEntity: {fileID: 1400684792932973733}
@@ -819,7 +820,7 @@ MonoBehaviour:
   gunShotIndex: 0
   shotFirstRoundAsap: 1
   allowMidAttackDirectionChange: 1
-  maxAngleChangePerSec: 50
+  maxAngleChangePerSec: 3600
   gun: {fileID: 1363365126835077203}
 --- !u!114 &6855559704500357548
 MonoBehaviour:
@@ -852,6 +853,8 @@ MonoBehaviour:
   ammoReloadTimer:
     timer: 0
     maxValue: 0.6
+  player: {fileID: 0}
+  DashRecoverAmount: 2
 --- !u!114 &1927605442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,7 +893,7 @@ PrefabInstance:
       objectReference: {fileID: 1400684792932973726}
     - target: {fileID: 1927605441, guid: eea32cbb9ba5d1d48ab81fada14f6abc, type: 3}
       propertyPath: damagePerHit.hypnoDamage
-      value: 50
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 3167118829676677601, guid: eea32cbb9ba5d1d48ab81fada14f6abc,
         type: 3}
@@ -956,6 +959,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611089708095309831, guid: eea32cbb9ba5d1d48ab81fada14f6abc,
+        type: 3}
+      propertyPath: endSize.x
+      value: 7.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611089708095309831, guid: eea32cbb9ba5d1d48ab81fada14f6abc,
+        type: 3}
+      propertyPath: endSize.y
+      value: 7.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611089708095309831, guid: eea32cbb9ba5d1d48ab81fada14f6abc,
+        type: 3}
+      propertyPath: endSize.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611089708095309831, guid: eea32cbb9ba5d1d48ab81fada14f6abc,
+        type: 3}
+      propertyPath: scaleTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eea32cbb9ba5d1d48ab81fada14f6abc, type: 3}

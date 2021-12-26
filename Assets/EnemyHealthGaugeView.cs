@@ -32,54 +32,40 @@ public class EnemyHealthGaugeView : MonoBehaviour
     
     public void updateHealthGaugeFill(ResourceComponent resourceComponent)
     {
-        // Fillspriter.color = hypnoComponent.IsBerserked
-        //                     ? berserkColor
-        //                     : hypnoComponent.IsInBerserkRange
-        //                         ? berserkRangeColor
-        //                         : normalColor;
-        // Fillspriter.GetPropertyBlock(propBlock);
-        //
-        // // propBlock.SetColor("SOMECOLOR", );
-        // propBlock.SetFloat(FillHeight,hypnoComponent.IsBerserked? 1 : resourceComponent.Ratio );
-        //
-        //
-        // Fillspriter.SetPropertyBlock(propBlock);
         if (hypnoComponent.IsBerserked)
         {
-            flashSpriter.gameObject.SetActive(false);
-            
-            backGroundSpriter.color = berserkColor;
-            Fillspriter.color = berserkFillColor;
-            
             setFillHeight(1- enemyEntity.berserkTimer.Ratio);
         }
         else if(hypnoComponent.IsInBerserkRange)
         {
             flashSpriter.gameObject.SetActive(true);
-            float flashThresold = Mathf.Lerp(berserkTransitionFlashThresholdMMin,
-                                            berserkTransitionFlashThresholdMax,
-                                            enemyEntity.berserkTransitionTimer.Ratio);
 
-            berserkTransitionFlashTimer.updateTimer(Time.deltaTime);
-            berserkTransitionFlashTimer.maxValue = flashThresold;
-
-            Color flashEndColor = berserkRangeColor;
-            flashEndColor.a = 0;
-            flashSpriter.color = Color.Lerp(berserkRangeColor, flashEndColor, berserkTransitionFlashTimer.Ratio);
-            
-            if(berserkTransitionFlashTimer.isComplete)
-                berserkTransitionFlashTimer.reset();
-            
-            setFillHeight(1);
+            doBerserktransitionFlash();
         }
         else
         {
-            
-            flashSpriter.gameObject.SetActive(false);
-
             Fillspriter.color = Color.Lerp(lowHealthColor,normalColor, healthComponent.Ratio);
             setFillHeight(1);
         }
+    }
+
+    private void doBerserktransitionFlash()
+    {
+        float flashThresold = Mathf.Lerp(berserkTransitionFlashThresholdMMin,
+            berserkTransitionFlashThresholdMax,
+            enemyEntity.berserkTransitionTimer.Ratio);
+
+        berserkTransitionFlashTimer.updateTimer(Time.deltaTime);
+        berserkTransitionFlashTimer.maxValue = flashThresold;
+
+        Color flashEndColor = berserkRangeColor;
+        flashEndColor.a = 0;
+        flashSpriter.color = Color.Lerp(berserkRangeColor, flashEndColor, berserkTransitionFlashTimer.Ratio);
+
+        if (berserkTransitionFlashTimer.isComplete)
+            berserkTransitionFlashTimer.reset();
+
+        setFillHeight(1);
     }
 
     public void setFillHeight(float normalizedHeight)
@@ -94,6 +80,8 @@ public class EnemyHealthGaugeView : MonoBehaviour
     }
 
 
+    #region Setup
+
     private void Awake()
     {
         healthComponent = GetComponentInParent<HealthComponent>();
@@ -106,8 +94,6 @@ public class EnemyHealthGaugeView : MonoBehaviour
     {
         updateHealthGaugeFill(healthComponent);
     }
-    
-
 
     private void OnEnable()
     {
@@ -115,28 +101,40 @@ public class EnemyHealthGaugeView : MonoBehaviour
         {
             healthComponent.RatioChanged += updateHealthGaugeFill;
             hypnoComponent.Berserked += handleBerserked;
+            hypnoComponent.Hypnotized += HandleNormalState;
+            hypnoComponent.HypnosisRecovered += HandleNormalState;
         }
     }
-
-    private void handleBerserked(HypnoComponent obj)
-    {
-        Fillspriter.color = berserkColor;
-        
-        Fillspriter.GetPropertyBlock(propBlock);
-        
-        // propBlock.SetColor("SOMECOLOR", );
-        propBlock.SetFloat("FillHeight",1  );
-
-        
-        Fillspriter.SetPropertyBlock(propBlock);
-    }
-
+    
     private void OnDisable()
     {
         if (healthComponent != null)
         {
             healthComponent.RatioChanged -= updateHealthGaugeFill;
             hypnoComponent.Berserked -= handleBerserked;
+            hypnoComponent.Hypnotized -= HandleNormalState;
+            hypnoComponent.HypnosisRecovered -= HandleNormalState;
         }
     }
+
+    #endregion
+
+    private void HandleNormalState(HypnoComponent obj)
+    {
+        flashSpriter.gameObject.SetActive(false);
+    }
+
+    private void handleBerserked(HypnoComponent obj)
+    {
+        Fillspriter.color = berserkColor;
+        
+        setFillHeight(1);
+
+        flashSpriter.gameObject.SetActive(false);
+            
+        backGroundSpriter.color = berserkColor;
+        Fillspriter.color = berserkFillColor;
+    }
+
+
 }

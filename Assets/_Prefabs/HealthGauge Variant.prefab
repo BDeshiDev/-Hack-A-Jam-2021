@@ -232,7 +232,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4c7e81d4aeebea5429526e80743933fd, type: 2}
+  - {fileID: 2100000, guid: 5094e00c903e0f24d9d57e35128e12b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -697,16 +697,16 @@ MonoBehaviour:
   Fillspriter: {fileID: 2350914425013974796}
   backGroundSpriter: {fileID: 810037284}
   flashSpriter: {fileID: 970653021}
-  berserkFillColor: {r: 0.7921569, g: 0.41610363, b: 0.1372549, a: 1}
-  berserkColor: {r: 0.7921569, g: 0.13725491, b: 0.13725491, a: 1}
+  berserkFillColor: {r: 1, g: 0.32727972, b: 0, a: 1}
+  berserkColor: {r: 0.7735849, g: 0.44152722, b: 0.44152722, a: 1}
   berserkRangeColor: {r: 1, g: 0.75332725, b: 0, a: 1}
   normalColor: {r: 0.22352941, g: 0.83137256, b: 0.3764706, a: 1}
   lowHealthColor: {r: 0, g: 0.43137255, b: 0.10980392, a: 1}
   berserkTransitionFlashTimer:
     timer: 0
-    maxValue: 0.6
-  berserkTransitionFlashThresholdMax: 0.6
-  berserkTransitionFlashThresholdMMin: 0.2
+    maxValue: 0.8
+  berserkTransitionFlashThresholdMax: 0.8
+  berserkTransitionFlashThresholdMMin: 0.4
 --- !u!1001 &462400057959097818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -717,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 2795299758037078739, guid: 7e9bec7345da11f43a47049eea594122,
         type: 3}
       propertyPath: m_Name
-      value: HealthGauge
+      value: HealthGauge Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2795299758037078740, guid: 7e9bec7345da11f43a47049eea594122,
         type: 3}

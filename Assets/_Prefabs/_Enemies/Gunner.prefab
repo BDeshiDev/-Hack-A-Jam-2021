@@ -754,22 +754,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6415456996822711884}
     m_Modifications:
-    - target: {fileID: 730768388, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
-      propertyPath: berserkFillColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 730768388, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
-      propertyPath: berserkFillColor.g
-      value: 0.32727972
-      objectReference: {fileID: 0}
-    - target: {fileID: 730768388, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
-      propertyPath: berserkFillColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 970653021, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5094e00c903e0f24d9d57e35128e12b8, type: 2}
     - target: {fileID: 2350914425013974793, guid: 4c35e914b0dc4ec42ba1ebb3da752d11,
         type: 3}
       propertyPath: m_Name

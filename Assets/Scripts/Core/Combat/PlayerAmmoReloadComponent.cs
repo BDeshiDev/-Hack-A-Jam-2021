@@ -1,19 +1,23 @@
 using System;
 using BDeshi.Utility;
 using Core.Combat.Enemies;
+using Core.Player;
 using UnityEngine;
 
 namespace Core.Combat
 {
     /// <summary>
-    /// Auto reload over time. Sufficient for the jam
+    /// Auto reload over time.
+    /// Only player needs to reloa for the jam
+    /// Sufficient for the jam
     /// </summary>
-    public class AmmoReloadComponent : MonoBehaviour
+    public class PlayerAmmoReloadComponent : MonoBehaviour
     {
         [SerializeField] private AmmoComponent ammoComponent;
         [SerializeField] private Gun gun;
         [SerializeField] private FiniteTimer ammoReloadTimer = new FiniteTimer(0, 3f);
-        
+        [SerializeField] private HypnoPlayer player;
+        [SerializeField] int DashRecoverAmount = 2;
         public event Action<AmmoComponent> AmmoChanged;
 
         void Start()
@@ -21,10 +25,31 @@ namespace Core.Combat
             ammoComponent = GetComponent<AmmoComponent>();
             gun = GetComponent<Gun>();
             gun.ShotFired.AddListener(resetReloadTimer);
-            
-            
+
+            player = GetComponentInParent<HypnoPlayer>();
+        }
+
+        private void OnEnable()
+        {
+            if (player != null)
+            {
+                player.SuccessfullyDodged += handleDodge;
+            }
         }
         
+        private void OnDisable()
+        {
+            if (player != null)
+            {
+                player.SuccessfullyDodged -= handleDodge;
+            }
+        }
+
+        private void handleDodge()
+        {
+            reload(DashRecoverAmount);
+        }
+
 
         private void resetReloadTimer()
         {
@@ -32,10 +57,10 @@ namespace Core.Combat
         }
         
 
-        private void reload()
+        private void reload(int count = 1)
         {
             ammoReloadTimer.reset();
-            ammoComponent.reload(1);
+            ammoComponent.reload(count);
         }
         
 
