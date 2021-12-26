@@ -10,6 +10,8 @@ namespace Core.Combat.Powerups
     {
         public FiniteTimer durationTimer = new FiniteTimer(9);
         public UnityEvent OnPowerUpSpawned;
+        [SerializeField] private SpriteRenderer spriter;
+        public SpriteRenderer Spriter => spriter;
         void Update()
         {
             if (durationTimer.tryCompleteTimer(Time.deltaTime))
@@ -21,12 +23,15 @@ namespace Core.Combat.Powerups
 
         private void NormalReturn()
         {
+            CombatEventManger.Instance.OnPowerUpDeSpawned.Invoke(this);
             NormalReturnCallback?.Invoke(this);
         }
 
         public void initialize()
         {
             durationTimer.reset();
+            
+            CombatEventManger.Instance.OnPowerUpSpawned.Invoke(this);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -44,7 +49,7 @@ namespace Core.Combat.Powerups
 
         public void handleForceReturn()
         {
-        
+            
         }
 
         public event Action<Powerup> NormalReturnCallback;

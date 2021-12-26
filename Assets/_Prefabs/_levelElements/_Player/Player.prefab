@@ -428,7 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInputThisFrame: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
-  speed: 6
+  speed: 6.5
 --- !u!114 &1400684792932973733
 MonoBehaviour:
   m_ObjectHideFlags: 0

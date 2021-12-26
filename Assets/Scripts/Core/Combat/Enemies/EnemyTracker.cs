@@ -20,8 +20,8 @@ namespace Core.Combat.Enemies
                 return;
            
             Instance.activeEnemies.Remove(e);
-            
-            CombatEventManger.Instance.OnEnemyDefeated.Invoke(e);
+            if(CombatEventManger.Instance != null)
+                CombatEventManger.Instance.OnEnemyDefeated.Invoke(e);
         }
 
         static int compare(EnemyEntity a, EnemyEntity b)

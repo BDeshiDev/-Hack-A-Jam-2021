@@ -18,6 +18,7 @@ namespace Core
         public PrefabPoolPool<EnemyEntity> enemyPool;
         public PrefabPoolPool<SummoningCircle> summoningCircles;
         public PrefabPoolPool<Powerup> powerUpPool;
+        public PrefabPoolPool<ParticleHelper> particlePool;
 
         protected override void initialize()
         {
@@ -27,6 +28,7 @@ namespace Core
             enemyPool = new PrefabPoolPool<EnemyEntity>(3, createParent("Enemies"));
             summoningCircles = new PrefabPoolPool<SummoningCircle>(1, createParent("summoningCircles"));
             powerUpPool = new PrefabPoolPool<Powerup>(1, createParent("Powerups"));
+            particlePool = new PrefabPoolPool<ParticleHelper>(1, createParent("particles"));
         }
 
         private void Start()

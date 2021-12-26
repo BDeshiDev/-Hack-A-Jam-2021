@@ -61,6 +61,9 @@ public class PowerupCycle : MonoBehaviour
 
     public void updateTimer(float amount)
     {
+        if(arena == null)
+            return;
+        
         powerUpTimer.updateTimer(amount);
         progressBar.updateFromRatio(powerUpTimer.Ratio);
 

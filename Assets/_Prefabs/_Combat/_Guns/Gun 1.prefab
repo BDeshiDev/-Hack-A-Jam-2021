@@ -117,13 +117,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 0}
+  ammoComponent: {fileID: 0}
+  muzzleFlash: {fileID: 0}
   ShotFired:
     m_PersistentCalls:
       m_Calls: []
-  BlankFired:
-    m_PersistentCalls:
-      m_Calls: []
-  ammoComponent: {fileID: 0}
 --- !u!1 &5255754624123825248
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,13 +242,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 5255754625713581221}
+  ammoComponent: {fileID: 0}
+  muzzleFlash: {fileID: 0}
   ShotFired:
     m_PersistentCalls:
       m_Calls: []
-  BlankFired:
-    m_PersistentCalls:
-      m_Calls: []
-  ammoComponent: {fileID: 0}
 --- !u!1 &6123235081978938046
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,13 +364,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 0}
+  ammoComponent: {fileID: 0}
+  muzzleFlash: {fileID: 0}
   ShotFired:
     m_PersistentCalls:
       m_Calls: []
-  BlankFired:
-    m_PersistentCalls:
-      m_Calls: []
-  ammoComponent: {fileID: 0}
 --- !u!1001 &8151849145425814299
 PrefabInstance:
   m_ObjectHideFlags: 0

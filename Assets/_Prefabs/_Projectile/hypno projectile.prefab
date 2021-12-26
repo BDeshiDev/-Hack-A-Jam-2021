@@ -107,11 +107,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   knockbackForce: 6
+  spriter: {fileID: 7937409385446727008}
+  hitParticlesPrefab: {fileID: 5411806936869478689, guid: 43dff263df4d19f42b71c8e8ca407634,
+    type: 3}
   TargetingInfo: {fileID: 0}
   damage:
     healthDamage: 0
     hypnoDamage: 20
-  spriter: {fileID: 7937409385446727008}
   speedCurve:
     serializedVersion: 2
     m_Curve:
