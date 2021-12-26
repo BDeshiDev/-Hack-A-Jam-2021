@@ -540,10 +540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd00544e9fbcc0409b80653fed7ddf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombRechargeTimer:
-    timer: 0
-    maxValue: 15
-  dodgeBombChargeRecoverAmount: 1
   bomb: {fileID: 2797302074111290205}
 --- !u!1 &1400684793009360757
 GameObject:
@@ -838,6 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curAmmo: 0
   maxAmmo: 5
+  maxOverFlow: 5
 --- !u!114 &8553817614676527437
 MonoBehaviour:
   m_ObjectHideFlags: 0

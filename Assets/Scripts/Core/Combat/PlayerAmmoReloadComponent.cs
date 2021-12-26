@@ -27,23 +27,11 @@ namespace Core.Combat
             gun.ShotFired.AddListener(resetReloadTimer);
 
             player = GetComponentInParent<HypnoPlayer>();
+            
+            CombatEventManger.Instance.OnSuccessFullDodge.add(gameObject, handleDodge);
         }
 
-        private void OnEnable()
-        {
-            if (player != null)
-            {
-                player.SuccessfullyDodged += handleDodge;
-            }
-        }
         
-        private void OnDisable()
-        {
-            if (player != null)
-            {
-                player.SuccessfullyDodged -= handleDodge;
-            }
-        }
 
         private void handleDodge()
         {
@@ -66,6 +54,8 @@ namespace Core.Combat
 
         void Update()
         {
+            if(ammoComponent.IsFull)
+                return;
             ammoReloadTimer.updateTimer(Time.deltaTime);
             if (ammoReloadTimer.isComplete)
             {

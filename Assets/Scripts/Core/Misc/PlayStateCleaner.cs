@@ -31,10 +31,11 @@ namespace Core.Misc
             }
             else if (playModeState == PlayModeStateChange.ExitingEditMode)
             {
-                // GameStateManager.PlayModeEnterCleanup();
                 EnemyTracker.PlayModeEnterCleanup();
                 GameplayPoolManager.PlayModeEnterCleanup();
                 // GameStateManager.PlayModeEnterCleanup();
+                
+                CombatEventManger.PlayModeEnterCleanup();
             }
         }
     }

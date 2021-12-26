@@ -146,6 +146,8 @@ namespace Core.Combat
         {
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
+            
+            CombatEventManger.Instance.OnEnemyDefeated.Invoke(this);
         }
 
 

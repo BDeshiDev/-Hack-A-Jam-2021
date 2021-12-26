@@ -19,8 +19,7 @@ namespace Core.Player
         [SerializeField] PlayerDashState dashState;
         public override TargetResolverComponent TargetResolverComponent => playerTargetter;
         TargetResolverComponent playerTargetter;
-
-        public event Action SuccessfullyDodged;
+        public GunAttackState PlayerGunState =>playerGunState;
 
 
         public override void look(Vector3 dir, Vector3 aimPoint)
@@ -97,7 +96,7 @@ namespace Core.Player
             base.takeDamage(damage);
             if (isInvulnerable)//since dash = only source on invincibility, this means we have dodge through attack
             {
-                SuccessfullyDodged?.Invoke();
+                CombatEventManger.Instance.OnSuccessFullDodge.Invoke();
             }
         }
 

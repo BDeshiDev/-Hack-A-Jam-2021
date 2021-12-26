@@ -7,10 +7,13 @@ namespace Core.Combat
     {
         [SerializeField] int curAmmo = 0;
         [SerializeField] int maxAmmo = 6;
+        [SerializeField] int maxOverFlow = 5;
 
         public bool IsEmpty => curAmmo <= 0;
+        public bool IsFull => curAmmo >= maxAmmo;
         public int CurAmmo => curAmmo;
         public int MaxAmmo => maxAmmo;
+        public int MaxOverFlow=> maxOverFlow;
         
         public event Action<AmmoComponent> onAmountChanged;
         public event Action<AmmoComponent> onEmptied;
@@ -35,7 +38,7 @@ namespace Core.Combat
         public void applyChange(int change)
         {
             var oldCur = curAmmo;
-            curAmmo = Mathf.Clamp(curAmmo + change, 0, maxAmmo);
+            curAmmo = clipAmmo(curAmmo + change);
             if (curAmmo != oldCur)
             {
                 onAmountChanged?.Invoke(this);
@@ -48,10 +51,15 @@ namespace Core.Combat
             // Debug.Log(curAmmo + " " + oldCur + " " + change);
         }
 
+        public int clipAmmo(int totalAmmoAmount)
+        {
+            return Mathf.Clamp(totalAmmoAmount, 0 , maxAmmo + maxOverFlow );
+        }
+
 
         public void reload(int ammo)
         {
-            curAmmo = Mathf.Clamp(curAmmo + ammo, 0 , maxAmmo );
+            curAmmo = clipAmmo(curAmmo + ammo);
             onAmountChanged?.Invoke(this);
         }
 

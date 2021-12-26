@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BDeshi.Utility;
 using Core;
 using Core.Combat;
+using Core.Combat.Powerups;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -17,13 +18,13 @@ public class PowerupCycle : MonoBehaviour
     [SerializeField] private float minArenaCenterDist = 1f;
     [SerializeField] private ImageFillBar progressBar;
 
-    [SerializeField]private int curPowerUpIndex = 0;
-    [SerializeField]private List<PowerupCycleSlot> cycle;
+    [SerializeField] private int curPowerUpIndex = 0;
+    [SerializeField] private List<PowerupCycleSlot> cycle;
 
-    [SerializeField]private float boostPerKill = .5f;
-    [SerializeField]private float boostPerHypno = .5f;
-    [SerializeField]private float boostPerWave = 3;
-    
+    [SerializeField] private float boostPerKill = .5f;
+    [SerializeField] private float boostPerHypno = .5f;
+    [SerializeField] private float boostPerWave = 3;
+    [SerializeField] private float boostPerDodge = 1;
     
 
     public Vector3 getPowerupSpawnPos()
@@ -94,6 +95,34 @@ public class PowerupCycle : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
 
         curPowerUpIndex = 0;
+    }
+
+    private void Start()
+    {
+        CombatEventManger.Instance.OnEnemyDefeated.add(gameObject, HandleEnemyDefeated);
+        CombatEventManger.Instance.OnEnemyHypnotized.add(gameObject, handleEnemyHypnotized);
+        CombatEventManger.Instance.OnWaveCompleted.add(gameObject, HandleWaveCompleted);
+        CombatEventManger.Instance.OnSuccessFullDodge.add(gameObject, handleSuccessfulDodge);
+    }
+
+    private void handleSuccessfulDodge()
+    {
+        updateTimer(boostPerDodge);
+    }
+
+    private void HandleWaveCompleted(Spawner obj)
+    {
+        updateTimer(boostPerWave);
+    }
+
+    private void handleEnemyHypnotized(EnemyEntity obj)
+    {
+        updateTimer(boostPerHypno);
+    }
+
+    private void HandleEnemyDefeated(EnemyEntity obj)
+    {
+        updateTimer(boostPerKill);
     }
 
 

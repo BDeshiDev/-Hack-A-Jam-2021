@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerBombLauncher : MonoBehaviour
 {
-    public PlayerBomb bomb;
+    [SerializeField] PlayerBomb bomb;
     public event Action<bool> BombChargeToggled;
     public bool HasBomb { get; private set; } = true;
 
@@ -24,7 +24,7 @@ public class PlayerBombLauncher : MonoBehaviour
 
 
 
-    void addBomb()
+    public void addBomb()
     {
         HasBomb = true;
         BombChargeToggled?.Invoke(true);

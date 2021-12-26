@@ -1,4 +1,5 @@
-﻿using Core.Player;
+﻿using Core.Combat.Powerups;
+using Core.Player;
 using UnityEngine;
 
 public class HealthPowerup : Powerup

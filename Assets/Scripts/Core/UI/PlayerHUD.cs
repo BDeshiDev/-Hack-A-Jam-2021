@@ -19,16 +19,6 @@ namespace Core.UI
         [SerializeField] private ImageFillBar bombRechargeBar;
         [SerializeField] private CanvasGroup bombCanvas;
 
-        private void OnEnable()
-        {
-            GameStateManager.Instance.GameplaySceneRefresh += refreshHUD;
-        }
-        
-        private void OnDisable()
-        {
-            GameStateManager.Instance.GameplaySceneRefresh -= refreshHUD;
-        }
-
         private void refreshHUD()
         {
             var p = GameObject.FindGameObjectWithTag("Player");
@@ -51,9 +41,13 @@ namespace Core.UI
 
         void Start()
         {
+            GameStateManager.Instance.GameplaySceneRefresh += refreshHUD;
             refreshHUD();
         }
-
+        private void OnDestroy()
+        {
+            GameStateManager.Instance.GameplaySceneRefresh -= refreshHUD;
+        }
 
     }
 }

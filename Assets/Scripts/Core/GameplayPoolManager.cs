@@ -2,6 +2,7 @@
 using bdeshi.utility;
 using BDeshi.Utility;
 using Core.Combat;
+using Core.Combat.Powerups;
 using UnityEngine;
 
 namespace Core
