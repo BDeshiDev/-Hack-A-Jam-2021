@@ -24,6 +24,7 @@ namespace Core.Combat
         {
             for (int i = 0; i < count; i++)
             {
+
                 var summoningCircle = GameplayPoolManager.Instance.summoningCircles.get(spawner.summoningCirclePrefab);
                 summoningCircle.startSummon(prefab, spawner.findSafeSpawnSpot(), spawner.trackEnemy);
             }

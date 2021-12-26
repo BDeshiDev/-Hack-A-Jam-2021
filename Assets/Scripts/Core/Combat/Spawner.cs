@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Utility;
 using Core.Input;
@@ -21,14 +22,26 @@ namespace Core.Combat
         public event Action<int> waveCompleted;
         public int remainingCountInWave = 0;
     
-        private HashSet<HypnoComponent> hypnotizedTracker = new HashSet<HypnoComponent>();
+        private HashSet<EnemyEntity> hypnotizedTracker = new HashSet<EnemyEntity>();
+        //any enemy spawned and not dead go here
+        private HashSet<EnemyEntity> spawnTracker = new HashSet<EnemyEntity>();
 
         [SerializeField] bool repeatLastWave = true;
 
         public float spawnerRunningTime { get; private set; } = 0;
         public float totalHypnoTime { get; private set; } = 0;
-        public void Start()
+        public float totalEnemiesKilled { get; private set; } = 0;
+
+        public IEnumerator Start()
         {
+            CombatEventManger.Instance.OnEnemyDefeated.add(gameObject,handleSpawnedEnemyDeath);
+            CombatEventManger.Instance.OnEnemyHypnotized.add(gameObject,handleSpawnedEnemyHypnotized);
+            CombatEventManger.Instance.OnEnemyHypnosisRecovery.add(gameObject,handleSpawnedEnemyDeHypnotized);
+            CombatEventManger.Instance.OnEnemyBerserked.add(gameObject,handleSpawnedEnemyHypnotized);
+
+            yield return null;
+            yield return null;
+            yield return null;
             spawnNextWave();
         }
 
@@ -42,7 +55,6 @@ namespace Core.Combat
             if (waveIndex < waves.Count)
             {
                 hypnotizedTracker.Clear();
-                hypnos.Clear();
 
                 actualWaveCount++;
                 if (waveIndex == (waves.Count - 1) && repeatLastWave)
@@ -64,53 +76,35 @@ namespace Core.Combat
             }
         }
 
-        public void handleSpawnedEnemyDeath(CombatEntity e)
+        public void handleSpawnedEnemyDeath(EnemyEntity e)
         {
             //ugly but will do for noww
-            Debug.Log("died " + e , e);
-
-            var enemy = e as EnemyEntity;
-            if (enemy != null)
+            if(spawnTracker.Remove(e))
             {
-                unTrackEnemy(enemy);
+                hypnotizedTracker.Remove(e);
+                spawnTracker.Remove(e);
 
-                totalHypnoTime += enemy.TimeSpentHypnotized;
+
+                totalHypnoTime += e.TimeSpentHypnotized;
+
+
+                totalEnemiesKilled++;
+
+                remainingCountInWave--;
+                if (remainingCountInWave == 0)
+                {
+                    spawnNextWave();
+                }
             }
+        }
 
-            remainingCountInWave--;
-            if (remainingCountInWave == 0)
+
+
+        public void handleSpawnedEnemyHypnotized(EnemyEntity enemy)
+        {
+            if (spawnTracker.Contains(enemy) && hypnotizedTracker.Add(enemy))
             {
-                spawnNextWave();
-            }
-        }
-        
 
-        void unTrackEnemy(EnemyEntity e)
-        {
-            e.Died -= handleSpawnedEnemyDeath;
-
-            e.HypnoComponent.Hypnotized -= handleSpawnedEnemyHypnotized;
-            e.HypnoComponent.HypnosisRecovered -= handleSpawnedEnemyDeHypnotized;
-            e.HypnoComponent.Berserked -= handleSpawnedEnemyHypnotized;
-        }
-        
-        public void trackEnemy(EnemyEntity e)
-        {
-            e.Died += handleSpawnedEnemyDeath;
-            
-            e.HypnoComponent.Hypnotized += handleSpawnedEnemyHypnotized;
-            e.HypnoComponent.HypnosisRecovered += handleSpawnedEnemyDeHypnotized;
-            e.HypnoComponent.Berserked += handleSpawnedEnemyHypnotized;
-        }
-# if UNITY_EDITOR
-        private List<HypnoComponent> hypnos = new List<HypnoComponent>();
-#endif
-
-        public void handleSpawnedEnemyHypnotized(HypnoComponent hypnoComponent)
-        {
-            if (hypnotizedTracker.Add(hypnoComponent))
-            {
-                hypnos.Add(hypnoComponent);
                 if (hypnotizedTracker.Count >= remainingCountInWave)
                 {
                     Debug.Log("All enemeies hypno. Next stage!");
@@ -119,16 +113,21 @@ namespace Core.Combat
             }
         }
         
-        public void handleSpawnedEnemyDeHypnotized(HypnoComponent hypnoComponent)
+        public void handleSpawnedEnemyDeHypnotized(EnemyEntity enemy)
         {
-            hypnotizedTracker.Remove(hypnoComponent);
-
-            hypnos.Remove(hypnoComponent);
+            if(spawnTracker.Contains(enemy))
+                hypnotizedTracker.Remove(enemy);
         }
 
         private void Update()
         {
             spawnerRunningTime += Time.deltaTime;
+        }
+
+
+        public void trackEnemy(EnemyEntity e)
+        {
+            spawnTracker.Add(e);
         }
     }
 }

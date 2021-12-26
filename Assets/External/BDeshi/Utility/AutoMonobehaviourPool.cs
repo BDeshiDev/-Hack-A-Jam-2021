@@ -85,7 +85,6 @@ namespace BDeshi.Utility
         {
             foreach (var item in loaned)
             {
-                Debug.Log(item + "forcereturn");
                 item.handleForceReturn();
                 handleReturnInternal(item);
             }

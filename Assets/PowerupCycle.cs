@@ -22,10 +22,11 @@ public class PowerupCycle : MonoBehaviour
     [SerializeField] private List<PowerupCycleSlot> cycle;
 
     [SerializeField] private float boostPerKill = .5f;
-    [SerializeField] private float boostPerHypno = .5f;
+    [SerializeField] private float boostPerHypnotised = .25f;
     [SerializeField] private float boostPerWave = 3;
     [SerializeField] private float boostPerDodge = 1;
-    
+
+    public int NumPowerupCyclesCompleted { get; private set; } = 0;
 
     public Vector3 getPowerupSpawnPos()
     {
@@ -83,7 +84,10 @@ public class PowerupCycle : MonoBehaviour
         
         
         if(powerUpTimer.isComplete)
+        {
             powerUpTimer.resetAndKeepExtra();
+            NumPowerupCyclesCompleted++;
+        }
     }
 
     private float getCurThreshold()
@@ -120,7 +124,7 @@ public class PowerupCycle : MonoBehaviour
 
     private void handleEnemyHypnotized(EnemyEntity obj)
     {
-        updateTimer(boostPerHypno);
+        updateTimer(boostPerHypnotised);
     }
 
     private void HandleEnemyDefeated(EnemyEntity obj)

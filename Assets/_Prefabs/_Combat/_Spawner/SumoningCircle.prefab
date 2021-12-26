@@ -197,6 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37aa6d3be67b75469e979c42478fdee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animDuration: 0.6
+  animDuration: 1
   spriter1: {fileID: 702604308540069518}
   spriter2: {fileID: 702604308540069518}

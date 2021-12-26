@@ -7,8 +7,12 @@ namespace Core.Combat
     public class CombatEventManger: MonoBehaviourLazySingleton<CombatEventManger>
     {
         public SafeEvent OnSuccessFullDodge = new SafeEvent();
+        
         public SafeEvent<EnemyEntity> OnEnemyDefeated = new SafeEvent<EnemyEntity>();
+        public SafeEvent<EnemyEntity> OnEnemyHypnosisRecovery = new SafeEvent<EnemyEntity>();
+        public SafeEvent<EnemyEntity> OnEnemyBerserked = new SafeEvent<EnemyEntity>();
         public SafeEvent<EnemyEntity> OnEnemyHypnotized = new SafeEvent<EnemyEntity>();
+        
         public SafeEvent<Spawner> OnWaveCompleted = new SafeEvent<Spawner> ();
         public SafeEvent<Powerup> OnPowerUpSpawned = new SafeEvent<Powerup>();
         public SafeEvent<Powerup> OnPowerUpDeSpawned = new SafeEvent<Powerup>();
@@ -17,8 +21,12 @@ namespace Core.Combat
         {
             base.PlayModeEnterCleanupInternal();
             OnSuccessFullDodge.clear();
+            
             OnEnemyDefeated.clear();
             OnEnemyHypnotized.clear();
+            OnEnemyHypnosisRecovery.clear();
+            OnEnemyBerserked.clear();
+            
             OnWaveCompleted.clear();  
             OnPowerUpSpawned.clear();
             OnPowerUpDeSpawned.clear();

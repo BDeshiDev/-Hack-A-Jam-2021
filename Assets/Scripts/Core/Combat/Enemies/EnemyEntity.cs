@@ -120,7 +120,7 @@ namespace Core.Combat
         void actuallyDie()
         {
             invokeDeathEvent();
-
+            CombatEventManger.Instance.OnEnemyDefeated.Invoke(this);
             normalReturn();
             // Destroy(gameObject);
         }
@@ -130,6 +130,8 @@ namespace Core.Combat
             targetter.handleNormalState();
 
             targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
+            
+            CombatEventManger.Instance.OnEnemyHypnosisRecovery.Invoke(this);
         }
 
 
@@ -140,6 +142,8 @@ namespace Core.Combat
             
             attackCoolDown.reset( attackCoolDown.maxValue * berserkCoolDownMultiplier);
             fsm.handleEvent(Events.Berserk);
+            
+            CombatEventManger.Instance.OnEnemyBerserked.Invoke(this);
         }
 
         protected void OnHypnotized(HypnoComponent obj)
@@ -147,7 +151,7 @@ namespace Core.Combat
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
             
-            CombatEventManger.Instance.OnEnemyDefeated.Invoke(this);
+            CombatEventManger.Instance.OnEnemyHypnotized.Invoke(this);
         }
 
 

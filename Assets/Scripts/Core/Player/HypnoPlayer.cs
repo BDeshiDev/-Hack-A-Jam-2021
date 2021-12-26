@@ -74,10 +74,13 @@ namespace Core.Player
         {
             healthComponent.Emptied -= handleDeath;
         }
-
-        private void handleDeath(ResourceComponent obj)
+        [ContextMenu("FORCE DIE")]
+        private void handleDeath()
         {
             GameStateManager.Instance.handleEvent(GameStateManager.Event.Gameover);
+        }  private void handleDeath(ResourceComponent obj)
+        {
+            handleDeath();
         }
 
 
