@@ -18,8 +18,6 @@ namespace Core.Combat
 
         public Transform player;
         public Transform lastTarget = null;
-        public EnemyEntity mostAggroedTarget = null;
-        public Dictionary<EnemyEntity, float> aggroTracker = new Dictionary<EnemyEntity, float>();
         private float aggroGainRate = .33f;
 
         [SerializeField]FiniteTimer randomDirTimer = new FiniteTimer(1.85f);
@@ -43,19 +41,7 @@ namespace Core.Combat
         {
             targettingInfo = normalTargettingInfo;
         }
-
-        // public void updateAggro()
-        // {
-        //     if (mostAggroedTarget != null && mostAggroedTarget.IsHypnotized)
-        //     {
-        //         mostAggroedTarget = null;
-        //     }
-        //
-        //     foreach (var agroTracker in aggroTracker)
-        //     {
-        //         
-        //     }
-        // }
+        
 
         public void initialize()
         {
@@ -63,8 +49,6 @@ namespace Core.Combat
             handleNormalState();
             
             player = GameObject.FindWithTag("Player").transform;
-            mostAggroedTarget = null;
-            aggroTracker.Clear();
             // aggroTracker.Add(player);
         }
 
@@ -171,29 +155,6 @@ namespace Core.Combat
                 Gizmos.DrawWireSphere( lastTarget.position , 1.5f);
             Gizmos.DrawLine(transform.position, lastTargetPoint);
         }
-        //     private void OnTriggerEnter(Collider other)
-        //     {
-        //         if (state == HypnosisState.Hypnotized)
-        //         {
-        //             var e = other.GetComponent<EnemyEntity>();
-        //             if (e != null && !e.IsHypnotized)
-        //             {
-        //                 aggroTracker[e] = 1;
-        //             }
-        //         }
-        //     }
-        //
-        //     private void OnTriggerExit(Collider other)
-        //     {
-        //         if (state == HypnosisState.Hypnotized)
-        //         {
-        //             var e = other.GetComponent<EnemyEntity>();
-        //             if (e != null )
-        //             {
-        //                 aggroTracker.Remove(e);
-        //             }
-        //         }
-        //     }
-        // }
+        
     }
 }

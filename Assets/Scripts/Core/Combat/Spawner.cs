@@ -4,16 +4,13 @@ using BDeshi.Utility;
 using Core.Input;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
-using Random = UnityEngine.Random;
 
 namespace Core.Combat
 {
-    
-    public partial class Spawner: MonoBehaviour
+    public class Spawner: MonoBehaviour
     {
-        public Transform arena;
-        [SerializeField] Vector2 spawnPadding = 2f * Vector2.one;
-        [SerializeField] Vector2 spawnRange;
+        public Arena arena;
+
         [SerializeField] private int waveIndex = 0;
         [SerializeField] private int actualWaveCount = 0;
         public SummoningCircle summoningCirclePrefab;
@@ -27,6 +24,9 @@ namespace Core.Combat
         private HashSet<HypnoComponent> hypnotizedTracker = new HashSet<HypnoComponent>();
 
         [SerializeField] bool repeatLastWave = true;
+
+        public float spawnerRunningTime { get; private set; } = 0;
+        public float totalHypnoTime { get; private set; } = 0;
         public void Start()
         {
             spawnNextWave();
@@ -34,21 +34,7 @@ namespace Core.Combat
 
         public Vector2 findSafeSpawnSpot()
         {
-            Vector2 randomFactor = (Random.insideUnitCircle) * .5f;//0->1
-            Vector3 point = new Vector2(
-                spawnRange.x * (randomFactor.x),
-                spawnRange.y * (randomFactor.y)
-            );
-
-            return arena.position + point;
-        }
-
-        private void Awake()
-        {
-            spawnRange = new Vector2(
-                (arena.transform.localScale.x - spawnPadding.x),
-                (arena.transform.localScale.y - spawnPadding.y)
-            );
+            return arena.findSafeSpawnSpot();
         }
 
         void spawnNextWave()
@@ -87,6 +73,8 @@ namespace Core.Combat
             if (enemy != null)
             {
                 unTrackEnemy(enemy);
+
+                totalHypnoTime += enemy.TimeSpentHypnotized;
             }
 
             remainingCountInWave--;
@@ -116,7 +104,7 @@ namespace Core.Combat
 # if UNITY_EDITOR
         private List<HypnoComponent> hypnos = new List<HypnoComponent>();
 #endif
-        //Assume a single enemy has a single hypnocomponent. Sufficient for the jam.
+
         public void handleSpawnedEnemyHypnotized(HypnoComponent hypnoComponent)
         {
             if (hypnotizedTracker.Add(hypnoComponent))
@@ -135,6 +123,11 @@ namespace Core.Combat
             hypnotizedTracker.Remove(hypnoComponent);
 
             hypnos.Remove(hypnoComponent);
+        }
+
+        private void Update()
+        {
+            spawnerRunningTime += Time.deltaTime;
         }
     }
 }

@@ -6,8 +6,9 @@ using Core.Combat;
 using Core.Misc;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
-public class EnemyHealthGaugeView : MonoBehaviour
+public class EnemyHealthStatusView : MonoBehaviour
 {
     public HealthComponent healthComponent;
     public SpriteRenderer Fillspriter;
@@ -15,7 +16,7 @@ public class EnemyHealthGaugeView : MonoBehaviour
     public SpriteGroup backGroundSpriter;
     public SpriteRenderer flashSpriter;
     
-    private EnemyEntity enemyEntity;
+    private EnemyEntity enemyEntity;//
     private MaterialPropertyBlock propBlock;
     private static readonly int FillHeight = Shader.PropertyToID("FillHeight");
     private HypnoComponent hypnoComponent;
@@ -37,12 +38,6 @@ public class EnemyHealthGaugeView : MonoBehaviour
         if (hypnoComponent.IsBerserked)
         {
             setFillHeight(1- enemyEntity.berserkTimer.Ratio);
-        }
-        else if(hypnoComponent.IsInBerserkRange)
-        {
-            flashSpriter.gameObject.SetActive(true);
-
-            doBerserktransitionFlash();
         }
         else
         {
@@ -143,5 +138,18 @@ public class EnemyHealthGaugeView : MonoBehaviour
         Fillspriter.color = berserkFillColor;
     }
 
+    void Update()
+    {
+        if(!hypnoComponent.IsInBerserkRange && hypnoComponent.IsInBerserkRange)
+        {
+            flashSpriter.gameObject.SetActive(true);
+            doBerserktransitionFlash();
+        }
+        else
+        {
+            flashSpriter.gameObject.SetActive(false);
+
+        }
+    }
 
 }

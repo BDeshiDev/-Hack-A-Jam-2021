@@ -26,7 +26,7 @@ namespace Core.Combat
         public float hypnoDOTstartRate = .25f;
         public float hypnoDOTMaxRate = 2f;
         public FiniteTimer hypnoDOTIncreaseTimer = new FiniteTimer(0,9f);
-        public bool hypnoDOTActive = false;
+        public bool wasHypnotizedBefore = false;
         
         private float berserkThreshold = .15f;
         
@@ -104,6 +104,7 @@ namespace Core.Combat
             curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
             hypnoRecoverySpeedChangeTimer.reset();
             hypnoDOTIncreaseTimer.reset();
+            wasHypnotizedBefore = false;
             enterState(HypnosisState.Normal);
         }
 
@@ -127,7 +128,7 @@ namespace Core.Combat
             reduceAmount(Time.deltaTime * curHypnosisRecoveryRate);
 
             
-             if (hypnoDOTActive)
+             if (wasHypnotizedBefore)
              {
                  healthComponent.reduceAmount(dotRate * normalStateDOTMultiplier * Time.deltaTime);
              }
@@ -157,7 +158,7 @@ namespace Core.Combat
                     break;
                 case HypnosisState.Hypnotized:
                     curState = HypnosisState.Hypnotized;
-                    hypnoDOTActive = true;
+                    wasHypnotizedBefore = true;
                     Hypnotized?.Invoke(this);
                     break;
                 default:

@@ -22,10 +22,8 @@ namespace Core.Combat
         public float berserkHypnoDamageConversionFactor = .08f;
         public float normalCoolDownDuration = 2f;
 
-        /// <summary>
-        /// Health and hypnosis are modified
-        /// </summary>
-        /// <param name="damage"></param>
+        public float TimeSpentHypnotized { get; private set; } = 0;
+        
         public override void takeDamage(DamageInfo damage)
         {
             base.takeDamage(damage);
@@ -63,6 +61,11 @@ namespace Core.Combat
             }
             attackCoolDown.safeUpdateTimer(Time.deltaTime);
 
+
+            if (HypnoComponent.IsHypnotized)
+            {
+                TimeSpentHypnotized += Time.deltaTime;
+            }
         }
 
         protected override void Awake()
@@ -90,9 +93,7 @@ namespace Core.Combat
 
             EnemyTracker.addNewActiveEnemy(this);
         }
-
-
-
+        
         private void OnDisable()
         {
             if(HypnoComponent != null)
@@ -104,10 +105,9 @@ namespace Core.Combat
             EnemyTracker.removeInactiveEnemy(this);
         }
         
-
         protected void handleDeath(ResourceComponent healthComp)
         {
-            if (HypnoComponent.hypnoDOTActive)
+            if (HypnoComponent.wasHypnotizedBefore)
             {
                 HypnoComponent.forceBerserkState();
             }
@@ -119,7 +119,6 @@ namespace Core.Combat
 
         void actuallyDie()
         {
-            Debug.Log(gameObject +"actualy die");
             invokeDeathEvent();
 
             normalReturn();
@@ -162,6 +161,8 @@ namespace Core.Combat
             initializeFSM();
             
             attackCoolDown.reset(normalCoolDownDuration);
+
+            TimeSpentHypnotized = 0;
         }
 
         public void handleForceReturn()
