@@ -2367,6 +2367,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1927605439 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5859956197883514853, guid: 713121471e14c0041ac4049031764c52,
+    type: 3}
+  m_PrefabInstance: {fileID: 1400684792427819903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1927605442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927605439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1a3e5374907994897a187c262b77f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targettingInfo: {fileID: 11400000, guid: df90abe271f643d4cbfb7882f1a785bf, type: 2}
 --- !u!1 &1943521842
 GameObject:
   m_ObjectHideFlags: 0
@@ -3001,6 +3020,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486690050936143976, guid: 713121471e14c0041ac4049031764c52,
+        type: 3}
+      propertyPath: bombRechargeTimer.maxValue
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 713121471e14c0041ac4049031764c52, type: 3}

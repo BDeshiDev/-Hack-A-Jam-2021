@@ -23,4 +23,5 @@ MonoBehaviour:
   NormalLayer:
     m_LayerIndex: 14
   projectileSortingLayer: PlayerAttack
-  ProjectileColor: {r: 0, g: 1, b: 1, a: 1}
+  ProjectileColorPrimary: {r: 0, g: 1, b: 1, a: 1}
+  ProjectileColorSecondary: {r: 0, g: 1, b: 1, a: 1}
