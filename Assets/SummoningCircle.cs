@@ -39,7 +39,7 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
 
     public void initialize()
     {
-        
+        //
     }
 
     public void handleForceReturn()

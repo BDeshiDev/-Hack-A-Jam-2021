@@ -14,9 +14,9 @@ namespace Core.Combat
         public bool IsHypnotized => HypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
-        [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6.5f);
-        [SerializeField] private FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
         [SerializeField] protected FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
+        public FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
+        public FiniteTimer berserkTimer = new FiniteTimer(0,6.5f);
 
         public float berserkCoolDownMultiplier = .5f;
         public float berserkHypnoDamageConversionFactor = .08f;
