@@ -111,16 +111,27 @@ namespace BDeshi.BTSM
         /// If true, call the enter function in the state(s) transitioned to
         /// Usecase: initialize curState without calling enter
         /// </param>
+        /// <param name="forceEnterIfSameState"></param>
         public void transitionTo(State newState, bool callEnter = true, bool forceEnterIfSameState = false)
         {
             if (newState != null && (newState != curState || forceEnterIfSameState))
             {
 
                 // if (DebugContext)
-                //     Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
+                // Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
 
                 if(callEnter)
-                    recursiveTransitionToState(newState);
+                {
+                    if (forceEnterIfSameState && newState == curState)
+                    {
+                        newState.EnterState();
+                        curState = newState;
+                    }
+                    else
+                    {
+                        recursiveTransitionToState(newState);
+                    }
+                }
                 else
                 {
                     curState = newState;

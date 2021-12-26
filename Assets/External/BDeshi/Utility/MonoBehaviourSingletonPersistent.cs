@@ -25,6 +25,6 @@ namespace BDeshi.Utility
         
 
         protected abstract void initialize();
-        
     }
+
 }

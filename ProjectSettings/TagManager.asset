@@ -30,7 +30,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Powerup
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2326382859
+    locked: 0
+  - name: GlobalVFX
+    uniqueID: 506190525
     locked: 0

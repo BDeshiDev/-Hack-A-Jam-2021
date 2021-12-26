@@ -61,8 +61,14 @@ namespace bdeshi.utility
         public static void PlayModeEnterCleanup()
         {
             appicationQuitting = false;
+
+            if (_instance != null)
+                _instance.PlayModeEnterCleanupInternal();
         }
         
+        protected virtual void PlayModeEnterCleanupInternal()
+        {
 
+        }
     }
 }

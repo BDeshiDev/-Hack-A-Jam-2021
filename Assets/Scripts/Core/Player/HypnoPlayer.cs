@@ -19,7 +19,8 @@ namespace Core.Player
         [SerializeField] PlayerDashState dashState;
         public override TargetResolverComponent TargetResolverComponent => playerTargetter;
         TargetResolverComponent playerTargetter;
-        
+        public GunAttackState PlayerGunState =>playerGunState;
+
 
         public override void look(Vector3 dir, Vector3 aimPoint)
         {
@@ -60,7 +61,6 @@ namespace Core.Player
 
         public void shootTransition()
         {
-            Debug.Log("HOWWWWW");
             if(playerGunState.Gun.CanFire)
                 fsm.transitionTo(playerGunState, true, true);
         }
@@ -90,7 +90,16 @@ namespace Core.Player
         {
             fsm.handleEvent(Events.Attack1Release);
         }
-        
+
+        public override void takeDamage(DamageInfo damage)
+        {
+            base.takeDamage(damage);
+            if (isInvulnerable)//since dash = only source on invincibility, this means we have dodge through attack
+            {
+                CombatEventManger.Instance.OnSuccessFullDodge.Invoke();
+            }
+        }
+
 
         public void handleDashHeld()
         {

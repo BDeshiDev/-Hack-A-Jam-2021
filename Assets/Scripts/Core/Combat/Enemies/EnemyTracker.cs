@@ -9,7 +9,6 @@ namespace Core.Combat.Enemies
     public class EnemyTracker: MonoBehaviourLazySingleton<EnemyTracker>
     {
         [SerializeField] List<EnemyEntity> activeEnemies = new List<EnemyEntity>();
-
         public static void addNewActiveEnemy(EnemyEntity e)
         {
             Instance.activeEnemies.Add(e);
@@ -19,8 +18,10 @@ namespace Core.Combat.Enemies
         {
             if(Instance == null)
                 return;
-            //this won't be called frequently, perf is irrelevant
+           
             Instance.activeEnemies.Remove(e);
+            if(CombatEventManger.Instance != null)
+                CombatEventManger.Instance.OnEnemyDefeated.Invoke(e);
         }
 
         static int compare(EnemyEntity a, EnemyEntity b)

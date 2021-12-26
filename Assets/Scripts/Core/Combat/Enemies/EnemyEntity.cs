@@ -14,18 +14,16 @@ namespace Core.Combat
         public bool IsHypnotized => HypnoComponent.IsHypnotized;
 
         [SerializeField] protected EnemyTargetResolver targetter;
-        [SerializeField] private FiniteTimer berserkTimer = new FiniteTimer(0,6.5f);
-        [SerializeField] private FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
         [SerializeField] protected FiniteTimer attackCoolDown = new FiniteTimer(0, 2f);
+        public FiniteTimer berserkTransitionTimer = new FiniteTimer(0,6f);
+        public FiniteTimer berserkTimer = new FiniteTimer(0,6.5f);
 
         public float berserkCoolDownMultiplier = .5f;
         public float berserkHypnoDamageConversionFactor = .08f;
         public float normalCoolDownDuration = 2f;
 
-        /// <summary>
-        /// Health and hypnosis are modified
-        /// </summary>
-        /// <param name="damage"></param>
+        public float TimeSpentHypnotized { get; private set; } = 0;
+        
         public override void takeDamage(DamageInfo damage)
         {
             base.takeDamage(damage);
@@ -63,6 +61,11 @@ namespace Core.Combat
             }
             attackCoolDown.safeUpdateTimer(Time.deltaTime);
 
+
+            if (HypnoComponent.IsHypnotized)
+            {
+                TimeSpentHypnotized += Time.deltaTime;
+            }
         }
 
         protected override void Awake()
@@ -90,9 +93,7 @@ namespace Core.Combat
 
             EnemyTracker.addNewActiveEnemy(this);
         }
-
-
-
+        
         private void OnDisable()
         {
             if(HypnoComponent != null)
@@ -104,10 +105,9 @@ namespace Core.Combat
             EnemyTracker.removeInactiveEnemy(this);
         }
         
-
         protected void handleDeath(ResourceComponent healthComp)
         {
-            if (HypnoComponent.hypnoDOTActive)
+            if (HypnoComponent.wasHypnotizedBefore)
             {
                 HypnoComponent.forceBerserkState();
             }
@@ -119,7 +119,6 @@ namespace Core.Combat
 
         void actuallyDie()
         {
-            Debug.Log(gameObject +"actualy die");
             invokeDeathEvent();
 
             normalReturn();
@@ -147,6 +146,8 @@ namespace Core.Combat
         {
             targetter.handleHypnosis();
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
+            
+            CombatEventManger.Instance.OnEnemyDefeated.Invoke(this);
         }
 
 
@@ -162,6 +163,8 @@ namespace Core.Combat
             initializeFSM();
             
             attackCoolDown.reset(normalCoolDownDuration);
+
+            TimeSpentHypnotized = 0;
         }
 
         public void handleForceReturn()

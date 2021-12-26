@@ -26,7 +26,7 @@ namespace Core.Combat
         public float hypnoDOTstartRate = .25f;
         public float hypnoDOTMaxRate = 2f;
         public FiniteTimer hypnoDOTIncreaseTimer = new FiniteTimer(0,9f);
-        public bool hypnoDOTActive = false;
+        public bool wasHypnotizedBefore = false;
         
         private float berserkThreshold = .15f;
         
@@ -47,7 +47,9 @@ namespace Core.Combat
         [SerializeField] private HypnosisState curState;
 
         private HealthComponent healthComponent;
-        
+        private float dotRate;
+        [SerializeField] float normalStateDOTMultiplier = .3f;
+
 
         public override void handleCapped()
         {
@@ -102,6 +104,7 @@ namespace Core.Combat
             curHypnosisRecoveryRate = normalHypnosisRecoveryRate;
             hypnoRecoverySpeedChangeTimer.reset();
             hypnoDOTIncreaseTimer.reset();
+            wasHypnotizedBefore = false;
             enterState(HypnosisState.Normal);
         }
 
@@ -111,8 +114,8 @@ namespace Core.Combat
             {
                 hypnoDOTIncreaseTimer.safeUpdateTimer(Time.deltaTime);
                 
-                var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
-                healthComponent.reduceAmount(dotDamage);
+                dotRate = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) ;
+                healthComponent.reduceAmount(dotRate * Time.deltaTime);
                 
                 hypnoRecoverySpeedChangeTimer.safeUpdateTimer(Time.deltaTime);
                 curHypnosisRecoveryRate = hypnotizedStateHypoRecoveryRate = Mathf.Lerp(
@@ -125,12 +128,10 @@ namespace Core.Combat
             reduceAmount(Time.deltaTime * curHypnosisRecoveryRate);
 
             
-            //might be too op 
-            // if (hypnoDOTActive)
-            // {
-            //     var dotDamage = Mathf.Lerp(hypnoDOTstartRate, hypnoDOTMaxRate, hypnoDOTIncreaseTimer.Ratio) * Time.deltaTime;
-            //     healthComponent.reduceAmount(dotDamage);
-            // }
+             if (wasHypnotizedBefore)
+             {
+                 healthComponent.reduceAmount(dotRate * normalStateDOTMultiplier * Time.deltaTime);
+             }
             
             
         }
@@ -157,7 +158,7 @@ namespace Core.Combat
                     break;
                 case HypnosisState.Hypnotized:
                     curState = HypnosisState.Hypnotized;
-                    hypnoDOTActive = true;
+                    wasHypnotizedBefore = true;
                     Hypnotized?.Invoke(this);
                     break;
                 default:

@@ -2,6 +2,7 @@ using System;
 using BDeshi.UI;
 using Core.Combat;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Core.UI
 {
@@ -13,16 +14,10 @@ namespace Core.UI
         [SerializeField] private PlayerAmmoViewController ammoViewController;
         [SerializeField] private PlayerHealthViewController healthViewController;
         [SerializeField] private PlayerBombLauncher bomber;
-        [SerializeField] private ImageFillBar bombRechargeBar;
-        private void OnEnable()
-        {
-            GameStateManager.Instance.GameplaySceneRefresh += refreshHUD;
-        }
         
-        private void OnDisable()
-        {
-            GameStateManager.Instance.GameplaySceneRefresh -= refreshHUD;
-        }
+        //should be moved to a bomb view
+        [SerializeField] private ImageFillBar bombRechargeBar;
+        [SerializeField] private CanvasGroup bombCanvas;
 
         private void refreshHUD()
         {
@@ -30,19 +25,29 @@ namespace Core.UI
             healthComponent = p.GetComponent<HealthComponent>();
             healthViewController.init(healthComponent);
 
-            bomber = p.GetComponent<PlayerBombLauncher>();
-            //not necessary to unsub for jam since this will get destroyed 
-            bomber.BombChargeUpdated += bombRechargeBar.updateFromRatio;
-            bombRechargeBar.updateFromRatio(bomber.bombRechargeTimer.Ratio);
             AmmoComponent ammoComponent = p.GetComponentInChildren<AmmoComponent>();
             ammoViewController.init(ammoComponent);
+            
+            bomber = p.GetComponent<PlayerBombLauncher>();
+            //not necessary to unsub for jam since this will get destroyed 
+            bomber.BombChargeToggled += updateBombView;
+            updateBombView(bomber.HasBomb);
+        }
+
+        private void updateBombView(bool available)
+        {
+            bombCanvas.alpha = available ? 1 : .5f;
         }
 
         void Start()
         {
+            GameStateManager.Instance.GameplaySceneRefresh += refreshHUD;
             refreshHUD();
         }
-
+        private void OnDestroy()
+        {
+            GameStateManager.Instance.GameplaySceneRefresh -= refreshHUD;
+        }
 
     }
 }

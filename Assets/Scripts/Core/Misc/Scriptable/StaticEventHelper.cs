@@ -13,7 +13,7 @@ namespace Core.Misc.Scriptable
         
         public void setTutorialLevelInitial()
         {
-            GameStateManager.Instance.gamePlayState.setInitiallevelSceneName(GamePlayState.GamePlayScene);
+            GameStateManager.Instance.gamePlayState.setInitiallevelSceneName(GamePlayState.TutorialScene);
             GameStateManager.setInitialState(GameStateManager.Instance.gamePlayState);
         }
         

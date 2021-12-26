@@ -2,6 +2,7 @@
 using bdeshi.utility;
 using BDeshi.Utility;
 using Core.Combat;
+using Core.Combat.Powerups;
 using UnityEngine;
 
 namespace Core
@@ -9,12 +10,15 @@ namespace Core
     /// <summary>
     /// Single place for pools. 
     /// Will automatically return objects on level change.
+    /// Not optimal but sufficient for jam
     /// </summary>
     public class GameplayPoolManager: MonoBehaviourLazySingleton<GameplayPoolManager>
     {
         public PrefabPoolPool<Projectile> projectilePool;
         public PrefabPoolPool<EnemyEntity> enemyPool;
         public PrefabPoolPool<SummoningCircle> summoningCircles;
+        public PrefabPoolPool<Powerup> powerUpPool;
+        public PrefabPoolPool<ParticleHelper> particlePool;
 
         protected override void initialize()
         {
@@ -22,7 +26,9 @@ namespace Core
             
             projectilePool = new PrefabPoolPool<Projectile>(20, createParent("Projectiles"));
             enemyPool = new PrefabPoolPool<EnemyEntity>(3, createParent("Enemies"));
-            summoningCircles = new PrefabPoolPool<SummoningCircle>(1, createParent("summingCircles"));
+            summoningCircles = new PrefabPoolPool<SummoningCircle>(1, createParent("summoningCircles"));
+            powerUpPool = new PrefabPoolPool<Powerup>(1, createParent("Powerups"));
+            particlePool = new PrefabPoolPool<ParticleHelper>(1, createParent("particles"));
         }
 
         private void Start()

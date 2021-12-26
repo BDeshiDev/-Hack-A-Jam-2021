@@ -15,11 +15,12 @@ namespace Core.Combat
         [SerializeField] private float speed = 5;
         [SerializeField] private UnityEvent onHit;
         [SerializeField] private float knockbackForce = 6;
+        [SerializeField] private SpriteRenderer spriter;
+        [SerializeField]private ParticleHelper hitParticlesPrefab;
 
         public TargettingInfo TargetingInfo;
         public Vector3 ShotDir => transform.right;
         public DamageInfo damage;
-        [SerializeField]private SpriteRenderer spriter;
         public AnimationCurve speedCurve = AnimationCurve.EaseInOut(0,1,0,0);
 
         public void initialize(Vector3 spawnPos, Vector3 dir, TargettingInfo targetingInfo)
@@ -80,7 +81,7 @@ namespace Core.Combat
                     d.takeDamage(damage);
                 }
                 // Debug.Log(gameObject + " hit " +hit.collider ,  hit.collider);
-                handleHit();
+                handleHit(hit.point);
                 transform.position += ShotDir * hit.distance;
             }
             else
@@ -89,9 +90,16 @@ namespace Core.Combat
             }
         }
 
-        protected void handleHit()
+        protected void handleHit(Vector2 point)
         {
             onHit.Invoke();
+
+            var particles = GameplayPoolManager.Instance.particlePool
+                .get(hitParticlesPrefab);
+            particles.setColor(TargetingInfo.ProjectileColorPrimary);
+            particles.transform.position = point;
+            particles.transform.right = -transform.right;
+            
             handleEnd();
         }
 
@@ -120,7 +128,7 @@ namespace Core.Combat
         public event Action<Projectile> NormalReturnCallback;
         public void takeDamage(DamageInfo damage)
         {
-            handleHit();
+            handleHit(transform.position);
         }
     }
 }
