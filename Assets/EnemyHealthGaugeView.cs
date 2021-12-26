@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Utility;
 using Core.Combat;
+using Core.Misc;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public class EnemyHealthGaugeView : MonoBehaviour
 {
     public HealthComponent healthComponent;
     public SpriteRenderer Fillspriter;
-    public SpriteRenderer backGroundSpriter;
+    public SpriteGroup FillColorGroup;
+    public SpriteGroup backGroundSpriter;
     public SpriteRenderer flashSpriter;
     
     private EnemyEntity enemyEntity;
@@ -44,8 +46,9 @@ public class EnemyHealthGaugeView : MonoBehaviour
         }
         else
         {
-            Fillspriter.color = Color.Lerp(lowHealthColor,normalColor, healthComponent.Ratio);
+            FillColorGroup.Color = Color.Lerp(lowHealthColor,normalColor, healthComponent.Ratio);
             setFillHeight(1);
+            HandleNormalState();
         }
     }
 
@@ -70,11 +73,9 @@ public class EnemyHealthGaugeView : MonoBehaviour
 
     public void setFillHeight(float normalizedHeight)
     {
-
         Fillspriter.GetPropertyBlock(propBlock);
         
         propBlock.SetFloat(FillHeight, normalizedHeight);
-        
         
         Fillspriter.SetPropertyBlock(propBlock);
     }
@@ -123,6 +124,12 @@ public class EnemyHealthGaugeView : MonoBehaviour
     {
         flashSpriter.gameObject.SetActive(false);
     }
+    
+    private void HandleNormalState()
+    {
+        flashSpriter.gameObject.SetActive(false);
+    }
+
 
     private void handleBerserked(HypnoComponent obj)
     {
@@ -132,7 +139,7 @@ public class EnemyHealthGaugeView : MonoBehaviour
 
         flashSpriter.gameObject.SetActive(false);
             
-        backGroundSpriter.color = berserkColor;
+        backGroundSpriter.Color = berserkColor;
         Fillspriter.color = berserkFillColor;
     }
 

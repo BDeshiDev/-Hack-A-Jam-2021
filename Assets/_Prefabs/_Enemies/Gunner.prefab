@@ -754,6 +754,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6415456996822711884}
     m_Modifications:
+    - target: {fileID: 730768388, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
+      propertyPath: FillColorGroup.spriterRenderers.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 730768388, guid: 4c35e914b0dc4ec42ba1ebb3da752d11, type: 3}
+      propertyPath: FillColorGroup.spriterRenderers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1031791493}
     - target: {fileID: 2350914425013974793, guid: 4c35e914b0dc4ec42ba1ebb3da752d11,
         type: 3}
       propertyPath: m_Name

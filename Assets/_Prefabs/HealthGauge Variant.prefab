@@ -695,7 +695,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 0}
   Fillspriter: {fileID: 2350914425013974796}
-  backGroundSpriter: {fileID: 810037284}
+  FillColorGroup:
+    spriterRenderers:
+    - {fileID: 2350914425013974796}
+  backGroundSpriter:
+    spriterRenderers:
+    - {fileID: 810037284}
+    - {fileID: 899519944}
+    - {fileID: 1283116737}
   flashSpriter: {fileID: 970653021}
   berserkFillColor: {r: 1, g: 0.32727972, b: 0, a: 1}
   berserkColor: {r: 0.7735849, g: 0.44152722, b: 0.44152722, a: 1}
