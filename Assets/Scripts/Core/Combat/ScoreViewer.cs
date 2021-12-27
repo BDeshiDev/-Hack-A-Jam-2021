@@ -42,13 +42,13 @@ namespace Core.Combat
 
             sequence
                 .Append(createScoreLineAnim(survivedText, 
-                    $"Time Survived: {spawner.spawnerRunningTime}."))
+                    $"Time Survived: {spawner.spawnerRunningTime} secs"))
                 .Append(createScoreLineAnim(WaveText, 
                     $"Reached Wave: {spawner.lastReachedWave}."))
                 .Append(createScoreLineAnim(KilledText,
                     $"Enemies Killed: {spawner.totalEnemiesKilled}."))
                 .Append(createScoreLineAnim(hypnotizedText,
-                    $"Total Time across hypnotized enemies: {spawner.totalHypnoTime}."))
+                    $"Total Time enemies spent hypnotized : {spawner.totalHypnoTime} secs."))
                 .Append(createScoreLineAnim(CyclesText,
                     $"Total Power up Cycles: {powerupCycle.NumPowerupCyclesCompleted}."));
 

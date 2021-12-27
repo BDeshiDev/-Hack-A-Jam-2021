@@ -13,7 +13,8 @@ namespace Core.Combat.Enemies
         public AmmoComponent AmmoComponent => ammoComponent;
         public bool CanFire => ammoComponent == null || ammoComponent.CurAmmo >= 1;
 
-        public UnityEvent  ShotFired; 
+        public UnityEvent  ShotFired;
+        public ParticleHelper muzzleFlash;
         public virtual void shoot(GunShot gunShot, TargetResolverComponent targetResolverComponent)
         {
             //if we have a ammocomponent and we don't have enough ammo, don't shoot
@@ -27,6 +28,9 @@ namespace Core.Combat.Enemies
 
             
             ShotFired.Invoke();
+            
+            muzzleFlash.ForcePlay();
+            muzzleFlash.setColor(targetResolverComponent.TargettingInfo.ProjectileColorPrimary);
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Utility;
 using Core.Input;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -14,23 +16,35 @@ namespace Core.Combat
 
         [SerializeField] private int waveIndex = 0;
         [SerializeField] private int actualWaveCount = 0;
+
         public SummoningCircle summoningCirclePrefab;
 
         public int lastReachedWave => actualWaveCount;
         
         public List<Wave> waves;
-        public event Action<int> waveCompleted;
+        // public event Action<int> waveCompleted;
         public int remainingCountInWave = 0;
-    
+
         private HashSet<EnemyEntity> hypnotizedTracker = new HashSet<EnemyEntity>();
         //any enemy spawned and not dead go here
         private HashSet<EnemyEntity> spawnTracker = new HashSet<EnemyEntity>();
 
         [SerializeField] bool repeatLastWave = true;
+        
+        [SerializeField] private TextMeshPro waveText;
+        [SerializeField] private float waveTextFlashDuration = 1.1f;
+        [SerializeField] private int waveTextFlashAmplitude = 16;
+        [SerializeField] private float waveTextAnimDuration = 3.6f;
+
+        [SerializeField] private RectTransform hypnosisBonusText1;
+        [SerializeField] private RectTransform hypnosisBonusText2;
+        [SerializeField]private float hypnosisBonsTextMoveAmount = 3.76f;
+        [SerializeField]private float hypnoBonusShowTIme = 3;
 
         public float spawnerRunningTime { get; private set; } = 0;
         public float totalHypnoTime { get; private set; } = 0;
         public float totalEnemiesKilled { get; private set; } = 0;
+
 
         public IEnumerator Start()
         {
@@ -57,6 +71,7 @@ namespace Core.Combat
                 hypnotizedTracker.Clear();
 
                 actualWaveCount++;
+                showWaveCount();
                 if (waveIndex == (waves.Count - 1) && repeatLastWave)
                 {
                     waves[waveIndex].startSpawn(this);
@@ -67,7 +82,7 @@ namespace Core.Combat
                     waves[waveIndex++].startSpawn(this);
                 }
 
-                Debug.Log($"spawning wave {waveIndex}(actually : {actualWaveCount}) started");
+                // Debug.Log($"spawning wave {waveIndex}(actually : {actualWaveCount}) started");
 
             }
             else
@@ -76,21 +91,26 @@ namespace Core.Combat
             }
         }
 
+        private void showWaveCount()
+        {
+            waveText.text = $"Wave\n {actualWaveCount}";
+            waveText.DOFade(1, waveTextAnimDuration)
+                .SetEase(Ease.Flash, waveTextFlashAmplitude, waveTextFlashDuration);
+        }
+
         public void handleSpawnedEnemyDeath(EnemyEntity e)
         {
             //ugly but will do for noww
             if(spawnTracker.Remove(e))
             {
                 hypnotizedTracker.Remove(e);
-                spawnTracker.Remove(e);
-
 
                 totalHypnoTime += e.TimeSpentHypnotized;
-
 
                 totalEnemiesKilled++;
 
                 remainingCountInWave--;
+                 
                 if (remainingCountInWave == 0)
                 {
                     spawnNextWave();
@@ -107,12 +127,13 @@ namespace Core.Combat
 
                 if (hypnotizedTracker.Count >= remainingCountInWave)
                 {
-                    Debug.Log("All enemeies hypno. Next stage!");
                     spawnNextWave();
                 }
             }
         }
-        
+
+
+
         public void handleSpawnedEnemyDeHypnotized(EnemyEntity enemy)
         {
             if(spawnTracker.Contains(enemy))
