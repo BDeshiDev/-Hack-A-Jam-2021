@@ -114,6 +114,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 702604308371153797}
+  - {fileID: 5355190128748511570}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -200,3 +201,111 @@ MonoBehaviour:
   animDuration: 1
   spriter1: {fileID: 702604308540069518}
   spriter2: {fileID: 702604308540069518}
+  baseSize: {x: 2, y: 2}
+  spawnStartCallback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5355190128748511569}
+        m_TargetAssemblyTypeName: SFXPlayer, Assembly-CSharp
+        m_MethodName: playRandomized
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1001 &9148646718326657398
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 702604308540069513}
+    m_Modifications:
+    - target: {fileID: 3794265898875654178, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_Name
+      value: SummoningSFX Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 481.41925
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 499.43112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.591535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794265898875654183, guid: 5fb11a50dfff6c0488925314db5280ae,
+        type: 3}
+      propertyPath: playOnEnable
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fb11a50dfff6c0488925314db5280ae, type: 3}
+--- !u!4 &5355190128748511570 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3794265898875654180, guid: 5fb11a50dfff6c0488925314db5280ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 9148646718326657398}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5355190128748511569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3794265898875654183, guid: 5fb11a50dfff6c0488925314db5280ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 9148646718326657398}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35827f4873af49b4db6c2ed3a840d2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

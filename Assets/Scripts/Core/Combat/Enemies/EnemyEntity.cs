@@ -2,6 +2,7 @@
 using BDeshi.Utility;
 using Core.Combat.Enemies;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Serialization;
 
@@ -23,6 +24,9 @@ namespace Core.Combat
         public float normalCoolDownDuration = 2f;
 
         public float TimeSpentHypnotized { get; private set; } = 0;
+
+        public UnityEvent SelfBerserkedEvent;
+        public UnityEvent SelfHypnotizedEvent;
         
         public override void takeDamage(DamageInfo damage)
         {
@@ -144,6 +148,8 @@ namespace Core.Combat
             fsm.handleEvent(Events.Berserk);
             
             CombatEventManger.Instance.OnEnemyBerserked.Invoke(this);
+            
+            SelfBerserkedEvent.Invoke();
         }
 
         protected void OnHypnotized(HypnoComponent obj)
@@ -152,6 +158,8 @@ namespace Core.Combat
             targetter.gameObject.layer = targetter.TargettingInfo.HypnotizedLayer.LayerIndex;
             
             CombatEventManger.Instance.OnEnemyHypnotized.Invoke(this);
+            
+            SelfHypnotizedEvent.Invoke();
         }
 
 

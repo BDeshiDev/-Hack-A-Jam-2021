@@ -26,8 +26,6 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
     
     protected override void initialize()
     {
-        source1 = gameObject.AddComponent<AudioSource>();
-        source2 = gameObject.AddComponent<AudioSource>();
         source1.outputAudioMixerGroup = source2.outputAudioMixerGroup = bgmGroup;
         source1.loop = source2.loop = true;
         curSource = source1;
@@ -80,8 +78,10 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
 
 
 
-    public void playClip(AudioSource source, AudioClip clip,bool shouldLoop)
+    public void playClip(AudioClip clip, bool shouldLoop, bool shouldRestartIfSame = false)
     {
+        if(clip == curSource.clip && !shouldRestartIfSame)
+            return;
         curSource.clip = clip;
         curSource.loop = shouldLoop;
         curSource.Play();

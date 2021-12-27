@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Core.Combat
 {
@@ -12,7 +13,7 @@ namespace Core.Combat
         [SerializeField] protected HealthComponent healthComponent;
         public bool isInvulnerable;
         
-        public event Action<CombatEntity> Died;
+        public UnityEvent ActualDeathEvent;
         protected virtual void Awake()
         {
             if (healthComponent == null)
@@ -39,9 +40,9 @@ namespace Core.Combat
             healthComponent.reduceAmount(damage.healthDamage);
         }
 
-        protected virtual void invokeDeathEvent()
+        protected void invokeDeathEvent()
         {
-            Died?.Invoke(this);
+            ActualDeathEvent.Invoke();
         }
 
     }

@@ -43,13 +43,13 @@ namespace Core.Combat
             Debug.Log("scoring : " + powerupCycle, powerupCycle);
             sequence
                 .Append(createScoreLineAnim(survivedText, 
-                    $"Time Survived: {spawner.spawnerRunningTime} secs"))
+                    $"Time Survived: {spawner.SpawnerRunningTime} secs"))
                 .Append(createScoreLineAnim(WaveText, 
                     $"Reached Wave: {spawner.lastReachedWave}."))
                 .Append(createScoreLineAnim(KilledText,
-                    $"Enemies Killed: {spawner.totalEnemiesKilled}."))
+                    $"Enemies Killed: {spawner.TotalEnemiesKilled}."))
                 .Append(createScoreLineAnim(hypnotizedText,
-                    $"Total Time enemies spent hypnotized : {spawner.totalHypnoTime + spawner.getAliveEnemyHypnoTime()} secs."))
+                    $"Total Time enemies spent hypnotized : {spawner.TotalHypnoTime + spawner.getAliveEnemyHypnoTime()} secs."))
                 .Append(createScoreLineAnim(CyclesText,
                     $"Total Power up Cycles: {powerupCycle.NumPowerupCyclesCompleted}."));
 

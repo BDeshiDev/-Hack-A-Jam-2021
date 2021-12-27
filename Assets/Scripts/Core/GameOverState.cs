@@ -18,8 +18,9 @@ namespace Core
         [SerializeField] private CanvasGroup rectTransformButton;
         public Tween  createTween()
         {
-
+        
             var t = DOTween.Sequence()
+                .SetDelay(.6f)
                 .Append(gameOverImageContainer.DOFade(1, fadeTime).SetEase(Ease.OutCubic))
                 .Append(gameOverText.transform.DOScale(Vector3.one, fadeTime))
                 .Append(gameOverText.transform.DOPunchScale(1.5f * Vector3.one, fadeTime))
@@ -34,6 +35,7 @@ namespace Core
                         .Insert(0, rectTransformButton.transform.DOScale(Vector3.one, fadeTime))
                     )
                 .OnComplete(() => {
+                    Time.timeScale = 0;
                     gameOverImageContainer.interactable = true;
                     //for some reason, timescale = 0 doesn't work with dotween even if SetUpdate(true) is used.
                     //so set it after
@@ -61,15 +63,16 @@ namespace Core
             gameOverImageContainer.alpha = 0;
             rectTransformButton.alpha = 0;
             rectTransformButton.transform.localScale = Vector3.zero;
+            
 
             startTWeen();
             
             GameStateManager.Instance.pause();
             Time.timeScale = 0;
-            
-            #if UNITY_EDITOR
-                tween.Complete();
-            #endif
+
+            // #if UNITY_EDITOR
+            //     tween.Complete();
+            // #endif
         }
 
         public override void Tick()
@@ -84,7 +87,9 @@ namespace Core
                 tween.Complete(false);
             }
             gameOverImageContainer.interactable = false;
-            gameOverImageContainer.DOFade(0,fadeTime);
+            gameOverImageContainer
+                .DOFade(0,fadeTime)
+                .SetUpdate(true);
             
             GameStateManager.Instance.unPause();
             Time.timeScale = 1;

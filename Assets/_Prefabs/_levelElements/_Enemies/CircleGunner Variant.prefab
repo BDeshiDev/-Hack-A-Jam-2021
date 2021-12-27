@@ -112,6 +112,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircleGunner Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6415456996822711878, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: max
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415456996822711879, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: berserkHypnoDamageConversionFactor
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 6415456996822711884, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}
       propertyPath: m_RootOrder
@@ -166,6 +176,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415456996822711885, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
+        type: 3}
+      propertyPath: max
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6415456997197623925, guid: 4ba839b5d6927fc489fec36c5ea4dc20,
         type: 3}

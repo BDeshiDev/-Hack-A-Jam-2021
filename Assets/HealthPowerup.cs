@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthPowerup : Powerup
 {
     [SerializeField] float healPercentage = .4f;
-    protected override void doPowerUpThing(HypnoPlayer hypnoPlayer)
+    protected override void doPowerUpPickup(HypnoPlayer hypnoPlayer)
     {
         hypnoPlayer.HealthComponent.modifyAmount(hypnoPlayer.HealthComponent.Max * healPercentage);
     }

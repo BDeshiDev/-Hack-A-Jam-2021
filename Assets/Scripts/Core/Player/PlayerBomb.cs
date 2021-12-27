@@ -5,6 +5,7 @@ using BDeshi.Utility;
 using Core.Combat;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
 
 public class PlayerBomb : MonoBehaviour
@@ -14,6 +15,11 @@ public class PlayerBomb : MonoBehaviour
     [SerializeField] private HitBox bombHitbox;
     private Tween tween;
     public Vector3 endSize = Vector3.one;
+
+    public UnityEvent bombLaunched;
+
+    public float flashPreiod = .5f;
+    public float flashCount = 4;
 
     private void Start()
     {
@@ -28,17 +34,25 @@ public class PlayerBomb : MonoBehaviour
         transform.localScale = Vector3.zero;
         bombHitbox.startDetection();
         
+        bombLaunched.Invoke();
+        
         createOrRestartTween();
     }
 
     Tween  createTween()
     {
-        var part1Time = scaleTime * .9f;
-        var part2Time = scaleTime * .1f;
+        var part1Time = scaleTime * .7f;
+        var part2Time = scaleTime * .2f;
+        var part3Time = scaleTime * .6f;
         var t = DOTween.Sequence()
-            .Append(transform.DOScale(endSize * 1.5f, part1Time))
+            .Append(
+                transform.DOScale(endSize * .5f, part1Time)
+                .SetEase(Ease.Flash, flashCount, flashPreiod)
+                )
+            .Append(transform.DOScale(endSize * 1.2f, part2Time)
+                .SetEase(Ease.OutCubic))
             .Insert(0, spriter.DOFade(1, part1Time))
-            .Append(transform.DOScale(endSize, part2Time))
+            .Append(transform.DOScale(0, part3Time))
             .SetAutoKill(false)
             .SetRecyclable(true);
         t.onComplete += cleanup;

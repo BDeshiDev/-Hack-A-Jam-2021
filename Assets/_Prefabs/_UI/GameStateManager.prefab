@@ -1124,6 +1124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOveScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 3565187347172409110, guid: baec5a77f19e9ae45bdb9f36b855d9b1,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.9019608
+      objectReference: {fileID: 0}
     - target: {fileID: 3565187347172409111, guid: baec5a77f19e9ae45bdb9f36b855d9b1,
         type: 3}
       propertyPath: m_Pivot.x

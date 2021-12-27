@@ -28,6 +28,7 @@ namespace Core.Misc
                 ManagerLoadEnsurer.loadedManager = false;
                 InputManager.PlayModeExitCleanUp();
 
+                TipDispenser.cleanup();
             }
             else if (playModeState == PlayModeStateChange.ExitingEditMode)
             {

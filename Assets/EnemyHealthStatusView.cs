@@ -33,13 +33,15 @@ public class EnemyHealthStatusView : MonoBehaviour
     [SerializeField] float berserkTransitionFlashThresholdMMin = .2f;
     
     
+    
+    
     public void updateHealthGaugeFill(ResourceComponent resourceComponent)
     {
         if (hypnoComponent.IsBerserked)
         {
             setFillHeight(1- enemyEntity.berserkTimer.Ratio);
         }
-        else
+        else if(!hypnoComponent.IsInBerserkRange)
         {
             FillColorGroup.Color = Color.Lerp(lowHealthColor,normalColor, healthComponent.Ratio);
             setFillHeight(1);

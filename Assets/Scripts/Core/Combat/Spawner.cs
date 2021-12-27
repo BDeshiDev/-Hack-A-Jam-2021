@@ -26,7 +26,7 @@ namespace Core.Combat
         public int remainingCountInWave = 0;
 
         private HashSet<EnemyEntity> hypnotizedOrBerserkTracker = new HashSet<EnemyEntity>();
-        private List<EnemyEntity> hypnotizedOrBerserkList = new List<EnemyEntity>();
+        // private List<EnemyEntity> hypnotizedOrBerserkList = new List<EnemyEntity>();
         //any enemy spawned and not dead go here
         private HashSet<EnemyEntity> spawnTracker = new HashSet<EnemyEntity>();
 
@@ -42,9 +42,10 @@ namespace Core.Combat
         [SerializeField]private float hypnosisBonsTextMoveAmount = 3.76f;
         [SerializeField]private float hypnoBonusShowTIme = 3;
 
-        public float spawnerRunningTime { get; private set; } = 0;
-        public float totalHypnoTime { get; private set; } = 0;
-        public float totalEnemiesKilled { get; private set; } = 0;
+        public float SpawnerRunningTime { get; private set; } = 0;
+        public float TotalHypnoTime { get; private set; } = 0;
+        public float TotalEnemiesKilled { get; private set; } = 0;
+        public int NumEnemiesCurrentlyHypnotized => hypnotizedOrBerserkTracker.Count;
 
 
         public IEnumerator Start()
@@ -104,20 +105,14 @@ namespace Core.Combat
             if(spawnTracker.Remove(e))
             {
                 removeHypnoORBerserkedEnemy(e);
-                Debug.Log("remove spawn "+ e,  e);
+                
+                TotalHypnoTime += e.TimeSpentHypnotized;
 
-
-                totalHypnoTime += e.TimeSpentHypnotized;
-
-                totalEnemiesKilled++;
+                TotalEnemiesKilled++;
 
                 remainingCountInWave--;
                 
                 trySpawnNextWave();
-            }
-            else
-            {
-                Debug.Log(e+ " died but ignored ", e);
             }
         }
 
@@ -144,10 +139,11 @@ namespace Core.Combat
 
         public void trySpawnNextWave()
         {
-            Debug.Log(hypnotizedOrBerserkTracker.Count + " vs " + remainingCountInWave);
+            // Debug.Log(hypnotizedOrBerserkTracker.Count + " vs " + remainingCountInWave);
             
             if (hypnotizedOrBerserkTracker.Count >= remainingCountInWave)
             {
+                CombatEventManger.Instance.OnWaveCompleted.Invoke(this);
                 spawnNextWave();
             }
         }
@@ -163,14 +159,14 @@ namespace Core.Combat
 
         private void Update()
         {
-            spawnerRunningTime += Time.deltaTime;
+            SpawnerRunningTime += Time.deltaTime;
         }
 
         bool addHypnoORBerserekedEnemy(EnemyEntity e)
         {
             if(hypnotizedOrBerserkTracker.Add(e))
             {
-                hypnotizedOrBerserkList.Add(e);
+                // hypnotizedOrBerserkList.Add(e);
 
                 return true;
             }
@@ -182,7 +178,7 @@ namespace Core.Combat
         {
             if(hypnotizedOrBerserkTracker.Remove(e))
             {
-                hypnotizedOrBerserkList.Remove(e);
+                // hypnotizedOrBerserkList.Remove(e);
 
                 return true;
             }

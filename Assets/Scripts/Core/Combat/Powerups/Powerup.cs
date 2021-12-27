@@ -10,6 +10,7 @@ namespace Core.Combat.Powerups
     {
         public FiniteTimer durationTimer = new FiniteTimer(9);
         public UnityEvent OnPowerUpSpawned;
+        public UnityEvent OnPowerUpPickedUp;
         [SerializeField] private SpriteRenderer spriter;
         public SpriteRenderer Spriter => spriter;
         void Update()
@@ -30,7 +31,7 @@ namespace Core.Combat.Powerups
         public void initialize()
         {
             durationTimer.reset();
-            
+            OnPowerUpSpawned.Invoke();
             CombatEventManger.Instance.OnPowerUpSpawned.Invoke(this);
         }
 
@@ -39,12 +40,13 @@ namespace Core.Combat.Powerups
             var p = other.GetComponent<HypnoPlayer>();
             if (p != null)
             {
-                doPowerUpThing(p);
+                doPowerUpPickup(p);
+                OnPowerUpPickedUp.Invoke();
                 NormalReturn();
             }
         }
 
-        protected abstract void doPowerUpThing(HypnoPlayer hypnoPlayer);
+        protected abstract void doPowerUpPickup(HypnoPlayer hypnoPlayer);
 
 
         public void handleForceReturn()

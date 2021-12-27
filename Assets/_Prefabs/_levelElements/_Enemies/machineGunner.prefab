@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 6415456996822711885}
   - component: {fileID: 6415456996822711886}
   - component: {fileID: 1061881115}
+  - component: {fileID: -3994895028265477143}
   m_Layer: 14
   m_Name: machineGunner
   m_TagString: Untagged
@@ -365,6 +366,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthComponent: {fileID: 0}
   isInvulnerable: 0
+  ActualDeathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3994895028265477143}
+        m_TargetAssemblyTypeName: Core.Misc.ParticleSpawnHelper, Assembly-CSharp
+        m_MethodName: spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   spriter: {fileID: 0}
   fsmRunner: {fileID: 0}
   aimer: {fileID: 6415456996845152558}
@@ -379,7 +395,7 @@ MonoBehaviour:
     timer: 0
     maxValue: 8
   berserkCoolDownMultiplier: 0.25
-  berserkHypnoDamageConversionFactor: 0.08
+  berserkHypnoDamageConversionFactor: 0.15
   normalCoolDownDuration: 2
   normalMaintainRangeState: {fileID: 2977584803869460922}
   normalPrepAttackState: {fileID: 5622293358087497251}
@@ -447,7 +463,7 @@ MonoBehaviour:
   hypnoDOTIncreaseTimer:
     timer: 0
     maxValue: 9
-  hypnoDOTActive: 0
+  wasHypnotizedBefore: 0
   hypnoDamageVsHealthCurve:
     serializedVersion: 2
     m_Curve:
@@ -488,7 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ca2ced48ba46eda489ecce77647f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max: 100
+  max: 60
   cur: 0
 --- !u!114 &6415456996822711886
 MonoBehaviour:
@@ -523,10 +539,22 @@ MonoBehaviour:
     type: 2}
   player: {fileID: 0}
   lastTarget: {fileID: 0}
-  mostAggroedTarget: {fileID: 0}
   randomDirTimer:
     timer: 0
     maxValue: 0.5
+--- !u!114 &-3994895028265477143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415456996822711877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873ff88069f64dc7a4a812f89f3f109b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 976398501236524174, guid: 7c8c8d428b4e1c6408c9b86abc2c0aa7, type: 3}
 --- !u!1 &6415456996845152557
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +794,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ef8d99d41ea08f4aabecc0096b65a08, type: 3}
+--- !u!114 &6415456997197623925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5255754624123825246, guid: 3ef8d99d41ea08f4aabecc0096b65a08,
+    type: 3}
+  m_PrefabInstance: {fileID: 1294917770437615147}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcfb2025d704a7cacbe9a89d1b0e295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6415456997197623924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5255754624123825247, guid: 3ef8d99d41ea08f4aabecc0096b65a08,
@@ -782,18 +822,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13f498e2316c42b8bf2744a980e7dfb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6415456997197623925 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5255754624123825246, guid: 3ef8d99d41ea08f4aabecc0096b65a08,
-    type: 3}
-  m_PrefabInstance: {fileID: 1294917770437615147}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bcfb2025d704a7cacbe9a89d1b0e295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6873212398755725776

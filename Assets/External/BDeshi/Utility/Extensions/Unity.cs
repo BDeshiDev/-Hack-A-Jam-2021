@@ -173,6 +173,16 @@ namespace BDeshi.Utility.Extensions
                 Gizmos.DrawLine(path[i-1], path[i ]);
             }
         }
+        
+        public static void Shuffle<T>(this IList<T> list)  
+        {  
+            for (int i = list.Count -1 ; i < list.Count; i--)
+            {
+                int k = Random.Range(0, i+1); 
+                (list[k], list[i]) = (list[i], list[k]);
+            }
+
+        }
 #endif
     }
 }

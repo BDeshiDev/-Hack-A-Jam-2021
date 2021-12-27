@@ -3,7 +3,7 @@ using Core.Player;
 
 public class BombPowerup : Powerup
 {
-    protected override void doPowerUpThing(HypnoPlayer hypnoPlayer)
+    protected override void doPowerUpPickup(HypnoPlayer hypnoPlayer)
     {
         hypnoPlayer.GetComponent<PlayerBombLauncher>().addBomb();
     }

@@ -18,6 +18,7 @@ namespace Core.Combat
         [SerializeField] private FiniteTimer ammoReloadTimer = new FiniteTimer(0, 3f);
         [SerializeField] private HypnoPlayer player;
         [SerializeField] int DashRecoverAmount = 2;
+        [SerializeField] float hypnotizedCountBulletConversionFactor = .5f;
         public event Action<AmmoComponent> AmmoChanged;
 
         void Start()
@@ -29,9 +30,18 @@ namespace Core.Combat
             player = GetComponentInParent<HypnoPlayer>();
             
             CombatEventManger.Instance.OnSuccessFullDodge.add(gameObject, handleDodge);
+            CombatEventManger.Instance.OnWaveCompleted.add(gameObject, handleWaveCompleted);
         }
 
-        
+        private void handleWaveCompleted(Spawner spawner)
+        {
+            int bonusAmmo = Mathf.CeilToInt(
+                            spawner.NumEnemiesCurrentlyHypnotized
+                             * hypnotizedCountBulletConversionFactor
+                            );
+            reload(bonusAmmo);
+        }
+
 
         private void handleDodge()
         {
