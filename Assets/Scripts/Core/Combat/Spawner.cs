@@ -25,7 +25,8 @@ namespace Core.Combat
         // public event Action<int> waveCompleted;
         public int remainingCountInWave = 0;
 
-        private HashSet<EnemyEntity> hypnotizedTracker = new HashSet<EnemyEntity>();
+        private HashSet<EnemyEntity> hypnotizedOrBerserkTracker = new HashSet<EnemyEntity>();
+        private List<EnemyEntity> hypnotizedOrBerserkList = new List<EnemyEntity>();
         //any enemy spawned and not dead go here
         private HashSet<EnemyEntity> spawnTracker = new HashSet<EnemyEntity>();
 
@@ -68,7 +69,7 @@ namespace Core.Combat
         {
             if (waveIndex < waves.Count)
             {
-                hypnotizedTracker.Clear();
+                // hypnotizedOrBerserkTracker.Clear();
 
                 actualWaveCount++;
                 showWaveCount();
@@ -100,44 +101,64 @@ namespace Core.Combat
 
         public void handleSpawnedEnemyDeath(EnemyEntity e)
         {
-            //ugly but will do for noww
             if(spawnTracker.Remove(e))
             {
-                hypnotizedTracker.Remove(e);
+                removeHypnoORBerserkedEnemy(e);
+                Debug.Log("remove spawn "+ e,  e);
+
 
                 totalHypnoTime += e.TimeSpentHypnotized;
 
                 totalEnemiesKilled++;
 
                 remainingCountInWave--;
-                 
-                if (remainingCountInWave == 0)
-                {
-                    spawnNextWave();
-                }
+                
+                trySpawnNextWave();
             }
+            else
+            {
+                Debug.Log(e+ " died but ignored ", e);
+            }
+        }
+
+        public float getAliveEnemyHypnoTime()
+        {
+            float t = 0;
+            foreach (var spawnedEnemy in spawnTracker)
+            {
+                t += spawnedEnemy.TimeSpentHypnotized;
+            }
+
+            return t;
         }
 
 
 
         public void handleSpawnedEnemyHypnotized(EnemyEntity enemy)
         {
-            if (spawnTracker.Contains(enemy) && hypnotizedTracker.Add(enemy))
+            if (spawnTracker.Contains(enemy) && addHypnoORBerserekedEnemy(enemy))
             {
-
-                if (hypnotizedTracker.Count >= remainingCountInWave)
-                {
-                    spawnNextWave();
-                }
+                trySpawnNextWave();
             }
         }
 
+        public void trySpawnNextWave()
+        {
+            Debug.Log(hypnotizedOrBerserkTracker.Count + " vs " + remainingCountInWave);
+            
+            if (hypnotizedOrBerserkTracker.Count >= remainingCountInWave)
+            {
+                spawnNextWave();
+            }
+        }
 
 
         public void handleSpawnedEnemyDeHypnotized(EnemyEntity enemy)
         {
             if(spawnTracker.Contains(enemy))
-                hypnotizedTracker.Remove(enemy);
+                removeHypnoORBerserkedEnemy(enemy);
+            
+            trySpawnNextWave();
         }
 
         private void Update()
@@ -145,9 +166,34 @@ namespace Core.Combat
             spawnerRunningTime += Time.deltaTime;
         }
 
+        bool addHypnoORBerserekedEnemy(EnemyEntity e)
+        {
+            if(hypnotizedOrBerserkTracker.Add(e))
+            {
+                hypnotizedOrBerserkList.Add(e);
+
+                return true;
+            }
+
+            return false;
+        }
+        
+        bool removeHypnoORBerserkedEnemy(EnemyEntity e)
+        {
+            if(hypnotizedOrBerserkTracker.Remove(e))
+            {
+                hypnotizedOrBerserkList.Remove(e);
+
+                return true;
+            }
+
+            return false;
+        }
+
 
         public void trackEnemy(EnemyEntity e)
         {
+            Debug.Log("add spawn "+ e,  e);
             spawnTracker.Add(e);
         }
     }

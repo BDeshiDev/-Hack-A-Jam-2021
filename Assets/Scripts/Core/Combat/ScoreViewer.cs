@@ -39,7 +39,8 @@ namespace Core.Combat
         {
             Spawner spawner = FindObjectOfType<Spawner>();
             PowerupCycle powerupCycle = FindObjectOfType<PowerupCycle>();
-
+            Debug.Log("scoring : " + spawner, spawner);
+            Debug.Log("scoring : " + powerupCycle, powerupCycle);
             sequence
                 .Append(createScoreLineAnim(survivedText, 
                     $"Time Survived: {spawner.spawnerRunningTime} secs"))
@@ -48,7 +49,7 @@ namespace Core.Combat
                 .Append(createScoreLineAnim(KilledText,
                     $"Enemies Killed: {spawner.totalEnemiesKilled}."))
                 .Append(createScoreLineAnim(hypnotizedText,
-                    $"Total Time enemies spent hypnotized : {spawner.totalHypnoTime} secs."))
+                    $"Total Time enemies spent hypnotized : {spawner.totalHypnoTime + spawner.getAliveEnemyHypnoTime()} secs."))
                 .Append(createScoreLineAnim(CyclesText,
                     $"Total Power up Cycles: {powerupCycle.NumPowerupCyclesCompleted}."));
 

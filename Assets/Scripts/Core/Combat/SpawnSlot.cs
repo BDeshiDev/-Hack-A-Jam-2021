@@ -16,7 +16,7 @@ namespace Core.Combat
 
         public void setCount(ref int remainingTotalCount)
         {
-            count = Random.Range(min, Mathf.Min(max + 1, remainingTotalCount));
+            count = Mathf.Min(remainingTotalCount,Random.Range(min, max + 1));
             remainingTotalCount-= count;
         }
 
