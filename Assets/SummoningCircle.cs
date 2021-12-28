@@ -5,6 +5,7 @@ using BDeshi.Utility;
 using Core;
 using Core.Combat;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -27,20 +28,22 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
 
     public void startSummon(EnemyEntity prefab, Vector3 pos, Action<EnemyEntity> spawnCallback)
     {
+        lastSummon = summon(prefab, pos, spawnCallback);
+        StartCoroutine(lastSummon);
+    }
+    
+    
+    //won't be used by anything else for the jam, so modularity not necessary
+    public IEnumerator summon(EnemyEntity prefab,
+                        Vector3 pos,
+                        [CanBeNull] Action<EnemyEntity> spawnCallback)
+    {
         transform.position = pos;
         transform.localScale = Vector3.zero;
         var c = spriter1.color;
         c.a = 0;
         spriter1.color = spriter2.color = c;
         lastSummon = summon(prefab, pos, spawnCallback);
-
-        StartCoroutine(lastSummon);
-    }
-    
-    
-    //won't be used by anything else for the jam, so modularity not necessary
-    IEnumerator summon(EnemyEntity prefab, Vector3 pos, Action<EnemyEntity> spawnCallback)
-    {
         delayTimer.reset();
 
         while (!delayTimer.isComplete)
@@ -59,7 +62,7 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
                     var e = GameplayPoolManager.Instance.enemyPool.get(prefab);
                     e.transform.position = transform.position;
 
-                    spawnCallback.Invoke(e);
+                    spawnCallback?.Invoke(e);
                 })
             ;
         yield return t.WaitForCompletion();

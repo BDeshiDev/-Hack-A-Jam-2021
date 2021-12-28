@@ -77,6 +77,8 @@ namespace Core.Player
         [ContextMenu("FORCE DIE")]
         private void handleDeath()
         {
+            if(!canDie)
+                return;
             invokeDeathEvent();
             GameStateManager.Instance.handleEvent(GameStateManager.Event.Gameover);
         }  

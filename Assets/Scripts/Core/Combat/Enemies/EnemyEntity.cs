@@ -141,6 +141,7 @@ namespace Core.Combat
 
         protected virtual void HandleBerserked(HypnoComponent obj)
         {
+            healthComponent.forceEmpty();
             targetter.handleBerserk();
             targetter.gameObject.layer = targetter.TargettingInfo.NormalLayer.LayerIndex;
             
