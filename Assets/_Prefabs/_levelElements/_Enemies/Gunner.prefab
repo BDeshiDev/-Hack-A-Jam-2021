@@ -288,10 +288,16 @@ MonoBehaviour:
     maxValue: 6
   berserkTimer:
     timer: 0
-    maxValue: 8
+    maxValue: 6
   berserkCoolDownMultiplier: 0.25
-  berserkHypnoDamageConversionFactor: 0.15
+  berserkHypnoDamageConversionFactor: 0.05
   normalCoolDownDuration: 2
+  SelfBerserkedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SelfHypnotizedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   normalMaintainRangeState: {fileID: 2977584803869460922}
   normalPrepAttackState: {fileID: 5622293358087497251}
   normalAttackState: {fileID: 7112558282308568999}

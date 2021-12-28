@@ -142,7 +142,7 @@ public class EnemyHealthStatusView : MonoBehaviour
 
     void Update()
     {
-        if(!hypnoComponent.IsInBerserkRange && hypnoComponent.IsInBerserkRange)
+        if(!hypnoComponent.IsBerserked && hypnoComponent.IsInBerserkRange)
         {
             flashSpriter.gameObject.SetActive(true);
             doBerserktransitionFlash();

@@ -3212,3 +3212,4 @@ Received Import Request.
   path: Assets/_Prefabs/_levelElements/_Enemies/ShotGunner Variant.prefab
   artifactKey: Guid(03ef1f5d435cbe344bf1c9a9f24d56c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/_Prefabs/_levelElements/_Enemies/ShotGunner Variant.prefab using Guid(03ef1f5d435cbe344bf1c9a9f24d56c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '37fb4b9646a5093cbbc51aa2be3bfc24') in 0.031169 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
