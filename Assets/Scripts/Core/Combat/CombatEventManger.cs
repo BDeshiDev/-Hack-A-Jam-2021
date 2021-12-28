@@ -1,5 +1,6 @@
 ﻿using bdeshi.utility;
 using BDeshi.Utility;
+using Core.Combat.Enemies;
 using Core.Combat.Powerups;
 
 namespace Core.Combat
