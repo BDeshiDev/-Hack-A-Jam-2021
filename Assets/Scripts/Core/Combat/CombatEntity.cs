@@ -12,7 +12,7 @@ namespace Core.Combat
         public HealthComponent HealthComponent=> healthComponent;
         [SerializeField] protected HealthComponent healthComponent;
         public bool isInvulnerable;
-        public bool canDie;
+        public bool CanDie;
         public UnityEvent ActualDeathEvent;
         protected virtual void Awake()
         {

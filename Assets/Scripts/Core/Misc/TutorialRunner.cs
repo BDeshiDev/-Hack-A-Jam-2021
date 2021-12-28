@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using BDeshi.BTSM;
 using BDeshi.Utility;
 using Core.Combat;
 using Core.Combat.Powerups;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Core.Misc
 {
-    public class Tutorial:MonoBehaviour
+    public class TutorialRunner:MonoBehaviour
     {
         private HypnoPlayer player;
         private PlayerBombLauncher bomber;
@@ -29,6 +30,8 @@ namespace Core.Misc
         [SerializeField] private TextMeshPro titleDropTextRight;
         [SerializeField]  TextMeshPro text;
         private float titleDropWaitTime = 1f;
+        private float hypnoFightShowTime = 4;
+
 
         private void Start()
         {
@@ -42,7 +45,7 @@ namespace Core.Misc
         
         public IEnumerator doTutorial()
         {
-            yield return StartCoroutine(showControls());
+            // yield return StartCoroutine(showControls());
             yield return StartCoroutine(showEnemyMechanics());
 
             yield return StartCoroutine(doTitleDrop());
@@ -52,62 +55,97 @@ namespace Core.Misc
         
         public IEnumerator showEnemyMechanics()
         {
-            //do enemy portion
-            var summoningCircle = GameplayPoolManager.Instance.summoningCircles.get(summoningCirclePrefab);
-            yield return StartCoroutine(
-                    summoningCircle.summon(enemyPrefab,
-                                        arena.findSafeSpawnSpot(),
-                                        (e) => enemy1 = e)
-                    );
-            showText("Your attacks can hypnotize enemies.");
-
-            while (!enemy1.IsHypnotized)
-            {
-                yield return null;
-            }
+            player.CanDie = false;
+            //stuff other than the mechanics tutorial aren't complex enough to require fsm
+            ModularState enemy1SpawnState = new ModularState(
+                () =>
+                {
+                    showText("Your attacks can hypnotize enemies.");
+                    
+                    var summoningCircle = GameplayPoolManager.Instance.summoningCircles.get(summoningCirclePrefab);
+                    summoningCircle.startSummon(enemyPrefab,
+                        arena.findSafeSpawnSpot(),
+                        (e) => { enemy1 = e;  });
+                });
             
-            summoningCircle = GameplayPoolManager.Instance.summoningCircles.get(summoningCirclePrefab);
-            yield return StartCoroutine(
-                summoningCircle.summon(enemyPrefab,
-                    arena.findSafeSpawnSpot(),
-                    (e) => enemy2 = e)
+            //at this state, enemy1 is hypnotized
+            FiniteTimer hypnoFightShowTimer = new FiniteTimer(0, this.hypnoFightShowTime);
+            ModularState enemy2SpawnState = new ModularState(
+                () =>
+                {
+                    hypnoFightShowTimer.reset();
+
+                    var summoningCircle = GameplayPoolManager.Instance.summoningCircles.get(summoningCirclePrefab);
+                    summoningCircle.startSummon(enemyPrefab,
+                        arena.findSafeSpawnSpot(), 
+                        e =>
+                        {
+                            enemy2 = e;
+                            showText("Hypnotized enemies will temporarily fight for you");
+                        });
+                },
+                () => hypnoFightShowTimer.updateTimer(Time.deltaTime)
             );
-            showText("Hypnotized enemies will temporarily fight for you.");
-            FiniteTimer hypnoFightTextShowTimer = new FiniteTimer(0, hypnoTextShowTime);
-            //both not dead
-            while (!enemy1.HealthComponent.IsEmpty &&
-                   !enemy2.HealthComponent.IsEmpty)
-            {
-                
-                // we've show the hypnoFightText long enough or 
-                // any one of them dead
-                // and not berserk, because that takes priority
-                if (!hypnoFightTextShowTimer.isComplete ||
-                    (enemy1.HealthComponent.IsEmpty ||
-                     enemy2.HealthComponent.IsEmpty) && 
-                    !(
-                        enemy1.HypnoComponent.IsBerserked || 
-                        enemy2.HypnoComponent.IsBerserked
-                      )
-                    )
+            //
+            FiniteTimer migraineShowTimer = new FiniteTimer(hypnoTextShowTime);
+            ModularState migraineState = new ModularState(
+                () =>
                 {
+                    migraineShowTimer.reset();
                     showText("Hypnotized enemies take damage over time from migraine.");
-                    hypnoFightTextShowTimer.safeUpdateTimer(Time.deltaTime);
-                }
-                else
+                },
+                () => migraineShowTimer.updateTimer(Time.deltaTime)
+                );
+            ModularState berserkState = new ModularState(
+                () =>
                 {
-                    //any one going to turn into or is berserk
-                    if ((enemy1.HypnoComponent.IsInBerserkRange ||
-                         enemy1.HypnoComponent.IsBerserked) ||
-                        (enemy2.HypnoComponent.IsInBerserkRange ||
-                         enemy2.HypnoComponent.IsBerserked))
-                    {
-                        showText("Enemies go berserk at low health");
-                    }
+                    showText("Enemies go berserk at low health");
                 }
+            );
+            
+            
+
+            StateMachine fsm = new StateMachine(enemy1SpawnState);
+            fsm.addTransition(
+                enemy1SpawnState,
+                enemy2SpawnState,
+                () => enemy1 != null && enemy1.IsHypnotized);
+            
+            fsm.addTransition(enemy2SpawnState, migraineState, 
+                () =>
+                        (
+                            enemy2 != null &&
+                            (enemy1.HealthComponent.IsEmpty || enemy2.HealthComponent.IsEmpty)
+                        )||
+                        hypnoFightShowTimer.isComplete
+                        ) ;
+            
+            fsm.addTransition(migraineState, berserkState, 
+                () => 
+                         enemy1.HypnoComponent.IsInBerserkRange ||
+                         enemy1.HypnoComponent.IsBerserked ||
+                         enemy2.HypnoComponent.IsInBerserkRange ||
+                         enemy2.HypnoComponent.IsBerserked
+            ) ;
+            
+            fsm.addTransition(berserkState,  migraineState, 
+                () =>
+                    (!enemy1.HypnoComponent.IsInBerserkRange && !enemy2.HypnoComponent.IsInBerserkRange) &&
+                    enemy1.HealthComponent.IsEmpty ||
+                    enemy2.HealthComponent.IsEmpty
+            ) ;
+
+            
+            fsm.enter();
+            //both not dead
+            while ((enemy1 == null || enemy2 == null) ||
+                   (!enemy1.TrulyDead && !enemy2.TrulyDead))
+            {
+                fsm.Tick();
                 yield return null;
             }
         }
+        
 
         public IEnumerator showControls()
         {
@@ -130,7 +168,7 @@ namespace Core.Misc
             
             yield return new WaitForSeconds(3f);
             
-            showText("LMB to \n Shoot hypnotic \"Fireballs\".");
+            showText("LMB to \n Shoot .");
             
             
             while (!InputManager.meleeButton.isHeld)
@@ -179,6 +217,9 @@ namespace Core.Misc
 
         public IEnumerator doTitleDrop()
         {
+            text.gameObject.SetActive(false);
+            
+            
             yield return showText("Welcome", titleDropTextLeft);
             yield return showText("To", titleDropTextRight);
 

@@ -24,10 +24,11 @@ namespace Core.Combat
         public float normalCoolDownDuration = 2f;
 
         public float TimeSpentHypnotized { get; private set; } = 0;
-
+        
         public UnityEvent SelfBerserkedEvent;
         public UnityEvent SelfHypnotizedEvent;
-        
+
+        public bool TrulyDead => healthComponent.IsEmpty && berserkTimer.isComplete;
         public override void takeDamage(DamageInfo damage)
         {
             base.takeDamage(damage);
