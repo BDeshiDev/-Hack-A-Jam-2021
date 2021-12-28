@@ -8,6 +8,7 @@ using Core.Player;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Core.Misc
 {
@@ -26,11 +27,15 @@ namespace Core.Misc
         private EnemyEntity enemy2;
         
         [SerializeField] private float hypnoTextShowTime = 5f;
-        [SerializeField] private TextMeshPro titleDropTextLeft;
-        [SerializeField] private TextMeshPro titleDropTextRight;
+        [SerializeField] private TextMeshPro titleDropText1;
+        [SerializeField] private TextMeshPro titleDropText2;
+        [SerializeField] private TextMeshPro titleDropText3;
+        [SerializeField] private TextMeshPro titleDropText4;
+        public UnityEvent TitleDropped;
         [SerializeField]  TextMeshPro text;
         private float titleDropWaitTime = 1f;
         private float hypnoFightShowTime = 4;
+        private float welcomeTime = .8f;
 
 
         private void Start()
@@ -45,7 +50,7 @@ namespace Core.Misc
         
         public IEnumerator doTutorial()
         {
-            // yield return StartCoroutine(showControls());
+            yield return StartCoroutine(showControls());
             yield return StartCoroutine(showEnemyMechanics());
 
             yield return StartCoroutine(doTitleDrop());
@@ -103,7 +108,6 @@ namespace Core.Misc
                 }
             );
             
-            
 
             StateMachine fsm = new StateMachine(enemy1SpawnState);
             fsm.addTransition(
@@ -138,11 +142,17 @@ namespace Core.Misc
             
             fsm.enter();
             //both not dead
-            while ((enemy1 == null || enemy2 == null) ||
-                   (!enemy1.TrulyDead && !enemy2.TrulyDead))
+            //
+            while (true)
             {
                 fsm.Tick();
                 yield return null;
+
+                if (enemy1 != null && enemy2 != null &&
+                    enemy1.TrulyDead && enemy2.TrulyDead)
+                {
+                    break;
+                }
             }
         }
         
@@ -175,11 +185,9 @@ namespace Core.Misc
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(4f);
             
-            showText("They reload over time.");
             
-            yield return new WaitForSeconds(2f);
             
             showText("Pick up the powerup");
             
@@ -220,13 +228,19 @@ namespace Core.Misc
             text.gameObject.SetActive(false);
             
             
-            yield return showText("Welcome", titleDropTextLeft);
-            yield return showText("To", titleDropTextRight);
+            yield return showText("Welcome", titleDropText1).WaitForCompletion();
+            yield return showText("To", titleDropText2).WaitForCompletion();
+            yield return new WaitForSeconds(welcomeTime);
 
-            titleDropTextLeft.text = titleDropTextRight.text = "";
+
+            titleDropText1.text = titleDropText2.text = "";
+            TitleDropped.Invoke();
+            yield return showText("YOUR BULLETS.", titleDropText3).WaitForCompletion();
+            yield return new WaitForSeconds(.6f);
+
+            yield return showText("OUR HELL.", titleDropText4).WaitForCompletion();
             
-            yield return showText("YOUR BULLETS.", titleDropTextLeft);
-            yield return showText("OUR HELL.", titleDropTextRight);
+
             
             yield return new WaitForSeconds(titleDropWaitTime);
         }
