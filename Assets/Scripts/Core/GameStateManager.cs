@@ -3,161 +3,138 @@ using System.Collections;
 using System.Collections.Generic;
 using BDeshi.BTSM;
 using bdeshi.utility;
+using BDeshi.Utility;
+using Core;
+using Core.Combat;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
-public class GameStateManager : MonoBehaviourLazySingleton<GameStateManager>
+public class GameStateManager : MonoBehaviourSingletonPersistent<GameStateManager>
 {
     [SerializeField] FSMRunner runner;
-    public static bool isPaused { get; private set; } = false;
+    public bool IsPaused =>isPaused;
+    [SerializeField] bool isPaused = false;
     public EventDrivenStateMachine<Event> fsm { get; private set; }
+
     public static State initialState;
 
-    public static StateBase titleMenuState { get; } = new TitleMenuState();
-    public static StateBase optionMenuState { get; } = new GameState("Options Menu");
-    public static StateBase gamePlayState { get; } = new GamePlayState();
-    public static StateBase pauseMenuState { get; } = new GamePausedState("PauseMenu");
-    public static StateBase inGameOptionMenuState  { get; }= new GameState("Options Menu");
+    //need to reference these
+    public GamePlayState gamePlayState;
+    public GameOverState gameoverState;
+    // public GameState inGameOptionMenuState;
+    // public GameState optionMenuState;
+
+    public event Action Paused;
+    public event Action UnPaused;
+    public event Action GameplaySceneRefresh;
     
-    
-    protected override void init()
+
+    protected override void initialize()
     {
-        base.init();
-        
-        optionMenuState.AsChildOf(titleMenuState);
-        pauseMenuState.AsChildOf(gamePlayState);
-        inGameOptionMenuState.AsChildOf(pauseMenuState);
+
 
         if (initialState == null)
             initialState = gamePlayState;
         
-        fsm = new EventDrivenStateMachine<GameStateManager.Event>(initialState);
-        fsm.addEventTransition(titleMenuState, Event.ViewOptions, optionMenuState);
+        fsm = new EventDrivenStateMachine<GameStateManager.Event>(initialState ?? gamePlayState);
         
-        fsm.addEventTransition(gamePlayState, Event.PauseToggle, pauseMenuState);
-        
-        fsm.addEventTransition(pauseMenuState, Event.PauseToggle, gamePlayState);
-        fsm.addEventTransition(pauseMenuState, Event.ViewOptions, inGameOptionMenuState);
-        fsm.addEventTransition(optionMenuState, Event.ViewOptions, pauseMenuState);
-        
-        fsm.addGlobalEventTransition(Event.PlayGame, gamePlayState);
-        fsm.addGlobalEventTransition(Event.GoToTitle, titleMenuState);
+        fsm.addEventTransition(gamePlayState, Event.Gameover, gameoverState);
+        fsm.addEventHandler(gameoverState , Event.PlayGame, restartGameplayLevel);
+        fsm.addEventHandler(gamePlayState, Event.TutorialComplete,() => enterGameplayLevel(gamePlayState.levelSceneName));
         
         runner = gameObject.AddComponent<FSMRunner>();
-        runner.Initialize(fsm, false);
+        runner.fsm = fsm;
+        // runner.Initialize(fsm, false);
     }
     
-    public static void setInitialState(State s)
+    private void Start()
     {
-        initialState = s;
-        if(Instance.fsm.curState != null)
-            return;
-        
-        Instance.init();
+        if (!willGetDestroyed)
+        {
+            if (initialState != null)
+                runner.fsm.startingState = initialState;
+            runner.Initialize(fsm, false);
+        }
     }
 
+    public void pause()
+    {
+        if (!IsPaused)
+        {
+            isPaused = true;
+            Paused?.Invoke();
+        }
+    }
+    
+    public void unPause()
+    {
+        if (IsPaused)
+        {
+            isPaused = false;
+            UnPaused?.Invoke();
+        }
+    }
 
+    public static bool setInitialState(State s)
+    {
+
+        if(Instance.fsm.curState != null)
+            return false;
+        
+        initialState = s;
+        
+        Debug.Log($"GameState initial set: {s}, currently {Instance.fsm.curState}" );
+
+        
+        return true;
+    }
+
+    public void InvokeGameplaySceneChanged()
+    {
+        StartCoroutine(doInvokeGameplaySceneChanged());
+    }
+    //unity requires 1 frame delay before checking loaded scene
+    IEnumerator doInvokeGameplaySceneChanged()
+    {
+        yield return null;
+        GameplaySceneRefresh?.Invoke();
+    }
 
     public void handleEvent(Event e)
     {
         if(Instance != null)
+        {
+            Debug.Log($"{fsm.curState} handle {e} ");
             Instance.fsm.handleEvent(e);
+            Debug.Log($"{fsm.curState} now ");
+        }
+    }
+
+    //only two levels needed for the jam so this is sufficient
+    public void enterGameplayLevel(string levelName)
+    {
+        if (levelName == gamePlayState.levelSceneName)
+        {
+            return;
+        }
+
+        gamePlayState.levelSceneName = levelName;
+
+        fsm.transitionTo(gamePlayState, true, true);
     }
     
-    
+    public void restartGameplayLevel()
+    {
+        Debug.Log(gamePlayState, gamePlayState);
+        fsm.transitionTo(gamePlayState, true, true);
+    }
     
     public enum Event
     {
-        PauseToggle,
         PlayGame,
-        ViewOptions,
-        GoToTitle,
+        Gameover,
+        TutorialComplete,
     }
 
-    public class GameState : StateBase
-    {
-        public GameState()
-        {
-        }
-
-        public GameState(string prefix)
-        {
-            this.Prefix = prefix;
-        }
-
-        public override void EnterState()
-        {
-            Debug.Log($"Enter {FullStateName}", GameStateManager.Instance);
-        }
-
-        public override void Tick()
-        {
-            
-        }
-
-        public override void ExitState()
-        {
-            
-        }
-    }
-    
-    public class GamePausedState: GameState
-    {
-        public GamePausedState(String prefix) : base(prefix)
-        {
-        }
-
-        public override void EnterState()
-        {
-            base.EnterState();
-            Debug.Log("paused");
-            isPaused = true;
-        }
-
-        public override void ExitState()
-        {
-            base.ExitState();
-            isPaused = false;
-        }
-    }
-    
+  
 }
-
-public class GamePlayState : StateBase
-{
-    public override void EnterState()
-    {
-        SceneManager.LoadScene("GamePlayScene");
-        Debug.Log("VAR");
-    }
-
-    public override void Tick()
-    {
-        
-    }
-
-    public override void ExitState()
-    {
-        
-    }
-}
-
-public class TitleMenuState : GameStateManager.GameState
-{
-    public override void EnterState()
-    {
-        SceneManager.LoadScene("TitleScene");
-    }
-
-    public override void Tick()
-    {
-        
-    }
-
-    public override void ExitState()
-    {
-        
-    }
-}
-
-

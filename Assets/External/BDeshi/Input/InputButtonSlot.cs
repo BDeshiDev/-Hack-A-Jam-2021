@@ -16,7 +16,7 @@ namespace ShieldSan.Input
         private List<SafeAction> onPerformedCallbacks = new List<SafeAction>();
         private List<SafeAction> OnCancelledCallbacks = new List<SafeAction>();
             
-        public bool isHeld { get; private set; } 
+        public bool isHeld { get; private set; }
 
         public void addPerformedCallback(GameObject go, Action a)
         {

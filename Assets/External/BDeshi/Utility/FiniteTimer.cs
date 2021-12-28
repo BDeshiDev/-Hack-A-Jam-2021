@@ -33,7 +33,11 @@ namespace BDeshi.Utility
         {
             timer += delta;
         }
-
+        /// <summary>
+        /// return true if this is completed before or after updating
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <returns></returns>
         public bool tryCompleteTimer(float delta)
         {
             return tryCompleteTimer(delta, out var r);
@@ -82,10 +86,10 @@ namespace BDeshi.Utility
             reset();
         }
 
-        public void cyclicReset()
+        public void resetAndKeepExtra()
         {
-            if (Ratio > 1)
-                timer = maxValue * (Ratio - 1);
+            if (timer > maxValue)
+                timer -= maxValue;
             else
                 reset();
         }

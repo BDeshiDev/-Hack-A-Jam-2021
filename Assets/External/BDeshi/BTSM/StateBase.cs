@@ -13,7 +13,7 @@ namespace BDeshi.BTSM
                
         public string Name => GetType().Name;
 
-        public StateBase AsChildOf(State p)
+        public State AsChildOf(State p)
         {
             Parent = p;
             return this;

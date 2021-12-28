@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2375938910393654807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2375938910393654805}
+  - component: {fileID: 2375938910393654806}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2375938910393654805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375938910393654807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2375938910393654806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375938910393654807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df440bce25f91ff4d91e350c075039f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: -944628639613478452, guid: 790be33bfc5730743903c0b3ae976f6d, type: 3}
+  AimOrigin: {fileID: 0}
+  cam: {fileID: 0}
+  MouseAimActive: 0
+  GamePadAimActive: 0
+  aimDir: {x: 0, y: 0, z: 0}
+  aimPoint: {x: 0, y: 0, z: 0}
+  moveInput: {x: 0, y: 0}
+  applySensitivity: 1
+  gamepadVel: 80
+  aimAtAction: {fileID: -176263908450190203, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  aimAlongAction: {fileID: -3568598790354998939, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  movementAction: {fileID: 4992085326163989145, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  dashAction: {fileID: 4992085326163989145, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  meleeAction: {fileID: -1717504556656073157, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  bombAction: {fileID: -3707671587220374735, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  debugAction1: {fileID: 4014740420654707869, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  debugAction2: {fileID: -7301537711849400440, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}
+  debugAction3: {fileID: -602784573936036199, guid: 790be33bfc5730743903c0b3ae976f6d,
+    type: 3}

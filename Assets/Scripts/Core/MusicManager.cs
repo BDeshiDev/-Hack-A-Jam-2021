@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using bdeshi.utility;
 using BDeshi.Utility;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -24,10 +25,9 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
     private IEnumerator CustomTrackCoroutine = null;
     private IEnumerator VolumeLerpCoroutine = null;
     
+    
     protected override void initialize()
     {
-        source1 = gameObject.AddComponent<AudioSource>();
-        source2 = gameObject.AddComponent<AudioSource>();
         source1.outputAudioMixerGroup = source2.outputAudioMixerGroup = bgmGroup;
         source1.loop = source2.loop = true;
         curSource = source1;
@@ -54,14 +54,16 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
         curSource.volume = volume;
     }
     
+
     private IEnumerator fadeVolume(float finalVolume,float fadeTime)
     {
         float startVolume = curSource.volume;
         FiniteTimer timer = new FiniteTimer(0, fadeTime);
         while (!timer.isComplete)
         {
-            timer.updateTimer(Time.deltaTime);
+            timer.updateTimer(Time.unscaledTime);
             curSource.volume = Mathf.Lerp(startVolume, finalVolume, timer.Ratio);
+            Debug.Log(timer.Ratio);
             yield return null;
         }
 
@@ -80,8 +82,10 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
 
 
 
-    public void playClip(AudioSource source, AudioClip clip,bool shouldLoop)
+    public void playClip(AudioClip clip, bool shouldLoop, bool shouldRestartIfSame = false)
     {
+        if(clip == curSource.clip && !shouldRestartIfSame)
+            return;
         curSource.clip = clip;
         curSource.loop = shouldLoop;
         curSource.Play();

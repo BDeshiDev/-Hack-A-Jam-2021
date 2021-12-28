@@ -39,12 +39,20 @@ namespace BDeshi.Utility.Extensions
         {
             transform.rotation = Quaternion.AngleAxis(transform.rotation.eulerAngles.z + angleOffset, Vector3.forward);
         }
+        
+        public static float get2dAngle(this Vector3 dir)
+        {
+            return Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        }
 
         public static float get2dAngle(this Vector2 dir)
         {
             return Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         }
-
+        public static float get2dAngle(this Transform t)
+        {
+            return get2dAngle(t.up);
+        }
         public static void lookAlongTopDown(this Transform transform, Vector3 dir)
         {
             transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
@@ -129,6 +137,15 @@ namespace BDeshi.Utility.Extensions
         public static Vector3 multiplyDimensions(this Vector3 v, Vector3 other)
         {
             return new Vector3(v.x * other.x, v.y * other.y, v.z * v.z);
+        }
+        public static void Shuffle<T>(this IList<T> list)  
+        {  
+            for (int i = list.Count -1 ; i < list.Count; i--)
+            {
+                int k = Random.Range(0, i+1); 
+                (list[k], list[i]) = (list[i], list[k]);
+            }
+
         }
 
 #if UNITY_EDITOR

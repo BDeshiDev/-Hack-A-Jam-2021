@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -35,7 +36,17 @@ namespace BDeshi.BTSM
 
         public void enter(bool callEnter = true)
         {
-            transitionTo(startingState);
+            transitionTo(startingState, callEnter);
+        }
+        
+        public void exitCurState()
+        {
+            State cur = curState;
+            while (cur != null)
+            {
+                cur.ExitState();
+                cur = cur.Parent;
+            }
         }
 
         public void Tick()
@@ -49,10 +60,11 @@ namespace BDeshi.BTSM
                 {
                     newState = activeTransition.SuccessState;
                     activeTransition.TakenLastTime = true;
-#if DEBUG
-                    if (DebugContext)
-                        Debug.Log("from " + (curState.FullStateName ) + "To " + activeTransition, DebugContext);
-#endif
+// #if DEBUG
+//                     if (DebugContext)
+//                         Debug.Log("from " + (curState.FullStateName ) + "To " + activeTransition, DebugContext);
+// #endif
+                    activeTransition.OnTaken?.Invoke();
                     break;
                 }
                 else
@@ -99,16 +111,32 @@ namespace BDeshi.BTSM
         /// If true, call the enter function in the state(s) transitioned to
         /// Usecase: initialize curState without calling enter
         /// </param>
-        public void transitionTo(State newState, bool callEnter = true)
+        /// <param name="forceEnterIfSameState"></param>
+        public void transitionTo(State newState, bool callEnter = true, bool forceEnterIfSameState = false)
         {
-            if (newState != null && newState != curState)
+            if (newState != null && (newState != curState || forceEnterIfSameState))
             {
-#if DEBUG
-                if (DebugContext)
-                    Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
-#endif
+
+                // if (DebugContext)
+                // Debug.Log("from " +(curState == null?"null": curState.FullStateName)  + "To " + newState.FullStateName, DebugContext);
+
                 if(callEnter)
-                    recursiveTransitionToState(newState);
+                {
+                    if (forceEnterIfSameState && newState == curState)
+                    {
+                        newState.EnterState();
+                        curState = newState;
+                    }
+                    else
+                    {
+                        recursiveTransitionToState(newState);
+                    }
+                }
+                else
+                {
+                    curState = newState;
+                }
+
                 HandleTransitioned();
             }
         }
@@ -179,6 +207,11 @@ namespace BDeshi.BTSM
             {
                 transitions.Add(from, new List<Transition>(){t});
             }
+        }
+        
+        public void addTransition(State from, State to, Func<bool> condition, Action onTaken = null )
+        {
+            addTransition(from, new SimpleTransition(to, condition, onTaken));
         }
 
         public void addGlobalTransition(Transition t)

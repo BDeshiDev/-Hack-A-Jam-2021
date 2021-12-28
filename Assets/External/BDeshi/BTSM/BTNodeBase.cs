@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace BDeshi.BTSM

@@ -6,20 +6,23 @@ namespace BDeshi.BTSM
     {
         private State s;
         private Func<bool> evaluateFunc;
-        
+
         /// <summary>
         /// Create a transition to a state
         /// </summary>
         /// <param name="s"></param>
         /// <param name="evaluateFunc">If NULL Transition will ALWAYS BE TRUE</param>
-        public SimpleTransition(State s, Func<bool> evaluateFunc = null)
+        /// <param name="onTaken">Executed if this is taken</param>
+        public SimpleTransition(State s, Func<bool> evaluateFunc = null, Action onTaken= null)
         {
             this.s = s;
             this.evaluateFunc = evaluateFunc;
+            OnTaken = onTaken;
         }
 
         public State SuccessState => s;
         public bool TakenLastTime { get; set; }
+        public Action OnTaken { get; }
 
         /// <summary>
         /// If Func return true, else return false
