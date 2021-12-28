@@ -1,9 +1,8 @@
 ﻿using BDeshi.UI;
-using Core.Combat;
-using Core.Combat.Enemies;
+using Core.Combat.Shooting;
 using UnityEngine;
 
-namespace Core.UI
+namespace Core.Combat.Visuals.UI.HUD
 {
     public class PlayerAmmoViewController : MonoBehaviour
     {

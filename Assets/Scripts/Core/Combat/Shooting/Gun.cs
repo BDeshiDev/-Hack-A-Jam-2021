@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Core.Combat.Targetting;
+using Core.Misc;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Shooting
 {
     public class Gun: MonoBehaviour
     {

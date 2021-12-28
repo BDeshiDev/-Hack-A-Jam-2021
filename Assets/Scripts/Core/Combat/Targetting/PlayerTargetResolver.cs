@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using Core.Combat;
 using Core.Input;
 using UnityEngine;
 
-public class PlayerTargetResolver : TargetResolverComponent
+namespace Core.Combat.Targetting
 {
-    public override Vector3 getTargetPos()
+    public class PlayerTargetResolver : TargetResolverComponent
     {
-        return InputManager.AimPoint;
+        public override Vector3 getTargetPos()
+        {
+            return InputManager.AimPoint;
+        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Misc
+namespace Core.Combat.Visuals
 {
     [Serializable]
     public class SpriteGroup

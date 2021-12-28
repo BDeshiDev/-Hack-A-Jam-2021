@@ -1,8 +1,7 @@
 ﻿using System;
-using BDeshi.Utility;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.CombatResources
 {
     public class ResourceComponent : MonoBehaviour
     {

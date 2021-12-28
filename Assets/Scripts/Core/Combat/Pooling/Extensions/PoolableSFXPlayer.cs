@@ -1,31 +1,35 @@
 ﻿using System;
 using BDeshi.Utility;
+using Core.Sound;
 using UnityEngine;
 
-public class PoolableSFXPlayer : SFXPlayer, AutoPoolable<PoolableSFXPlayer>
+namespace Core.Combat.Pooling.Extensions
 {
-    private bool shouldPool = false;
-    [SerializeField] FiniteTimer timer;
-
-    //this is not called on awake, so normal ones won't get pooled
-    public void initialize()
+    public class PoolableSFXPlayer : SFXPlayer, AutoPoolable<PoolableSFXPlayer>
     {
-        shouldPool = true;
-        timer.reset(source.clip.length);
-    }
+        private bool shouldPool = false;
+        [SerializeField] FiniteTimer timer;
 
-    public void handleForceReturn()
-    {
-        
-    }
-
-    private void Update()
-    {
-        if (timer.tryCompleteTimer(Time.deltaTime))
+        //this is not called on awake, so normal ones won't get pooled
+        public void initialize()
         {
-            NormalReturnCallback?.Invoke(this);
+            shouldPool = true;
+            timer.reset(source.clip.length);
         }
-    }
 
-    public event Action<PoolableSFXPlayer> NormalReturnCallback;
+        public void handleForceReturn()
+        {
+        
+        }
+
+        private void Update()
+        {
+            if (timer.tryCompleteTimer(Time.deltaTime))
+            {
+                NormalReturnCallback?.Invoke(this);
+            }
+        }
+
+        public event Action<PoolableSFXPlayer> NormalReturnCallback;
+    }
 }

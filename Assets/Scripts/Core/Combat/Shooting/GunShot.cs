@@ -1,7 +1,8 @@
 ﻿using Core.Combat.ShotPattern;
+using Core.Combat.Targetting;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Shooting
 {
     public class GunShot: MonoBehaviour
     {

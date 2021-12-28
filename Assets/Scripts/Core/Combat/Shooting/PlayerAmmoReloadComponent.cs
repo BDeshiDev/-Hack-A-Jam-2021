@@ -1,10 +1,10 @@
 using System;
 using BDeshi.Utility;
-using Core.Combat.Enemies;
-using Core.Player;
+using Core.Combat.Entities.Player;
+using Core.Combat.Spawning;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Shooting
 {
     /// <summary>
     /// Auto reload over time.

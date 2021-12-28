@@ -1,9 +1,7 @@
-﻿using System;
-using Core.Input;
+﻿using Core.Input;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace Core.Player
+namespace Core.Combat.Entities.Player
 {
     public class PlayerController:MonoBehaviour
     {

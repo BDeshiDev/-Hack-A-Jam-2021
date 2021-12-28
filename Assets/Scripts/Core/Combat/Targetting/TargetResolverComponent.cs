@@ -1,8 +1,6 @@
-﻿using BDeshi.Utility;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Targetting
 {
     /// <summary>
     /// Abstraction over targets

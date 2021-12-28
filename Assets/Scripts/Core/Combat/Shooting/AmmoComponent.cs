@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Shooting
 {
     public class AmmoComponent : MonoBehaviour 
     {

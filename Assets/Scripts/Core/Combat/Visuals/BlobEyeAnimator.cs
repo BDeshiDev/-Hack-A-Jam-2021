@@ -1,22 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Core.Combat;
+using Core.Combat.Entities;
 using UnityEngine;
 
-public class BlobEyeAnimator : MonoBehaviour
+namespace Core.Combat.Visuals
 {
-    [SerializeField] private BlobEye e1;
-    [SerializeField] private BlobEye e2;
-    private BlobEntity blobEntity;
-    private void Awake()
+    public class BlobEyeAnimator : MonoBehaviour
     {
-        blobEntity = GetComponentInParent<BlobEntity>();
-    }
+        [SerializeField] private BlobEye e1;
+        [SerializeField] private BlobEye e2;
+        private BlobEntity blobEntity;
+        private void Awake()
+        {
+            blobEntity = GetComponentInParent<BlobEntity>();
+        }
 
-    private void Update()
-    {
-        e1.ChangeLookDir(blobEntity.LastLookDir);
-        e2.ChangeLookDir(blobEntity.LastLookDir);
+        private void Update()
+        {
+            e1.ChangeLookDir(blobEntity.LastLookDir);
+            e2.ChangeLookDir(blobEntity.LastLookDir);
+        }
     }
 }

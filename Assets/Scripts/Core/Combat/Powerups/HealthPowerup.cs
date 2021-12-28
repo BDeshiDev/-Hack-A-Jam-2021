@@ -1,12 +1,14 @@
-﻿using Core.Combat.Powerups;
-using Core.Player;
+﻿using Core.Combat.Entities.Player;
 using UnityEngine;
 
-public class HealthPowerup : Powerup
+namespace Core.Combat.Powerups
 {
-    [SerializeField] float healPercentage = .4f;
-    protected override void doPowerUpPickup(HypnoPlayer hypnoPlayer)
+    public class HealthPowerup : Powerup
     {
-        hypnoPlayer.HealthComponent.modifyAmount(hypnoPlayer.HealthComponent.Max * healPercentage);
+        [SerializeField] float healPercentage = .4f;
+        protected override void doPowerUpPickup(HypnoPlayer hypnoPlayer)
+        {
+            hypnoPlayer.HealthComponent.modifyAmount(hypnoPlayer.HealthComponent.Max * healPercentage);
+        }
     }
 }

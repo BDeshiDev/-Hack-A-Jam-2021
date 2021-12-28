@@ -1,11 +1,14 @@
-﻿using System;
-using BDeshi.BTSM;
-using Core.Combat;
-using Core.Combat.Enemies;
+﻿using BDeshi.BTSM;
+using Core.Combat.CombatResources;
+using Core.Combat.Damage;
+using Core.Combat.Entities.States;
+using Core.Combat.Entities.States.PlayerState;
+using Core.Combat.Targetting;
+using Core.GameState;
 using Core.Physics;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.Combat.Entities.Player
 {
     [RequireComponent(typeof(MoveComponent))]
     public class HypnoPlayer: BlobEntity

@@ -4,7 +4,7 @@ using BDeshi.Utility.Extensions;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.Enemies
 {
     public class EnemyTracker: MonoBehaviourLazySingleton<EnemyTracker>
     {

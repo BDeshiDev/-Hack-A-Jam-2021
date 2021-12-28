@@ -1,7 +1,9 @@
 using BDeshi.Utility;
+using Core.Combat.Damage;
+using Core.Combat.Targetting;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Entities.States
 {
     public class LaserAttack : AttackState
     {

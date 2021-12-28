@@ -1,70 +1,69 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Core.Combat;
+using Core.Combat.CombatResources;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-public class HypnoGaugeView : MonoBehaviour
+namespace Core.Combat.Visuals.UI
 {
-    public HypnoComponent hypnoComponent;
-    public SpriteRenderer hypnoGaugeFillSpriter;
-    private MaterialPropertyBlock hypnGaugeFillPropertyBlock;
-    private static readonly int FillHeight = Shader.PropertyToID("FillHeight");
-    public Color hypnotizedColor;
-    public Color normalColor;
-
-    public void updateHypnoGaugeFill(ResourceComponent resourceComponent)
+    public class HypnoGaugeView : MonoBehaviour
     {
-        hypnoGaugeFillSpriter.GetPropertyBlock(hypnGaugeFillPropertyBlock);
-        hypnGaugeFillPropertyBlock.SetFloat(FillHeight,resourceComponent.Ratio );
+        public HypnoComponent hypnoComponent;
+        public SpriteRenderer hypnoGaugeFillSpriter;
+        private MaterialPropertyBlock hypnGaugeFillPropertyBlock;
+        private static readonly int FillHeight = Shader.PropertyToID("FillHeight");
+        public Color hypnotizedColor;
+        public Color normalColor;
+
+        public void updateHypnoGaugeFill(ResourceComponent resourceComponent)
+        {
+            hypnoGaugeFillSpriter.GetPropertyBlock(hypnGaugeFillPropertyBlock);
+            hypnGaugeFillPropertyBlock.SetFloat(FillHeight,resourceComponent.Ratio );
 
         
-        hypnoGaugeFillSpriter.SetPropertyBlock(hypnGaugeFillPropertyBlock);
-    }
+            hypnoGaugeFillSpriter.SetPropertyBlock(hypnGaugeFillPropertyBlock);
+        }
 
-    private void Awake()
-    {   
-        hypnoComponent = GetComponentInParent<HypnoComponent>();
-        hypnGaugeFillPropertyBlock = new MaterialPropertyBlock();
-        hypnoGaugeFillSpriter.color = normalColor;
+        private void Awake()
+        {   
+            hypnoComponent = GetComponentInParent<HypnoComponent>();
+            hypnGaugeFillPropertyBlock = new MaterialPropertyBlock();
+            hypnoGaugeFillSpriter.color = normalColor;
     
         
-        handleHypnosisRecovery(hypnoComponent);
-    }
-
-    private void Start()
-    {
-        updateHypnoGaugeFill(hypnoComponent);
-    }
-
-    private void OnEnable()
-    {
-        if (hypnoComponent != null)
-        {
-            hypnoComponent.RatioChanged += updateHypnoGaugeFill;
-            hypnoComponent.Hypnotized += handleHypnotized;
-            hypnoComponent.HypnosisRecovered += handleHypnosisRecovery;
+            handleHypnosisRecovery(hypnoComponent);
         }
-    }
 
-    private void handleHypnosisRecovery(HypnoComponent obj)
-    {
-        hypnoGaugeFillSpriter.color = normalColor;
-    }
-
-    private void handleHypnotized(HypnoComponent obj)
-    {
-        hypnoGaugeFillSpriter.color = hypnotizedColor;
-    }
-
-    private void OnDisable()
-    {
-        if (hypnoComponent != null)
+        private void Start()
         {
-            hypnoComponent.RatioChanged -= updateHypnoGaugeFill;
-            hypnoComponent.Hypnotized -= handleHypnotized;
-            hypnoComponent.HypnosisRecovered -= handleHypnosisRecovery;
+            updateHypnoGaugeFill(hypnoComponent);
+        }
+
+        private void OnEnable()
+        {
+            if (hypnoComponent != null)
+            {
+                hypnoComponent.RatioChanged += updateHypnoGaugeFill;
+                hypnoComponent.Hypnotized += handleHypnotized;
+                hypnoComponent.HypnosisRecovered += handleHypnosisRecovery;
+            }
+        }
+
+        private void handleHypnosisRecovery(HypnoComponent obj)
+        {
+            hypnoGaugeFillSpriter.color = normalColor;
+        }
+
+        private void handleHypnotized(HypnoComponent obj)
+        {
+            hypnoGaugeFillSpriter.color = hypnotizedColor;
+        }
+
+        private void OnDisable()
+        {
+            if (hypnoComponent != null)
+            {
+                hypnoComponent.RatioChanged -= updateHypnoGaugeFill;
+                hypnoComponent.Hypnotized -= handleHypnotized;
+                hypnoComponent.HypnosisRecovered -= handleHypnosisRecovery;
+            }
         }
     }
 }

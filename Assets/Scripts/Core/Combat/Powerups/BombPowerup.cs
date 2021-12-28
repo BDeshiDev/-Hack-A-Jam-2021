@@ -1,10 +1,12 @@
-﻿using Core.Combat.Powerups;
-using Core.Player;
+﻿using Core.Combat.Entities.Player;
 
-public class BombPowerup : Powerup
+namespace Core.Combat.Powerups
 {
-    protected override void doPowerUpPickup(HypnoPlayer hypnoPlayer)
+    public class BombPowerup : Powerup
     {
-        hypnoPlayer.GetComponent<PlayerBombLauncher>().addBomb();
+        protected override void doPowerUpPickup(HypnoPlayer hypnoPlayer)
+        {
+            hypnoPlayer.GetComponent<PlayerBombLauncher>().addBomb();
+        }
     }
 }

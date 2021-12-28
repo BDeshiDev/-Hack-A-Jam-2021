@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Core.Combat.CombatResources;
+using Core.Combat.Damage;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Combat
+namespace Core.Combat.Entities
 {
     /// <summary>
     /// Anything that can take damage.

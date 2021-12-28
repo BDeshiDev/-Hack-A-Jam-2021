@@ -1,7 +1,9 @@
 ﻿using BDeshi.BTSM;
+using Core.Combat.Entities.States;
+using Core.Combat.Entities.States.EnemyState;
 using UnityEngine;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.Enemies
 {
     //requires one more state for moving back before charge
     //ultimately better to keep a separate class like this

@@ -1,40 +1,41 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using BDeshi.Utility;
 using UnityEngine;
 
-public class ParticleHelper : MonoBehaviour, AutoPoolable<ParticleHelper>
+namespace Core.Misc
 {
-    [SerializeField] private ParticleSystem particleSystem;
-
-    public void ForcePlay()
+    public class ParticleHelper : MonoBehaviour, AutoPoolable<ParticleHelper>
     {
-        if(particleSystem.isPlaying)
-            particleSystem.Stop();
-        particleSystem.Play();
-    }
+        [SerializeField] private ParticleSystem particleSystem;
 
-    public void setColor(Color c)
-    {
-        var m = particleSystem.main;
-        m.startColor = c;
-    }
+        public void ForcePlay()
+        {
+            if(particleSystem.isPlaying)
+                particleSystem.Stop();
+            particleSystem.Play();
+        }
 
-    public void initialize()
-    {
-        ForcePlay();
-    }
+        public void setColor(Color c)
+        {
+            var m = particleSystem.main;
+            m.startColor = c;
+        }
+
+        public void initialize()
+        {
+            ForcePlay();
+        }
     
-    public void OnParticleSystemStopped()
-    {
-        NormalReturnCallback?.Invoke(this);
-    }
+        public void OnParticleSystemStopped()
+        {
+            NormalReturnCallback?.Invoke(this);
+        }
 
-    public void handleForceReturn()
-    {
+        public void handleForceReturn()
+        {
         
-    }
+        }
 
-    public event Action<ParticleHelper> NormalReturnCallback;
+        public event Action<ParticleHelper> NormalReturnCallback;
+    }
 }

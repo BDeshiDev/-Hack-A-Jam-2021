@@ -1,9 +1,10 @@
 ﻿using BDeshi.BTSM;
 using BDeshi.Utility.Extensions;
+using Core.Combat.Targetting;
 using Core.Physics;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Entities
 {
     /// <summary>
     /// Do basic blob stuff, logic driven via a FSM.

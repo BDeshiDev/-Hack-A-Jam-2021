@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using Core.Combat.Damage;
+using Core.Combat.Damage.Hitbox;
+using Core.Combat.Targetting;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Hitbox
 {
     public abstract class HitBox : MonoBehaviour
     {

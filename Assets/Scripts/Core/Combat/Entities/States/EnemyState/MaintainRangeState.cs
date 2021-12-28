@@ -1,10 +1,9 @@
-﻿using BDeshi.BTSM;
-using BDeshi.Utility;
+﻿using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.States.EnemyState
 {
     public  class MaintainRangeState: EnemyStatebase
     {

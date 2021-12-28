@@ -1,7 +1,8 @@
 ﻿using BDeshi.BTSM;
+using Core.Combat.Entities.Enemies;
 using UnityEngine;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.States.EnemyState
 {
     public abstract class EnemyStatebase : MonoBehaviourStateBase
     {

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using bdeshi.utility;
-using BDeshi.Utility;
+using Core.Combat.Powerups;
+using Core.Combat.Spawning;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Visuals.UI
 {
     public class ScoreViewer: MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿namespace Core.Combat
+﻿namespace Core.Combat.Damage
 {
     public interface IDamagable
     {

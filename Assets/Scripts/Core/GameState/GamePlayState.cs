@@ -3,7 +3,7 @@ using BDeshi.BTSM;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core
+namespace Core.GameState
 {
     public class GamePlayState : MonoBehaviourStateBase
     {

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Core
+namespace Core.Sound
 {
     public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
     {

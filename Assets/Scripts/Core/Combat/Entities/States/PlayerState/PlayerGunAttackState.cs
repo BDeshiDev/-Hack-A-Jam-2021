@@ -1,6 +1,6 @@
 ﻿using Core.Input;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.States.PlayerState
 {
     public class PlayerGunAttackState : GunAttackState
     {

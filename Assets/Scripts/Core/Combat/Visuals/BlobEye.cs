@@ -1,23 +1,25 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BlobEye: MonoBehaviour
+namespace Core.Combat.Visuals
 {
-    public float maxDistance = .75f;
-    private SpriteRenderer spriter;
-
-    private void Awake()
+    public class BlobEye: MonoBehaviour
     {
-        spriter = GetComponent<SpriteRenderer>();
-    }
+        public float maxDistance = .75f;
+        private SpriteRenderer spriter;
 
-    public void togglePupil(bool shouldShowPupil)
-    {
-        spriter.enabled = shouldShowPupil;
-    }
+        private void Awake()
+        {
+            spriter = GetComponent<SpriteRenderer>();
+        }
 
-    public void ChangeLookDir(Vector2 dir)
-    {
-        transform.localPosition = dir * maxDistance;
+        public void togglePupil(bool shouldShowPupil)
+        {
+            spriter.enabled = shouldShowPupil;
+        }
+
+        public void ChangeLookDir(Vector2 dir)
+        {
+            transform.localPosition = dir * maxDistance;
+        }
     }
 }

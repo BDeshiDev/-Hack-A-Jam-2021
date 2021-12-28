@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using bdeshi.utility;
 using BDeshi.Utility;
-using Core.Combat;
-using Core.Combat.Enemies;
+using Core.Combat.Entities.Enemies;
+using Core.Combat.Pooling.Extensions;
 using Core.Combat.Powerups;
+using Core.Combat.Shooting;
+using Core.Combat.Spawning;
+using Core.GameState;
+using Core.Misc;
 using UnityEngine;
 
-namespace Core
+namespace Core.Combat.Pooling
 {
     /// <summary>
     /// Single place for pools. 

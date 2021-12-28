@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using Core.Combat.Enemies;
+using Core.Combat.Entities.Enemies;
+using Core.Combat.Pooling;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Core.Combat
+namespace Core.Combat.Spawning
 {
 
     [Serializable]

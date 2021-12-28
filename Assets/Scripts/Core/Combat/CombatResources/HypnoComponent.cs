@@ -1,12 +1,10 @@
 ﻿using System;
-using BDeshi.BTSM;
 using BDeshi.Utility;
-using Core.Combat.Enemies;
+using Core.Combat.Damage;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.Serialization;
 
-namespace Core.Combat
+namespace Core.Combat.CombatResources
 {
     public class HypnoComponent: ResourceComponent
     {

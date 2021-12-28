@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.Combat
+namespace Core.Combat.Targetting
 {
     [CreateAssetMenu(fileName = "TargettingInfo")]
     public class TargettingInfo: ScriptableObject

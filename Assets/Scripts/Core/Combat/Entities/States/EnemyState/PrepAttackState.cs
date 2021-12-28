@@ -3,7 +3,7 @@ using BDeshi.Utility.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.States.EnemyState
 {
     public  class PrepAttackState: EnemyStatebase
     {

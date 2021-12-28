@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using BDeshi.Utility;
-using Core.Combat.Enemies;
+﻿using BDeshi.Utility;
+using Core.Combat.CombatResources;
+using Core.Combat.Entities.Enemies;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace Core.Combat
+namespace Core.Combat.Targetting
 {
     public class EnemyTargetResolver : TargetResolverComponent
     {

@@ -1,3 +1,4 @@
+using Core.GameState;
 using UnityEngine;
 
 namespace Core.Misc.Scriptable

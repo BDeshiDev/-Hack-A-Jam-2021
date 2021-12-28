@@ -1,9 +1,9 @@
-using Core.Combat;
+using Core.Combat.Hitbox;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Player
+namespace Core.Combat.Entities.Player
 {
     public class PlayerBomb : MonoBehaviour
     {

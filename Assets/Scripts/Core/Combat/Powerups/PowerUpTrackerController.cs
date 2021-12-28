@@ -1,39 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Utility;
-using Core.Combat;
-using Core.Combat.Powerups;
+using Core.Combat.Visuals.UI;
 using UnityEngine;
 
-public class PowerUpTrackerController : MonoBehaviour
+namespace Core.Combat.Powerups
 {
-    // Start is called before the first frame update
-    [SerializeField]private WorldPosTracker trackerPrefab;
-    public Dictionary<Powerup, WorldPosTracker> trackers = new Dictionary<Powerup, WorldPosTracker>();
-    private SimpleManualMonoBehaviourPool<WorldPosTracker> trackerPool;
-
-    void Start()
+    public class PowerUpTrackerController : MonoBehaviour
     {
-        trackerPool = new SimpleManualMonoBehaviourPool<WorldPosTracker>(trackerPrefab, 1);
-        
-        CombatEventManger.Instance.OnPowerUpSpawned.add(gameObject, handlePowerUpSpawned); 
-        CombatEventManger.Instance.OnPowerUpDeSpawned.add(gameObject, handlePowerUpDespawned); 
-    }
+        // Start is called before the first frame update
+        [SerializeField]private WorldPosTracker trackerPrefab;
+        public Dictionary<Powerup, WorldPosTracker> trackers = new Dictionary<Powerup, WorldPosTracker>();
+        private SimpleManualMonoBehaviourPool<WorldPosTracker> trackerPool;
 
-    private void handlePowerUpDespawned(Powerup p)
-    {
-        if (trackers.TryGetValue(p, out var tracker))
+        void Start()
         {
-            trackerPool.returnItem(tracker);
-        }
+            trackerPool = new SimpleManualMonoBehaviourPool<WorldPosTracker>(trackerPrefab, 1);
         
+            CombatEventManger.Instance.OnPowerUpSpawned.add(gameObject, handlePowerUpSpawned); 
+            CombatEventManger.Instance.OnPowerUpDeSpawned.add(gameObject, handlePowerUpDespawned); 
+        }
+
+        private void handlePowerUpDespawned(Powerup p)
+        {
+            if (trackers.TryGetValue(p, out var tracker))
+            {
+                trackerPool.returnItem(tracker);
+            }
+        
+        }
+
+        private void handlePowerUpSpawned(Powerup p)
+        {
+            trackers[p] = trackerPool.getItem();
+            trackers[p].init(p.Spriter);
+        }
+
+
     }
-
-    private void handlePowerUpSpawned(Powerup p)
-    {
-        trackers[p] = trackerPool.getItem();
-        trackers[p].init(p.Spriter);
-    }
-
-
 }

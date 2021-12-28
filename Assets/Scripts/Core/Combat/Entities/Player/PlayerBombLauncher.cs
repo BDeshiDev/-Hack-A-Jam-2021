@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.Combat.Entities.Player
 {
     public class PlayerBombLauncher : MonoBehaviour
     {

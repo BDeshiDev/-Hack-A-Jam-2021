@@ -1,9 +1,12 @@
 ﻿using System;
 using BDeshi.Utility;
+using Core.Combat.CombatResources;
+using Core.Combat.Damage;
+using Core.Combat.Targetting;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.Enemies
 {
     public abstract class EnemyEntity: BlobEntity, AutoPoolable<EnemyEntity>
     {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Core.Combat.Hitbox;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Damage.Hitbox
 {
     public class CircularHitBox : HitBox
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using BDeshi.Utility;
+using Core.Combat.Shooting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.States
 {
     public class GunAttackState : AttackState
     {

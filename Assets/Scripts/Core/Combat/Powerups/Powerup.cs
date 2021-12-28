@@ -1,6 +1,6 @@
 ﻿using System;
 using BDeshi.Utility;
-using Core.Player;
+using Core.Combat.Entities.Player;
 using UnityEngine;
 using UnityEngine.Events;
 

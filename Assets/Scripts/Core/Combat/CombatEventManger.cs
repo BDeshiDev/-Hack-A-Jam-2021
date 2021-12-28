@@ -1,7 +1,8 @@
 ﻿using bdeshi.utility;
 using BDeshi.Utility;
-using Core.Combat.Enemies;
+using Core.Combat.Entities.Enemies;
 using Core.Combat.Powerups;
+using Core.Combat.Spawning;
 
 namespace Core.Combat
 {

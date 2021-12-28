@@ -1,7 +1,7 @@
 ﻿using BDeshi.BTSM;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Entities.States
 {
     public abstract class AttackState : MonoBehaviourStateBase
     {

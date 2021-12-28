@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Core.Misc
+namespace Core.Sound
 {
     public class BGMSetter : MonoBehaviour
     {

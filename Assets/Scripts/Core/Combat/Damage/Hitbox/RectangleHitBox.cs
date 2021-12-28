@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using BDeshi.Utility.Extensions;
+﻿using BDeshi.Utility.Extensions;
+using Core.Combat.Hitbox;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Core.Combat
+namespace Core.Combat.Damage.Hitbox
 {
     public class RectangleHitBox: HitBox
     {

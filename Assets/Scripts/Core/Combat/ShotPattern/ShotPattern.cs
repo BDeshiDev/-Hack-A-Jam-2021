@@ -1,4 +1,7 @@
 ﻿using System;
+using Core.Combat.Pooling;
+using Core.Combat.Shooting;
+using Core.Combat.Targetting;
 using UnityEngine;
 
 namespace Core.Combat.ShotPattern

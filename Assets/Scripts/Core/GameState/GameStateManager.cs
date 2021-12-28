@@ -4,7 +4,7 @@ using BDeshi.BTSM;
 using BDeshi.Utility;
 using UnityEngine;
 
-namespace Core
+namespace Core.GameState
 {
     public class GameStateManager : MonoBehaviourSingletonPersistent<GameStateManager>
     {

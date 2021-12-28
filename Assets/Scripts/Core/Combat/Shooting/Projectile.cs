@@ -1,11 +1,14 @@
 ﻿using System;
 using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
+using Core.Combat.Damage;
+using Core.Combat.Pooling;
+using Core.Combat.Targetting;
+using Core.Misc;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-namespace Core.Combat
+namespace Core.Combat.Shooting
 {
     public class Projectile : MonoBehaviour, AutoPoolable<Projectile>, IDamagable
     {

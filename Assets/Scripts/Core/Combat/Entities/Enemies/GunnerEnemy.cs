@@ -1,12 +1,9 @@
-﻿using System;
-using System.Timers;
-using BDeshi.BTSM;
-using BDeshi.Utility;
+﻿using BDeshi.BTSM;
+using Core.Combat.Entities.States;
+using Core.Combat.Entities.States.EnemyState;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Serialization;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.Enemies
 {
     public class GunnerEnemy : EnemyEntity
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.UI
+namespace Core.Combat.Visuals.UI
 {
     public class ImageFillBar : MonoBehaviour
     {

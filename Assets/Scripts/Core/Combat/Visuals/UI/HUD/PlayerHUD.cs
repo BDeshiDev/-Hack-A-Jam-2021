@@ -1,11 +1,10 @@
-using System;
-using BDeshi.UI;
-using Core.Combat;
-using Core.Player;
+using Core.Combat.CombatResources;
+using Core.Combat.Entities.Player;
+using Core.Combat.Shooting;
+using Core.GameState;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Core.UI
+namespace Core.Combat.Visuals.UI.HUD
 {
     public class PlayerHUD : MonoBehaviour
     {

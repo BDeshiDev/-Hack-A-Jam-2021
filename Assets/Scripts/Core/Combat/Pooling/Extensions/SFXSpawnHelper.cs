@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Misc
+namespace Core.Combat.Pooling.Extensions
 {
     public class SFXSpawnHelper : MonoBehaviour
     {

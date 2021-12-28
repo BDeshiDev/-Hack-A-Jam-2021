@@ -2,7 +2,7 @@
 using Core.Input;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.Combat.Entities.States.PlayerState
 {
     public class PlayerDashState: PlayerState
     {

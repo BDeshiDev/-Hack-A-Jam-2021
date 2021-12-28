@@ -1,12 +1,12 @@
 ﻿using BDeshi.BTSM;
-using Core.Combat;
+using Core.Combat.Visuals.UI;
+using Core.Sound;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-namespace Core
+namespace Core.GameState
 {
     public class GameOverState : MonoBehaviourStateBase
     {

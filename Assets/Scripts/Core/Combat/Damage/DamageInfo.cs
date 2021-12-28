@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Combat
+namespace Core.Combat.Damage
 {
     [Serializable]
     public struct DamageInfo

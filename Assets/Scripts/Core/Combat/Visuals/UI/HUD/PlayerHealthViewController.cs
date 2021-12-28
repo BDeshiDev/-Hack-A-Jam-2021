@@ -1,8 +1,8 @@
 ﻿using BDeshi.UI;
-using Core.Combat;
+using Core.Combat.CombatResources;
 using UnityEngine;
 
-namespace Core.UI
+namespace Core.Combat.Visuals.UI.HUD
 {
     public class PlayerHealthViewController : MonoBehaviour
     {

@@ -1,8 +1,8 @@
-using System;
 using BDeshi.Utility;
+using Core.Combat.Damage.Hitbox;
 using UnityEngine;
 
-namespace Core.Combat
+namespace Core.Combat.Entities.States
 {
     public class SimpleHitBoxAttackState : AttackState
     {

@@ -1,9 +1,9 @@
 ﻿using BDeshi.Utility;
-using Core.Input;
+using Core.Combat.Damage.Hitbox;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.Combat.Enemies
+namespace Core.Combat.Entities.States.EnemyState
 {
     public class BullrushState: AttackState
     {

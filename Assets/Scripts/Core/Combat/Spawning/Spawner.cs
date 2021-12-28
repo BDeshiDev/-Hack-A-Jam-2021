@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using BDeshi.Utility;
-using Core.Combat.Enemies;
-using Core.Input;
+using Core.Combat.Entities.Enemies;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace Core.Combat
+namespace Core.Combat.Spawning
 {
     public class Spawner: MonoBehaviour
     {
