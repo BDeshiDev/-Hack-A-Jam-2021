@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using bdeshi.utility;
 using BDeshi.Utility;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -23,6 +24,7 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
     [SerializeField] private AudioClip curTrack;
     private IEnumerator CustomTrackCoroutine = null;
     private IEnumerator VolumeLerpCoroutine = null;
+    
     
     protected override void initialize()
     {
@@ -52,14 +54,16 @@ public class MusicManager : MonoBehaviourSingletonPersistent<MusicManager>
         curSource.volume = volume;
     }
     
+
     private IEnumerator fadeVolume(float finalVolume,float fadeTime)
     {
         float startVolume = curSource.volume;
         FiniteTimer timer = new FiniteTimer(0, fadeTime);
         while (!timer.isComplete)
         {
-            timer.updateTimer(Time.deltaTime);
+            timer.updateTimer(Time.unscaledTime);
             curSource.volume = Mathf.Lerp(startVolume, finalVolume, timer.Ratio);
+            Debug.Log(timer.Ratio);
             yield return null;
         }
 

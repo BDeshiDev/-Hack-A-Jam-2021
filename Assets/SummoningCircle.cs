@@ -23,7 +23,7 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
 
     private void Awake()
     {
-        delayTimer = new FiniteTimer(Random.Range(0, 1f));
+        delayTimer = new FiniteTimer(Random.Range(.2f, 1f));
     }
 
     public void startSummon(EnemyEntity prefab, Vector3 pos, Action<EnemyEntity> spawnCallback)
@@ -52,11 +52,13 @@ public class SummoningCircle : MonoBehaviour, AutoPoolable<SummoningCircle>
             yield return null;
         }
         spawnStartCallback.Invoke();
+        var part1Duration = animDuration*.4f;
+        var part2Duration = animDuration * .6f;
         Tween t = DOTween.Sequence()
-                .Append(transform.DOScale(baseSize *1.3f, animDuration*.8f))
-                .Append(transform.DOScale(baseSize, animDuration * .2f))
-                .Insert(0,spriter1.DOFade(1,animDuration))
-                .Insert(0,spriter2.DOFade(1,animDuration))
+                .Append(transform.DOScale(baseSize *2f, part1Duration))
+                .Append(transform.DOScale(baseSize, part2Duration))
+                .Insert(0,spriter1.DOFade(1,part1Duration))
+                .Insert(0,spriter2.DOFade(1,part1Duration))
                 .SetUpdate(true)
                 .OnComplete(() => { 
                     var e = GameplayPoolManager.Instance.enemyPool.get(prefab);

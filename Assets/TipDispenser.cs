@@ -6,6 +6,10 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+//Due to the time extension, I had the time to actually make a tutorial
+// The remaining mechanics are really meant for the player to figure out on their own
+// so this is no longer used.
+
 /// <summary>
 /// Shows a random string tip
 /// No time to set up proper tutorial.

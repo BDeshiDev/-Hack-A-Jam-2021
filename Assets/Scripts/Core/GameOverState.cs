@@ -16,6 +16,8 @@ namespace Core
         private Tween tween;
         [SerializeField] private ScoreViewer scoreViewer;
         [SerializeField] private CanvasGroup rectTransformButton;
+        [SerializeField] private float GameoverStateVolume = .25f;
+
         public Tween  createTween()
         {
         
@@ -69,6 +71,8 @@ namespace Core
             
             GameStateManager.Instance.pause();
             Time.timeScale = 0;
+            
+            MusicManager.Instance.doFadeVolume(GameoverStateVolume, 2f);
 
             // #if UNITY_EDITOR
             //     tween.Complete();
@@ -93,6 +97,11 @@ namespace Core
             
             GameStateManager.Instance.unPause();
             Time.timeScale = 1;
+            
+            MusicManager.Instance.setVolume(1f);
+
+            MusicManager.Instance.doFadeVolume(1f, 1f);
+
         }
     }
 }

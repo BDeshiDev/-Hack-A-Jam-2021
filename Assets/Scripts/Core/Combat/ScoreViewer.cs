@@ -28,9 +28,10 @@ namespace Core.Combat
             Vector3 startPos = tmp.rectTransform.localPosition;
             startPos.x = -tmp.rectTransform.rect.width/2;
             tmp.rectTransform.localPosition = startPos;
+            // Debug.Log(startPos.x);
             return DOTween.Sequence()
                 .Append(tmp.DOFade(1, animTimePerLine))
-                .Insert(0, tmp.rectTransform.DOMoveX( tmp.rectTransform.rect.width/2, animTimePerLine))
+                .Insert(0, tmp.rectTransform.DOLocalMoveX( 0, animTimePerLine))
                 .Insert(0, tmp.rectTransform.DOScale(Vector3.one, animTimePerLine * .5f))
                 .Append(tmp.rectTransform.DOPunchScale(Vector3.one * 1.5f, animTimePerLine * .5f));
         }
@@ -39,19 +40,20 @@ namespace Core.Combat
         {
             Spawner spawner = FindObjectOfType<Spawner>();
             PowerupCycle powerupCycle = FindObjectOfType<PowerupCycle>();
-            Debug.Log("scoring : " + spawner, spawner);
-            Debug.Log("scoring : " + powerupCycle, powerupCycle);
+            Debug.Log("scoring : " + spawner, spawner.gameObject);
+            Debug.Log("scoring : " + powerupCycle, powerupCycle.gameObject);
             sequence
                 .Append(createScoreLineAnim(survivedText, 
-                    $"Time Survived: {spawner.SpawnerRunningTime} secs"))
+                    $"Time Survived: "  +spawner.SpawnerRunningTime +" secs"))
                 .Append(createScoreLineAnim(WaveText, 
-                    $"Reached Wave: {spawner.lastReachedWave}."))
+                    "Reached Wave: "+ spawner.LastReachedWave))
                 .Append(createScoreLineAnim(KilledText,
-                    $"Enemies Killed: {spawner.TotalEnemiesKilled}."))
+                    $"Enemies Killed: " + spawner.TotalEnemiesKilled))
                 .Append(createScoreLineAnim(hypnotizedText,
-                    $"Total Time enemies spent hypnotized : {spawner.TotalHypnoTime + spawner.getAliveEnemyHypnoTime()} secs."))
+                    $"Total Time enemies spent hypnotized : " +
+                    (spawner.TotalHypnoTime + spawner.getAliveEnemyHypnoTime())+" secs."))
                 .Append(createScoreLineAnim(CyclesText,
-                    $"Total Power up Cycles: {powerupCycle.NumPowerupCyclesCompleted}."));
+                    $"Total Power up Cycles: "+ powerupCycle.NumPowerupCyclesCompleted));
 
             return sequence;
         }

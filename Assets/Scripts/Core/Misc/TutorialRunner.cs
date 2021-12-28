@@ -132,17 +132,16 @@ namespace Core.Misc
                          enemy2.HypnoComponent.IsBerserked
             ) ;
             
-            fsm.addTransition(berserkState,  migraineState, 
-                () =>
-                    (!enemy1.HypnoComponent.IsInBerserkRange && !enemy2.HypnoComponent.IsInBerserkRange) &&
-                    enemy1.HealthComponent.IsEmpty ||
-                    enemy2.HealthComponent.IsEmpty
-            ) ;
+            // fsm.addTransition(berserkState,  migraineState, 
+            //     () =>
+            //         (!enemy1.HypnoComponent.IsInBerserkRange && !enemy2.HypnoComponent.IsInBerserkRange) &&
+            //         enemy1.HealthComponent.IsEmpty ||
+            //         enemy2.HealthComponent.IsEmpty
+            // ) ;
 
             
             fsm.enter();
             //both not dead
-            //
             while (true)
             {
                 fsm.Tick();

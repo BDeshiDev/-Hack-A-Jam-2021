@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using BDeshi.Utility.Extensions;
-using Core.Combat.Powerups;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class WorldPosTracker : MonoBehaviour
 {

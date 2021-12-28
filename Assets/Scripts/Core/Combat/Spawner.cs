@@ -19,7 +19,7 @@ namespace Core.Combat
 
         public SummoningCircle summoningCirclePrefab;
 
-        public int lastReachedWave => actualWaveCount;
+        public int LastReachedWave => actualWaveCount;
         
         public List<Wave> waves;
         // public event Action<int> waveCompleted;
@@ -189,7 +189,7 @@ namespace Core.Combat
 
         public void trackEnemy(EnemyEntity e)
         {
-            Debug.Log("add spawn "+ e,  e);
+            // Debug.Log("add spawn "+ e,  e);
             spawnTracker.Add(e);
         }
     }

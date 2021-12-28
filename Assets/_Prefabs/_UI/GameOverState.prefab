@@ -46,3 +46,6 @@ MonoBehaviour:
   gameOverImageContainer: {fileID: 0}
   gameOverText: {fileID: 0}
   fadeTime: 0.6
+  scoreViewer: {fileID: 0}
+  rectTransformButton: {fileID: 0}
+  GameoverStateVolume: 0.125

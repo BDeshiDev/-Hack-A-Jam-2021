@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Core.Misc
 {
+    #if UNITY_EDITOR
     /// <summary>
     /// Unity playmode with no domain reload/scene reload can cause problems with static stuff
     /// But it's too nice to give up.
@@ -40,4 +41,5 @@ namespace Core.Misc
             }
         }
     }
+    #endif
 }

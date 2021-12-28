@@ -101,7 +101,7 @@ namespace Core.Input
 
         void Update()
         {
-            if(GameStateManager.Instance.IsPaused)
+            if(GameStateManager.Instance != null && GameStateManager.Instance.IsPaused)
             {
                 return;
             }

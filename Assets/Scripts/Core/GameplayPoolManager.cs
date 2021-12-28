@@ -19,6 +19,7 @@ namespace Core
         public PrefabPoolPool<SummoningCircle> summoningCircles;
         public PrefabPoolPool<Powerup> powerUpPool;
         public PrefabPoolPool<ParticleHelper> particlePool;
+        public PrefabPoolPool<PoolableSFXPlayer> sfxPool;
 
         protected override void initialize()
         {
@@ -29,6 +30,7 @@ namespace Core
             summoningCircles = new PrefabPoolPool<SummoningCircle>(1, createParent("summoningCircles"));
             powerUpPool = new PrefabPoolPool<Powerup>(1, createParent("Powerups"));
             particlePool = new PrefabPoolPool<ParticleHelper>(1, createParent("particles"));
+            sfxPool = new PrefabPoolPool<PoolableSFXPlayer>(1, createParent("sfx"));
         }
 
         private void Start()

@@ -138,6 +138,15 @@ namespace BDeshi.Utility.Extensions
         {
             return new Vector3(v.x * other.x, v.y * other.y, v.z * v.z);
         }
+        public static void Shuffle<T>(this IList<T> list)  
+        {  
+            for (int i = list.Count -1 ; i < list.Count; i--)
+            {
+                int k = Random.Range(0, i+1); 
+                (list[k], list[i]) = (list[i], list[k]);
+            }
+
+        }
 
 #if UNITY_EDITOR
         public static void DrawWireCapsule(Vector3 _pos, Quaternion _rot, float _radius, float _height, Color _color = default(Color))
@@ -172,16 +181,6 @@ namespace BDeshi.Utility.Extensions
             {
                 Gizmos.DrawLine(path[i-1], path[i ]);
             }
-        }
-        
-        public static void Shuffle<T>(this IList<T> list)  
-        {  
-            for (int i = list.Count -1 ; i < list.Count; i--)
-            {
-                int k = Random.Range(0, i+1); 
-                (list[k], list[i]) = (list[i], list[k]);
-            }
-
         }
 #endif
     }

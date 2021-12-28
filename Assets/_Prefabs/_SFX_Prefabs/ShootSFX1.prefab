@@ -144,3 +144,5 @@ MonoBehaviour:
   pitchMin: 1
   pitchMax: 1.75
   source: {fileID: 158855047940385337}
+  debug: 0
+  playOnEnable: 0

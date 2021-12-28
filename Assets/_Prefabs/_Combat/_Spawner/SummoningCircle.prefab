@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 702604308540069519}
   - component: {fileID: 702604308540069516}
   m_Layer: 0
-  m_Name: SumoningCircle
+  m_Name: SummoningCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
