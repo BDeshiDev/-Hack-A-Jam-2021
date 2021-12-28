@@ -1,5 +1,6 @@
 using BDeshi.Utility;
 using Core.Combat;
+using Core.Combat.CombatResources;
 using UnityEngine;
 using UnityEngine.UI;
 

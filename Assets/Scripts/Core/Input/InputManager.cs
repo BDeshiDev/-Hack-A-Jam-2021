@@ -1,6 +1,7 @@
 using System;
 using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
+using Core.GameState;
 using ShieldSan.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;

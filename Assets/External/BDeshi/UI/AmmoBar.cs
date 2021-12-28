@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BDeshi.Utility;
 using Core.Combat;
+using Core.Combat.Shooting;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using Core.Combat.Shooting;
+using Core.Combat.Targetting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
